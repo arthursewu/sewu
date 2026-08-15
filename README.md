@@ -1,6 +1,6 @@
 # sewu.org
 
-Personal site for Arthur Sewu — Full Stack Marketer.
+Personal site for Arthur Sewu — Creative Strategist & Media Buyer.
 
 Static site (plain HTML/CSS/JS), served by GitHub Pages at **https://sewu.org**.
 
