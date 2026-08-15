@@ -1,0 +1,529 @@
+/* =========================================
+   Dark Funnel Theme — Arthur Sewu
+   Inspired by joinbrezscales.com + brezmarketing.net
+   ========================================= */
+
+/* === Variables === */
+:root {
+    --bg: #0a0a0a;
+    --text: #ffffff;
+    --text-muted: #a0a0a0;
+    --text-dim: #666666;
+    --surface: #111111;
+    --border: #222222;
+    --accent: #ef4444;
+    --accent-hover: #dc2626;
+    --transition: all 0.3s ease;
+}
+
+/* === Reset === */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* === Typography === */
+h1,
+h2,
+h3 {
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+}
+
+em {
+    font-style: italic;
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* === Layout === */
+.container-narrow {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.container-form {
+    max-width: 600px;
+}
+
+.container-wide {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* =========================================
+   SECTION 1: Logo Header
+   ========================================= */
+.logo-header {
+    text-align: center;
+    padding: 40px 0 20px;
+}
+
+.logo {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--text);
+    letter-spacing: -0.05em;
+}
+
+/* =========================================
+   SECTION 2: Hero
+   ========================================= */
+.hero {
+    text-align: center;
+    padding: 40px 0 60px;
+}
+
+.hero-headline {
+    font-size: clamp(32px, 7vw, 72px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 24px;
+}
+
+.hero-sub {
+    font-size: clamp(16px, 2.5vw, 22px);
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    max-width: 650px;
+    margin-inline: auto;
+    line-height: 1.5;
+}
+
+.watch-prompt {
+    font-size: clamp(14px, 1.5vw, 18px);
+    margin-bottom: 32px;
+    color: var(--text);
+    letter-spacing: 0.02em;
+}
+
+/* Video — landscape 16:9 style */
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+}
+
+.local-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+
+
+/* =========================================
+   SECTION 3: Urgency CTA
+   ========================================= */
+.cta-section {
+    text-align: center;
+    padding: 60px 0;
+}
+
+.cta-heading {
+    font-size: clamp(28px, 5vw, 52px);
+    font-weight: 900;
+    margin-bottom: 40px;
+    line-height: 1.1;
+}
+
+.btn-cta {
+    display: inline-block;
+    background-color: var(--accent);
+    color: #ffffff;
+    border: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 22px;
+    padding: 22px 64px;
+    border-radius: 10px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-decoration: none;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 4px 25px rgba(239, 68, 68, 0.35);
+}
+
+.btn-cta:hover {
+    background-color: var(--accent-hover);
+    box-shadow: 0 8px 40px rgba(239, 68, 68, 0.55);
+    transform: translateY(-3px);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.cta-subtext {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-top: 20px;
+    line-height: 1.5;
+}
+
+/* =========================================
+   Shared Section Components
+   ========================================= */
+.section-tag {
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 600;
+    color: #ef4444;
+    text-transform: capitalize;
+    letter-spacing: 0.02em;
+    margin-bottom: 16px;
+}
+
+.section-heading {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 20px;
+}
+
+.section-sub {
+    font-size: clamp(15px, 1.8vw, 18px);
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 650px;
+    margin: 0 auto 48px auto;
+}
+
+/* =========================================
+   SECTION 4: Services
+   ========================================= */
+.services-section {
+    padding: 80px 0;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 16px;
+}
+
+@media (max-width: 768px) {
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.service-card {
+    text-align: center;
+    padding: 20px;
+}
+
+.service-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px;
+    height: 52px;
+    background: #ef4444;
+    border-radius: 12px;
+    margin-bottom: 24px;
+}
+
+.service-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 12px;
+}
+
+.service-desc {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-muted);
+}
+
+/* =========================================
+   SECTION 5: Growth / Results
+   ========================================= */
+.growth-section {
+    padding: 80px 0;
+}
+
+.social-proof {
+    padding: 80px 0;
+}
+
+.proof-heading {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 1.1;
+}
+
+/* Screenshot Proof Grid (like joinbrezscales.com) */
+.proof-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 768px) {
+    .proof-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.proof-img-card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.proof-img-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+}
+
+.proof-img-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* =========================================
+   SECTION 5: Application Form
+   ========================================= */
+.application-section {
+    padding: 80px 0;
+}
+
+.form-heading {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.form-sub {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 16px;
+    margin-bottom: 40px;
+}
+
+.application-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-field label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.form-field input,
+.form-field textarea {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: var(--transition);
+    appearance: none;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.form-field textarea {
+    resize: none;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+    color: var(--text-dim);
+}
+
+/* Custom Dropdown */
+.custom-dropdown {
+    position: relative;
+    width: 100%;
+}
+
+.dropdown-trigger {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: var(--transition);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    text-align: left;
+}
+
+.dropdown-trigger:focus,
+.custom-dropdown.open .dropdown-trigger {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.dropdown-arrow {
+    transition: transform 0.3s ease;
+}
+
+.custom-dropdown.open .dropdown-arrow {
+    transform: rotate(180deg);
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+    margin-top: -2px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    z-index: 100;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    list-style: none;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.custom-dropdown.open .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-option {
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    color: var(--text-muted);
+}
+
+.dropdown-option:hover {
+    background: #1a1a1a;
+    color: var(--text);
+}
+
+.dropdown-option.selected {
+    font-weight: 600;
+    color: var(--text);
+    background: #1e1e1e;
+}
+
+/* =========================================
+   SECTION 6: Footer
+   ========================================= */
+.site-footer {
+    padding: 60px 0 40px;
+}
+
+.footer-socials {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.footer-socials a {
+    color: var(--text-dim);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.footer-socials a:hover {
+    color: var(--text);
+    transform: translateY(-2px);
+}
+
+.disclaimer {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto 20px auto;
+}
+
+.copyright {
+    font-size: 13px;
+    color: var(--text-dim);
+}
+
+/* =========================================
+   Responsive
+   ========================================= */
+@media (max-width: 600px) {
+    .hero-headline {
+        font-size: clamp(28px, 8vw, 48px);
+    }
+
+    .cta-heading {
+        font-size: clamp(24px, 6vw, 36px);
+    }
+
+    .btn-cta {
+        font-size: 18px;
+        padding: 18px 40px;
+    }
+
+
+}
