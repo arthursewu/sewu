@@ -74,29 +74,47 @@
         table.q {
             border-collapse: collapse;
             width: 100%;
-            min-width: 460px;
+            min-width: 540px;
             font-size: 15px;
         }
 
         table.q th,
         table.q td {
             border: 1px solid var(--line);
-            padding: 14px;
+            padding: 18px 16px;
             text-align: left;
             vertical-align: top;
+            color: var(--mute);
         }
 
         table.q th {
             background: var(--panel);
-            font-size: 13px;
-            letter-spacing: .06em;
+            font-size: 12px;
+            letter-spacing: .08em;
             text-transform: uppercase;
             color: var(--mute);
+            width: 30%;
+        }
+
+        table.q thead th {
+            width: auto;
         }
 
         table.q td b {
             display: block;
-            font-size: 16px;
+            font-size: 19px;
+            color: var(--ink);
+            margin-bottom: 5px;
+            letter-spacing: -.01em;
+        }
+
+        table.q td.hot {
+            background: rgba(74, 222, 128, .07);
+            border-color: var(--accent);
+        }
+
+        table.q td.hot b {
+            color: var(--accent);
         }
 
         .rule {
@@ -173,7 +191,7 @@
                         <th>ROAS at or above bar</th>
                         <td><b>Breakthrough</b>if the campaign budget grew because of it. Spend Winner if budget stayed
                             flat.</td>
-                        <td><b>KPI Winner</b>Good ROAS. Will not spend.</td>
+                        <td class="hot"><b>KPI Winner</b>Good ROAS. Will not spend. The one that costs you.</td>
                     </tr>
                     <tr>
                         <th>ROAS below bar</th>
