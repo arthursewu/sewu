@@ -8,14 +8,14 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--ink);
   font:400 18px/1.6 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;}
 .wrap{max-width:var(--w);margin:0 auto;padding:0 24px}
-section{padding:72px 0;border-top:1px solid var(--line)}
+section{padding:56px 0;border-top:1px solid var(--line)}
 section:first-of-type{border-top:0}
-h1,h2,h3{line-height:1.15;margin:0 0 20px;letter-spacing:-.02em}
+h1,h2,h3{line-height:1.12;margin:0 0 18px;letter-spacing:-.02em}
 h1{font-size:clamp(32px,6vw,56px);font-weight:800}
 h2{font-size:clamp(26px,4vw,38px);font-weight:800}
 h3{font-size:20px;font-weight:700;margin-bottom:8px}
 p{margin:0 0 14px;max-width:62ch}
-.lead{font-size:clamp(19px,2.4vw,23px);color:var(--mute)}
+.lead{font-size:clamp(19px,2.4vw,24px);color:#dbe3ec;font-weight:600;max-width:60ch}
 .eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:16px}
 .logo{font-size:22px;font-weight:800;letter-spacing:-.03em}
 header{padding:28px 0}
@@ -35,12 +35,13 @@ header{padding:28px 0}
   border-radius:10px;padding:28px}
 .case p{margin:0 0 8px}
 .case .big{font-size:clamp(22px,3.2vw,30px);font-weight:800;color:var(--accent);margin-top:14px}
-.shots{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:28px}
-figure{margin:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.shots{display:grid;grid-template-columns:1fr;gap:18px;margin-top:26px;max-width:760px}
+figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
 figure img{display:block;width:100%;height:auto}
 figcaption{font-size:13px;color:var(--mute);padding:12px 14px;border-top:1px solid var(--line)}
 ul.plain{list-style:none;padding:0;margin:0}
-ul.plain li{padding:12px 0 12px 30px;border-bottom:1px solid var(--line);position:relative;color:var(--mute)}
+ul.plain{max-width:70ch}
+ul.plain li{padding:11px 0 11px 28px;border-bottom:1px solid var(--line);position:relative;color:var(--mute)}
 ul.plain li:before{content:"";position:absolute;left:4px;top:19px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
 ul.plain li b{color:var(--ink)}
 form{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:28px;margin-top:28px}
