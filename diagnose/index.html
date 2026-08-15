@@ -86,6 +86,24 @@
             border-radius: 10px; padding: 16px 18px; margin-top: 18px; font-size: 15px; color: #fcd9a4;
         }
         .again { margin-top: 20px; }
+        .intake label { margin-top: 16px; }
+        .intake input {
+            width: 100%; background: var(--bg); color: var(--ink);
+            border: 1px solid var(--line); border-radius: 9px;
+            padding: 15px; font: inherit; font-size: 16px;
+        }
+        .intake input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+        .intake .btn { margin-top: 22px; }
+        .fineprint { font-size: 13px; color: var(--mute); margin: 14px 0 0; max-width: 52ch; }
+        .err { color: #fca5a5; font-size: 14px; margin: 10px 0 0; }
+        .preview {
+            border: 1px solid var(--line); border-radius: 12px; background: var(--panel);
+            padding: 20px 22px; margin: 26px 0 0;
+        }
+        .preview .pk { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+        .preview h3 { margin: 8px 0 6px; font-size: 19px; }
+        .preview p { color: var(--mute); font-size: 14.5px; margin: 0; }
+        .preview .cap { font-size: 12px; color: var(--mute); margin-top: 14px; letter-spacing: .04em; text-transform: uppercase; }
         .backlink { font-size: 14px; color: var(--mute); text-decoration: none; }
         .backlink:hover { color: var(--ink); }
     </style>
@@ -99,11 +117,20 @@
 
     <section>
         <div class="wrap doc">
-            <p class="eyebrow">Free diagnostic</p>
-            <h1>Is it the creative, the media buying, or the funnel?</h1>
-            <p class="lead">Six questions, most of the time fewer. No numbers to type.</p>
-            <p>Have the ad open in Ads Manager while you answer. Every question compares your account against itself,
-                never against someone else's benchmark.</p>
+            <p class="eyebrow">Free diagnosis</p>
+            <h1>Find out what's actually broken in your ad account. In under 60 seconds.</h1>
+            <p class="lead">Creative, media buying, or funnel. Most people guess, fix the wrong one, and pay for it
+                twice.</p>
+            <p>No numbers to type. Have the ad open in Ads Manager and answer up to six questions. Every one compares
+                your account against itself, never against someone else's benchmark.</p>
+
+            <div class="preview">
+                <span class="pk">Media buying</span>
+                <h3>You are paying more to reach the same people</h3>
+                <p>Geo, audience, bid, or auction pressure. Check whether your own campaigns are bidding against each
+                    other. A new ad cannot fix a price.</p>
+                <p class="cap">&uarr; an example of what you get back</p>
+            </div>
         </div>
     </section>
 
@@ -202,8 +229,56 @@
                 }
             };
 
-            var ORDER = ['gate', 'ctr', 'freq', 'concepts', 'cpm', 'ppm', 'funnel'];
-            var cur = 'gate', hist = [], trace = [], thin = false;
+            var ORDER = ['intake', 'gate', 'ctr', 'freq', 'concepts', 'cpm', 'ppm', 'funnel'];
+            var cur = 'intake', hist = [], trace = [], thin = false;
+            var lead = { name: '', email: '' };
+
+            function renderIntake() {
+                drawBar();
+                backBtn.hidden = true;
+                card.innerHTML =
+                    '<div class="step">First</div>' +
+                    '<div class="q">Where should I send your diagnosis?</div>' +
+                    '<p class="why">You get the result on screen straight away. I email you a copy so you still have it next week, plus the odd thing worth reading. Unsubscribe whenever.</p>' +
+                    '<div class="intake">' +
+                    '<label for="nm">Your name</label><input id="nm" type="text" autocomplete="given-name" placeholder="Arthur">' +
+                    '<label for="em">Email</label><input id="em" type="email" autocomplete="email" placeholder="you@brand.com">' +
+                    '<div id="er"></div>' +
+                    '<button class="btn btn-block" id="go" type="button">Start the diagnosis</button>' +
+                    '<p class="fineprint">No spam, no selling your details, no sales call unless you ask for one.</p>' +
+                    '</div>';
+                document.getElementById('go').addEventListener('click', function () {
+                    var nm = document.getElementById('nm').value.trim();
+                    var em = document.getElementById('em').value.trim();
+                    var ok = /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(em);
+                    if (!nm || !ok) {
+                        document.getElementById('er').innerHTML =
+                            '<p class="err">' + (!nm ? 'Name first. ' : '') + (!ok ? 'That email does not look right.' : '') + '</p>';
+                        return;
+                    }
+                    lead.name = nm; lead.email = em;
+                    hist.push({ k: 'intake', hadTrace: false });
+                    cur = 'gate'; render();
+                });
+            }
+
+            function sendLead(v) {
+                try {
+                    fetch('https://formsubmit.co/ajax/arthur@sewu.org', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                        body: JSON.stringify({
+                            _subject: 'Diagnosis run: ' + v.verdict + ' (' + lead.name + ')',
+                            name: lead.name,
+                            email: lead.email,
+                            verdict: v.verdict,
+                            headline: v.key,
+                            thin_window: thin ? 'YES - under 5 purchases' : 'no',
+                            answers: trace.map(function (t, i) { return (i + 1) + '. ' + t.t.replace(/<[^>]*>/g, ''); }).join('  |  ')
+                        })
+                    }).catch(function () { });
+                } catch (e) { }
+            }
 
             function drawBar() {
                 var i = ORDER.indexOf(cur);
@@ -212,10 +287,11 @@
 
             function render() {
                 if (cur === 'END') return;
+                if (cur === 'intake') return renderIntake();
                 var q = Q[cur];
                 drawBar();
-                backBtn.hidden = hist.length === 0;
-                card.innerHTML = '<div class="step">Question ' + (hist.length + 1) + '</div>' +
+                backBtn.hidden = hist.length <= 1;
+                card.innerHTML = '<div class="step">Question ' + hist.length + '</div>' +
                     '<div class="q">' + q.q + '</div>' +
                     '<p class="why">' + q.why + '</p>' +
                     '<div class="opts">' + q.o.map(function (o, i) {
@@ -224,6 +300,7 @@
             }
 
             function finish(o) {
+                sendLead(o);
                 bar.innerHTML = ORDER.map(function () { return '<i class="on"></i>'; }).join('');
                 backBtn.hidden = true;
                 var html = '<div class="verdict' + (o.verdict === 'NOTHING CONCLUSIVE' ? ' grey' : '') + '">' +
