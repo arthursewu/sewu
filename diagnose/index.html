@@ -6,106 +6,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <title>Is it the creative, the media buying, or the funnel?</title>
-    <meta name="description" content="Put your own numbers in. It tells you which of the three is actually broken.">
+    <meta name="description" content="Six questions. It tells you which of the three is actually broken.">
     <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../style.css">
     <style>
-        .doc { max-width: 720px; }
-        .doc p { max-width: 66ch; }
+        .doc { max-width: 660px; }
+        .doc p { max-width: 62ch; }
 
-        fieldset {
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 34px 32px 30px;
+            min-height: 300px;
+            display: flex;
+            flex-direction: column;
+        }
+        .step {
+            font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
+            color: var(--accent); font-weight: 700; margin-bottom: 18px;
+        }
+        .q { font-size: clamp(22px, 3.4vw, 29px); font-weight: 800; line-height: 1.2; letter-spacing: -.02em; margin: 0 0 10px; }
+        .why { color: var(--mute); font-size: 15px; margin: 0 0 24px; max-width: 52ch; }
+        .opts { display: flex; flex-direction: column; gap: 11px; margin-top: auto; }
+        .opts button {
+            text-align: left;
+            background: var(--bg);
+            color: var(--ink);
             border: 1px solid var(--line);
             border-radius: 10px;
-            background: var(--panel);
-            padding: 20px 22px 24px;
-            margin: 0 0 18px;
-        }
-        legend {
-            font-size: 12px;
-            letter-spacing: .1em;
-            text-transform: uppercase;
-            color: var(--accent);
-            font-weight: 700;
-            padding: 0 8px;
-        }
-        .hint { font-size: 14px; color: var(--mute); margin: 0 0 16px; max-width: 60ch; }
-        .pair { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-        .pair label { margin-top: 12px; }
-        .seg { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
-        .seg button {
-            flex: 1 1 auto;
-            background: var(--bg);
-            color: var(--mute);
-            border: 1px solid var(--line);
-            border-radius: 8px;
-            padding: 12px 16px;
-            font: inherit;
-            font-size: 15px;
-            font-weight: 600;
+            padding: 17px 20px;
+            font: inherit; font-size: 16px; font-weight: 600;
             cursor: pointer;
         }
-        .seg button[aria-pressed="true"] {
-            border-color: var(--accent);
-            color: var(--accent);
-            background: rgba(74, 222, 128, .08);
-        }
-        #run { margin-top: 6px; }
+        .opts button:hover { border-color: var(--accent); color: var(--accent); }
+        .opts button small { display: block; font-weight: 400; font-size: 13.5px; color: var(--mute); margin-top: 3px; }
+        .opts button:hover small { color: var(--mute); }
 
-        #out { display: none; margin-top: 28px; }
-        #out.show { display: block; }
+        .bar { display: flex; gap: 6px; margin: 0 0 22px; }
+        .bar i { height: 3px; flex: 1; background: var(--line); border-radius: 2px; }
+        .bar i.on { background: var(--accent); }
+
+        #back {
+            background: none; border: 0; color: var(--mute); font: inherit; font-size: 14px;
+            cursor: pointer; padding: 14px 0 0; text-align: left;
+        }
+        #back:hover { color: var(--ink); }
+        #back[hidden] { display: none; }
+
         .verdict {
-            border: 1px solid var(--accent);
-            border-left: 4px solid var(--accent);
-            background: rgba(74, 222, 128, .07);
-            border-radius: 10px;
-            padding: 24px 26px;
+            border: 1px solid var(--accent); border-left: 4px solid var(--accent);
+            background: rgba(74, 222, 128, .07); border-radius: 12px; padding: 28px 30px;
         }
         .verdict.grey { border-color: var(--line); border-left-color: #6b7280; background: var(--panel); }
-        .verdict h2 { margin-bottom: 6px; }
-        .verdict .k {
-            font-size: 12px; letter-spacing: .12em; text-transform: uppercase;
-            color: var(--accent); font-weight: 700; display: block; margin-bottom: 12px;
-        }
+        .verdict .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 700; display: block; margin-bottom: 12px; }
         .verdict.grey .k { color: var(--mute); }
-        .verdict .fix { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); }
-        .verdict .fix b { color: var(--ink); }
+        .verdict h2 { margin-bottom: 12px; }
+        .verdict .fix { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); }
 
-        ol.trace { list-style: none; counter-reset: s; padding: 0; margin: 22px 0 0; }
+        ol.trace { list-style: none; counter-reset: s; padding: 0; margin: 24px 0 0; }
         ol.trace li {
-            counter-increment: s;
-            position: relative;
-            padding: 12px 0 12px 40px;
-            border-bottom: 1px solid var(--line);
-            color: var(--mute);
-            font-size: 15px;
+            counter-increment: s; position: relative; padding: 12px 0 12px 38px;
+            border-bottom: 1px solid var(--line); color: var(--mute); font-size: 15px;
         }
         ol.trace li:before {
-            content: counter(s);
-            position: absolute; left: 0; top: 12px;
-            width: 26px; height: 26px; border-radius: 50%;
+            content: counter(s); position: absolute; left: 0; top: 12px;
+            width: 25px; height: 25px; border-radius: 50%;
             background: var(--bg); border: 1px solid var(--line);
-            color: var(--mute); font-size: 13px; font-weight: 700;
+            color: var(--mute); font-size: 12px; font-weight: 700;
             display: flex; align-items: center; justify-content: center;
         }
         ol.trace li.hit { color: var(--ink); }
         ol.trace li.hit:before { border-color: var(--accent); color: var(--accent); }
-        ol.trace li b { color: var(--ink); }
-
         .warn {
-            border: 1px solid #b45309;
-            background: rgba(180, 83, 9, .1);
-            border-radius: 8px;
-            padding: 14px 16px;
-            margin-top: 18px;
-            font-size: 15px;
-            color: #fcd9a4;
+            border: 1px solid #b45309; background: rgba(180, 83, 9, .1);
+            border-radius: 10px; padding: 16px 18px; margin-top: 18px; font-size: 15px; color: #fcd9a4;
         }
+        .again { margin-top: 20px; }
         .backlink { font-size: 14px; color: var(--mute); text-decoration: none; }
         .backlink:hover { color: var(--ink); }
-        @media (max-width: 620px) { .pair { grid-template-columns: 1fr; } }
     </style>
 </head>
 
@@ -119,149 +101,25 @@
         <div class="wrap doc">
             <p class="eyebrow">Free diagnostic</p>
             <h1>Is it the creative, the media buying, or the funnel?</h1>
-            <p class="lead">Put your own numbers in. It tells you which of the three is actually broken, and shows you
-                the reasoning.</p>
-            <p>Every check compares your account against itself. There are no benchmarks in here, because another
-                brand's numbers tell you nothing about yours. Time to purchase, price point and margin all move these.
-            </p>
+            <p class="lead">Six questions, most of the time fewer. No numbers to type.</p>
+            <p>Have the ad open in Ads Manager while you answer. Every question compares your account against itself,
+                never against someone else's benchmark.</p>
         </div>
     </section>
 
     <section>
         <div class="wrap doc">
-            <form id="f" onsubmit="return false;">
-
-                <fieldset>
-                    <legend>The window</legend>
-                    <p class="hint">Everything below should come from the same date range.</p>
-                    <label for="purch">Purchases this ad got in the window</label>
-                    <input id="purch" type="number" min="0" step="1" placeholder="e.g. 18">
-                </fieldset>
-
-                <fieldset>
-                    <legend>1 &middot; Creative</legend>
-                    <p class="hint">Is the ad earning attention? Compare it to the other ads in the same campaign, using
-                        the middle one, not the average.</p>
-
-                    <label>Format</label>
-                    <div class="seg" id="fmt">
-                        <button type="button" data-v="static" aria-pressed="true">Static</button>
-                        <button type="button" data-v="video" aria-pressed="false">Video</button>
-                    </div>
-
-                    <div class="pair">
-                        <div>
-                            <label for="ctr" id="ctrLabel">This ad's CTR (%)</label>
-                            <input id="ctr" type="number" step="0.01" min="0" placeholder="e.g. 1.20">
-                        </div>
-                        <div>
-                            <label for="ctrMed" id="ctrMedLabel">Median CTR of the other ads (%)</label>
-                            <input id="ctrMed" type="number" step="0.01" min="0" placeholder="e.g. 1.60">
-                        </div>
-                    </div>
-
-                    <div class="pair">
-                        <div>
-                            <label for="freqNow">Frequency now</label>
-                            <input id="freqNow" type="number" step="0.01" min="0" placeholder="e.g. 3.10">
-                        </div>
-                        <div>
-                            <label for="freqThen">Frequency two weeks ago</label>
-                            <input id="freqThen" type="number" step="0.01" min="0" placeholder="e.g. 1.90">
-                        </div>
-                    </div>
-
-                    <label for="concepts">Distinct concepts running in this campaign</label>
-                    <input id="concepts" type="number" min="0" step="1"
-                        placeholder="genuinely different ideas, not versions">
-                </fieldset>
-
-                <fieldset>
-                    <legend>2 &middot; Media buying</legend>
-                    <p class="hint">Compare the same ad against itself somewhere else. Another geo, another campaign,
-                        another week.</p>
-
-                    <div class="pair">
-                        <div>
-                            <label for="cpmHere">CPM here</label>
-                            <input id="cpmHere" type="number" step="0.01" min="0" placeholder="e.g. 101">
-                        </div>
-                        <div>
-                            <label for="cpmThere">CPM for the same ad elsewhere</label>
-                            <input id="cpmThere" type="number" step="0.01" min="0" placeholder="e.g. 18">
-                        </div>
-                    </div>
-
-                    <div class="pair">
-                        <div>
-                            <label for="ppmHere">Purchases per 1,000 impressions here</label>
-                            <input id="ppmHere" type="number" step="0.001" min="0" placeholder="optional">
-                        </div>
-                        <div>
-                            <label for="ppmThere">Same, elsewhere</label>
-                            <input id="ppmThere" type="number" step="0.001" min="0" placeholder="optional">
-                        </div>
-                    </div>
-                </fieldset>
-
-                <fieldset>
-                    <legend>3 &middot; Funnel</legend>
-                    <p class="hint">Rates for each step, as percentages. Leave blank if you don't have them.</p>
-                    <div class="pair">
-                        <div>
-                            <label for="s1">Click &rarr; landing page view (%)</label>
-                            <input id="s1" type="number" step="0.1" min="0" max="100" placeholder="e.g. 72">
-                        </div>
-                        <div>
-                            <label for="s2">Landing page view &rarr; add to cart (%)</label>
-                            <input id="s2" type="number" step="0.1" min="0" max="100" placeholder="e.g. 7">
-                        </div>
-                    </div>
-                    <div class="pair">
-                        <div>
-                            <label for="s3">Add to cart &rarr; checkout (%)</label>
-                            <input id="s3" type="number" step="0.1" min="0" max="100" placeholder="e.g. 55">
-                        </div>
-                        <div>
-                            <label for="s4">Checkout &rarr; purchase (%)</label>
-                            <input id="s4" type="number" step="0.1" min="0" max="100" placeholder="e.g. 60">
-                        </div>
-                    </div>
-                    <div class="pair">
-                        <div>
-                            <label for="b1">Your normal click &rarr; LPV (%)</label>
-                            <input id="b1" type="number" step="0.1" min="0" max="100" placeholder="optional">
-                        </div>
-                        <div>
-                            <label for="b2">Your normal LPV &rarr; ATC (%)</label>
-                            <input id="b2" type="number" step="0.1" min="0" max="100" placeholder="optional">
-                        </div>
-                    </div>
-                    <div class="pair">
-                        <div>
-                            <label for="b3">Your normal ATC &rarr; checkout (%)</label>
-                            <input id="b3" type="number" step="0.1" min="0" max="100" placeholder="optional">
-                        </div>
-                        <div>
-                            <label for="b4">Your normal checkout &rarr; purchase (%)</label>
-                            <input id="b4" type="number" step="0.1" min="0" max="100" placeholder="optional">
-                        </div>
-                    </div>
-                </fieldset>
-
-                <button class="btn btn-block" id="run" type="button">Diagnose it</button>
-            </form>
-
-            <div id="out"></div>
+            <div class="bar" id="bar"></div>
+            <div class="card" id="card"></div>
+            <button id="back" hidden>&larr; back</button>
         </div>
     </section>
 
     <section>
         <div class="wrap doc">
             <h2>Want me to run this on your whole account?</h2>
-            <p>I run Meta and Google for DTC brands and build the creative that goes on them. Send me the export and
-                I'll do this for every ad, then tell you which ones are worth a new round and which ones were never a
-                creative problem. Free, no call required.</p>
+            <p>Send me the export and I'll do it for every ad, then tell you which ones are worth a new round and which
+                ones were never a creative problem. Free, no call required.</p>
             <p>One filter: you need to be spending at least $10,000 a day.</p>
             <p><a class="btn" href="../#apply">Get a free ad audit</a></p>
         </div>
@@ -269,133 +127,134 @@
 
     <footer>
         <div class="wrap">
-            <p>This is a diagnostic aid, not a guarantee. It reads the numbers you give it against each other and
-                nothing else.</p>
+            <p>A diagnostic aid, not a guarantee. It reads your answers against each other and nothing else.</p>
             <p>&copy; 2026 Arthur Sewu. All rights reserved.</p>
         </div>
     </footer>
 
     <script>
         (function () {
-            var fmt = 'static';
-            var seg = document.getElementById('fmt');
-            seg.addEventListener('click', function (e) {
-                var b = e.target.closest('button'); if (!b) return;
-                [].forEach.call(seg.querySelectorAll('button'), function (x) { x.setAttribute('aria-pressed', x === b); });
-                fmt = b.getAttribute('data-v');
-                document.getElementById('ctrLabel').textContent =
-                    fmt === 'video' ? "This ad's hook rate (%)" : "This ad's CTR (%)";
-                document.getElementById('ctrMedLabel').textContent =
-                    fmt === 'video' ? 'Median hook rate of the other ads (%)' : 'Median CTR of the other ads (%)';
-            });
+            var card = document.getElementById('card'),
+                bar = document.getElementById('bar'),
+                backBtn = document.getElementById('back');
 
-            function n(id) { var v = parseFloat(document.getElementById(id).value); return isNaN(v) ? null : v; }
-            var BAND = 0.20; // "clearly different" = 20% apart. The one number I chose.
-
-            document.getElementById('run').addEventListener('click', function () {
-                var purch = n('purch'), ctr = n('ctr'), med = n('ctrMed');
-                var fN = n('freqNow'), fT = n('freqThen'), con = n('concepts');
-                var cH = n('cpmHere'), cT = n('cpmThere'), pH = n('ppmHere'), pT = n('ppmThere');
-                var steps = [
-                    { k: 'click to landing page view', v: n('s1'), b: n('b1') },
-                    { k: 'landing page view to add to cart', v: n('s2'), b: n('b2') },
-                    { k: 'add to cart to checkout', v: n('s3'), b: n('b3') },
-                    { k: 'checkout to purchase', v: n('s4'), b: n('b4') }
-                ];
-
-                var trace = [], verdict = null, key = '', fix = '', warn = '';
-                var metric = fmt === 'video' ? 'hook rate' : 'CTR';
-
-                // gate
-                if (purch !== null && purch < 5) {
-                    warn = 'Only ' + purch + ' purchases in this window. That cannot prove a difference, and it cannot rule one out either. Treat everything below as untested until the window is bigger.';
+            var Q = {
+                gate: {
+                    q: 'How many purchases has this ad had?',
+                    why: 'In whatever window you are judging it on.',
+                    o: [
+                        { t: 'Fewer than 5', s: 'or none at all', go: 'ctr', set: { thin: true } },
+                        { t: '5 or more', go: 'ctr', set: { thin: false } }
+                    ]
+                },
+                ctr: {
+                    q: 'Is it getting clicked less than the ads next to it?',
+                    why: 'CTR for a static. Hook rate for a video. Compare it to the other ads in the same campaign, not to a number you read somewhere.',
+                    o: [
+                        { t: 'Yes, clearly worse', go: 'END', verdict: 'CREATIVE', key: 'The ad is not earning attention', fix: 'A new concept. This is the only answer where making a new ad is the fix.', trace: 'It is getting clicked less than the ads beside it.' },
+                        { t: 'No, same or better', go: 'freq', trace: 'It is earning the click as well as anything else running.' },
+                        { t: "I don't know", go: 'freq', trace: 'Click rate not checked, so step 1 was skipped.' }
+                    ]
+                },
+                freq: {
+                    q: 'Has frequency been climbing?',
+                    why: 'The same people seeing it over and over. Compare it to this ad two weeks ago, not to a fixed number.',
+                    o: [
+                        { t: 'Yes, going up', go: 'concepts', trace: 'Frequency is climbing.' },
+                        { t: 'No, steady', go: 'cpm', trace: 'Frequency is steady. Not fatigue, not a saturated pool.' },
+                        { t: "I don't know", go: 'cpm', trace: 'Frequency not checked.' }
+                    ]
+                },
+                concepts: {
+                    q: 'How many genuinely different ideas are running in that campaign?',
+                    why: 'Different ideas, not different edits of one idea. Three versions of the same hook counts as one.',
+                    o: [
+                        { t: 'Three or fewer', go: 'END', verdict: 'CREATIVE', key: 'Fatigue. The pool has nothing new to see', fix: 'More distinct concepts, plus fresh versions of what already worked. A handful of ideas cannot keep an audience fed.', trace: 'Frequency climbing with only a few distinct ideas running. That is a creative supply problem.' },
+                        { t: 'Four or more', go: 'END', verdict: 'MEDIA BUYING', key: 'The pool is too small, or you are competing with yourself', fix: 'New audiences, new geos, new placements. Or consolidate campaigns that are bidding against each other. No new ad fixes this.', trace: 'Frequency climbing even with plenty of different ideas running. You are feeding the pool and it is still saturating.' }
+                    ]
+                },
+                cpm: {
+                    q: 'Is CPM higher than usual for this ad?',
+                    why: 'Same ad, another campaign, another geo, or just a few weeks ago.',
+                    o: [
+                        { t: 'Yes, noticeably higher', go: 'ppm', trace: 'CPM is up.' },
+                        { t: 'No, about the same', go: 'funnel', trace: 'CPM is normal. You are not overpaying for reach.' },
+                        { t: "I don't know", go: 'funnel', trace: 'CPM not checked.' }
+                    ]
+                },
+                ppm: {
+                    q: 'Did purchases per 1,000 impressions go up at the same time?',
+                    why: 'This is the question almost nobody asks. A rising CPM can mean the auction found better people, which is good.',
+                    o: [
+                        { t: 'Yes, they went up too', go: 'funnel', trace: 'CPM up, but purchases per 1,000 impressions up as well. You are paying more because the auction is finding better people. That is working, not broken.' },
+                        { t: 'No, they fell or stayed flat', go: 'END', verdict: 'MEDIA BUYING', key: 'You are paying more to reach the same people', fix: 'Geo, audience, bid, or auction pressure. Check whether your own campaigns are bidding against each other. A new ad cannot fix a price.', trace: 'CPM up with no improvement in purchases per 1,000 impressions. You are just paying more.' },
+                        { t: "I don't know", go: 'funnel', trace: 'Could not tell whether the higher CPM was buying better people.' }
+                    ]
+                },
+                funnel: {
+                    q: 'Are people clicking, then not buying?',
+                    why: 'Walk the steps in Ads Manager and Shopify: click, landing page view, add to cart, checkout, purchase. Is one of them clearly worse than normal for you?',
+                    o: [
+                        { t: 'Yes, one step drops off', go: 'END', verdict: 'FUNNEL', key: 'They clicked. Something after the click stopped them', fix: 'The step that broke names the thing to fix: the page, the offer, the price, or the checkout. None of them are the ad.', trace: 'One step after the click is clearly below normal.' },
+                        { t: 'No, the steps look normal', go: 'END', verdict: 'NOTHING CONCLUSIVE', key: 'Nothing here is clearly broken', fix: 'On these answers no single layer stands out. Either the gap is smaller than the noise, or the number that would show it was not checked. That is a finding, not a failure. Do not brief a creative round off it.', trace: 'No step after the click is out of line either.' },
+                        { t: "I don't know", go: 'END', verdict: 'NOTHING CONCLUSIVE', key: 'Not enough checked to say', fix: 'The three most useful numbers here are click rate against the other ads, CPM against this ad\'s own history, and the step-by-step drop off after the click. Get those and run it again.', trace: 'Post-click steps not checked.' }
+                    ]
                 }
+            };
 
-                // 1 creative
-                if (ctr !== null && med !== null && med > 0) {
-                    var d = (ctr - med) / med;
-                    if (d <= -BAND) {
-                        verdict = 'CREATIVE'; key = 'The ad is not earning attention';
-                        fix = 'A new concept. This is the only verdict where a new ad is the fix.';
-                        trace.push({ hit: true, t: '<b>' + metric + ' is ' + Math.abs(d * 100).toFixed(0) + '% below the other ads.</b> It is not earning the click.' });
-                    } else {
-                        trace.push({ hit: false, t: metric + ' is ' + (d >= 0 ? 'above' : 'only ' + Math.abs(d * 100).toFixed(0) + '% below') + ' the others. The ad is earning attention.' });
-                    }
-                } else { trace.push({ hit: false, t: metric + ' not supplied, so step 1 was skipped.' }); }
+            var ORDER = ['gate', 'ctr', 'freq', 'concepts', 'cpm', 'ppm', 'funnel'];
+            var cur = 'gate', hist = [], trace = [], thin = false;
 
-                // 1b fatigue vs pool
-                if (!verdict && fN !== null && fT !== null && fT > 0) {
-                    var fd = (fN - fT) / fT;
-                    if (fd >= BAND) {
-                        if (con !== null && con <= 3) {
-                            verdict = 'CREATIVE'; key = 'Fatigue. The pool has nothing new to see';
-                            fix = 'More distinct concepts, plus fresh versions of what already worked. Only ' + con + ' concept' + (con === 1 ? '' : 's') + ' running is not enough to keep a pool fed.';
-                            trace.push({ hit: true, t: '<b>Frequency up ' + (fd * 100).toFixed(0) + '% with only ' + con + ' distinct concept' + (con === 1 ? '' : 's') + ' running.</b> That is a creative supply problem, not a pool problem.' });
-                        } else if (con !== null) {
-                            verdict = 'MEDIA BUYING'; key = 'The pool is too small, or you are competing with yourself';
-                            fix = 'New audiences, new geos, new placements. Or consolidate campaigns that are bidding against each other. No new ad fixes this.';
-                            trace.push({ hit: true, t: '<b>Frequency up ' + (fd * 100).toFixed(0) + '% while ' + con + ' distinct concepts are running.</b> You are giving the pool plenty to see and it is still saturating.' });
-                        } else {
-                            trace.push({ hit: false, t: 'Frequency is up ' + (fd * 100).toFixed(0) + '%, but concept count was not supplied, so this could not be split.' });
-                        }
-                    } else {
-                        trace.push({ hit: false, t: 'Frequency is stable. Not fatigue, and not a saturated pool.' });
-                    }
-                }
+            function drawBar() {
+                var i = ORDER.indexOf(cur);
+                bar.innerHTML = ORDER.map(function (_, j) { return '<i class="' + (j <= i ? 'on' : '') + '"></i>'; }).join('');
+            }
 
-                // 2 media buying
-                if (!verdict && cH !== null && cT !== null && cT > 0) {
-                    var cd = (cH - cT) / cT;
-                    if (cd >= BAND) {
-                        var better = (pH !== null && pT !== null && pT > 0 && pH > pT);
-                        if (better) {
-                            trace.push({ hit: false, t: 'CPM is ' + (cd * 100).toFixed(0) + '% higher here, but purchases per 1,000 impressions are higher too. You are paying more because the auction found better people. That is working.' });
-                        } else {
-                            verdict = 'MEDIA BUYING'; key = 'You are paying more to reach the same people';
-                            fix = 'Geo, audience, bid, or auction pressure. Check whether your own campaigns are bidding against each other. A new ad cannot fix a price.';
-                            trace.push({ hit: true, t: '<b>CPM is ' + (cd * 100).toFixed(0) + '% higher than the same ad elsewhere</b>, without better purchase efficiency to justify it.' });
-                        }
-                    } else {
-                        trace.push({ hit: false, t: 'CPM is in line with the same ad elsewhere. You are not overpaying for reach.' });
-                    }
-                }
+            function render() {
+                if (cur === 'END') return;
+                var q = Q[cur];
+                drawBar();
+                backBtn.hidden = hist.length === 0;
+                card.innerHTML = '<div class="step">Question ' + (hist.length + 1) + '</div>' +
+                    '<div class="q">' + q.q + '</div>' +
+                    '<p class="why">' + q.why + '</p>' +
+                    '<div class="opts">' + q.o.map(function (o, i) {
+                        return '<button data-i="' + i + '">' + o.t + (o.s ? '<small>' + o.s + '</small>' : '') + '</button>';
+                    }).join('') + '</div>';
+            }
 
-                // 3 funnel
-                if (!verdict) {
-                    var worst = null;
-                    steps.forEach(function (s) {
-                        if (s.v === null || s.b === null || s.b <= 0) return;
-                        var g = (s.v - s.b) / s.b;
-                        if (g <= -BAND && (worst === null || g < worst.g)) worst = { k: s.k, g: g, v: s.v, b: s.b };
-                    });
-                    if (worst) {
-                        verdict = 'FUNNEL'; key = 'They clicked. Something after the click stopped them';
-                        fix = 'The broken step is <b>' + worst.k + '</b>, running ' + worst.v + '% against your normal ' + worst.b + '%. That step names the thing to fix. None of them are the ad.';
-                        trace.push({ hit: true, t: '<b>' + worst.k + ' is ' + Math.abs(worst.g * 100).toFixed(0) + '% below your normal.</b> The drop is after the click.' });
-                    } else {
-                        trace.push({ hit: false, t: 'No funnel step is clearly below your normal, or the comparison numbers were not supplied.' });
-                    }
-                }
-
-                if (!verdict) {
-                    verdict = 'NOTHING CONCLUSIVE'; key = 'Nothing here is clearly broken';
-                    fix = 'On the numbers you gave, no single layer stands out. Either the gap is smaller than the noise, or the number that would show it was not supplied. That is a finding, not a failure. Do not brief a creative round off it.';
-                }
-
-                var html = '<div class="verdict' + (verdict === 'NOTHING CONCLUSIVE' ? ' grey' : '') + '">' +
-                    '<span class="k">' + verdict + '</span>' +
-                    '<h2>' + key + '</h2>' +
-                    '<div class="fix">' + fix + '</div></div>';
-                if (warn) html += '<div class="warn"><b>Read this first.</b> ' + warn + '</div>';
+            function finish(o) {
+                bar.innerHTML = ORDER.map(function () { return '<i class="on"></i>'; }).join('');
+                backBtn.hidden = true;
+                var html = '<div class="verdict' + (o.verdict === 'NOTHING CONCLUSIVE' ? ' grey' : '') + '">' +
+                    '<span class="k">' + o.verdict + '</span><h2>' + o.key + '</h2>' +
+                    '<div class="fix">' + o.fix + '</div></div>';
+                if (thin) html += '<div class="warn"><b>Read this first.</b> Under 5 purchases cannot prove a difference, and it cannot rule one out either. Treat the answer above as untested until the window is bigger. A zero in a starved window is expected, not evidence.</div>';
                 html += '<ol class="trace">' + trace.map(function (t) {
                     return '<li class="' + (t.hit ? 'hit' : '') + '">' + t.t + '</li>';
-                }).join('') + '</ol>';
+                }).join('') + '</ol>' +
+                    '<p class="again"><button class="btn" id="restart" type="button">Run it on another ad</button></p>';
+                card.outerHTML = '<div id="card">' + html + '</div>';
+                document.getElementById('card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                document.getElementById('restart').addEventListener('click', function () { location.reload(); });
+            }
 
-                var out = document.getElementById('out');
-                out.innerHTML = html;
-                out.classList.add('show');
-                out.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            document.addEventListener('click', function (e) {
+                var b = e.target.closest('.opts button'); if (!b) return;
+                var o = Q[cur].o[+b.getAttribute('data-i')];
+                if (o.set && typeof o.set.thin === 'boolean') thin = o.set.thin;
+                if (o.trace) trace.push({ t: o.trace, hit: !!o.verdict });
+                hist.push({ k: cur, hadTrace: !!o.trace });
+                if (o.go === 'END') { cur = 'END'; finish(o); } else { cur = o.go; render(); }
             });
+
+            backBtn.addEventListener('click', function () {
+                var last = hist.pop(); if (!last) return;
+                if (last.hadTrace) trace.pop();
+                cur = last.k; render();
+            });
+
+            render();
         })();
     </script>
 
