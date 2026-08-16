@@ -23,6 +23,8 @@ header{padding:28px 0}
   font-weight:800;font-size:16px;letter-spacing:.02em;padding:16px 30px;border-radius:8px;
   text-decoration:none;border:0;cursor:pointer}
 .btn:hover{filter:brightness(1.08)}
+.btn-alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn-alt:hover{border-color:var(--ink);filter:none}
 .btn-quiet{display:inline-block;margin-left:18px;color:var(--mute);text-decoration:none;font-size:15px;font-weight:600}
 .btn-quiet:hover{color:var(--ink)}
 @media(max-width:600px){.btn-quiet{display:block;margin:16px 0 0}}
