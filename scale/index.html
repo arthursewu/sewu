@@ -431,12 +431,14 @@
                 }
 
                 h += '<div class="tell">' + p.tell + '</div>';
-                h += '<p class="again"><button class="btn" id="restart" type="button">Run it on another ad</button></p>';
+                h += '<p class="again"><a class="btn" href="../contact/">Let&rsquo;s scale your brand</a>'
+                    + ' <button class="btn-quiet" id="restart" type="button">Run it on another ad</button></p>';
 
                 card.outerHTML = '<div id="card">' + h + '</div>';
                 revealForm(res[0].key);
                 document.getElementById('card').scrollIntoView({ behavior: 'smooth', block: 'start' });
-                document.getElementById('restart').addEventListener('click', function () { location.reload(); });
+                var rs = document.getElementById('restart');
+                if (rs) rs.addEventListener('click', function () { location.reload(); });
             }
 
             document.addEventListener('click', function (e) {
