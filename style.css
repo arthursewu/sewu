@@ -191,3 +191,23 @@ ul.cases{gap:28px 36px}
   padding:16px 0 0!important;margin:0 0 26px!important}
 .tell{border:0!important;border-left:2px solid var(--line)!important;border-radius:0!important;
   padding:2px 0 2px 16px!important}
+
+/* ---- dark hero block: the nav is the top of it, not a separate bar ---- */
+.hero{background:var(--ink);color:#fff;padding:66px 0 58px;margin-top:0}
+.hero .eyebrow{color:#98a4b3}
+.hero h1{color:#fff}
+.hero .lead{color:#c7d0dc}
+.hero p{color:#98a4b3}
+.hero .btn{background:#fff;color:var(--ink)}
+.hero .btn:hover{filter:brightness(.92)}
+.nav{border-bottom:0}
+/* numbers as graphics, inside the dark block */
+.hero .stats{gap:40px;margin-top:38px}
+.hero .stat{border-top:2px solid #3a4453;padding:18px 0 0}
+.hero .stat b{display:block;font-size:clamp(44px,6.6vw,82px);line-height:.9;letter-spacing:-.045em;color:#fff}
+.hero .stat span{display:block;margin-top:12px;font-size:13px;color:#98a4b3;max-width:24ch}
+@media(max-width:760px){
+  .hero{padding:44px 0 40px}
+  .hero .stats{gap:26px;margin-top:28px}
+  .hero .stat b{font-size:clamp(40px,13vw,56px)}
+}
