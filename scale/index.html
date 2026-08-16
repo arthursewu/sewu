@@ -341,7 +341,7 @@
                 backBtn.hidden = true;
                 card.innerHTML = '<div class="step">First</div>' +
                     '<div class="q">Where should I send your Scale Report?</div>' +
-                    '<p class="why">You get your findings and the full fix list straight away. I keep your email so I can send you the odd thing worth reading. Unsubscribe whenever.</p>' +
+                    '<p class="why">Your findings appear on screen. <b>The step-by-step fixes are emailed to you</b>, so use an address you actually read.</p>' +
                     '<div class="intake">' +
                     '<label for="nm">Your name</label><input id="nm" type="text" autocomplete="given-name" placeholder="Arthur">' +
                     '<label for="em">Email</label><input id="em" type="email" autocomplete="email" placeholder="you@brand.com">' +
@@ -374,8 +374,27 @@
                         method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                         body: JSON.stringify({
                             _subject: 'Scale Report: ' + res[0].key + ' (' + lead.name + ')',
+                            _replyto: lead.email,
+                            _autoresponse: 'Here it is.
+
+' +
+                                'Your Scale Report fixes:
+https://sewu.org/report
+
+' +
+                                'What we found: ' + res[0].f.h + '.
+
+' +
+                                'That page has the step by step for it, and the list of things NOT to do about it. The wrong fix is the expensive part, so read the second list first.
+
+' +
+                                'I am Arthur. I run Meta and Google ads for DTC brands and I make the ads too. I will email you when I have something worth reading. Not before.
+
+' +
+                                'Arthur
+sewu.org',
                             name: lead.name, email: lead.email,
-                            primary: res[0].key + ' — ' + res[0].f.h,
+                            primary: res[0].key + ' - ' + res[0].f.h,
                             also: res.slice(1).map(function (r) { return r.key; }).join(', ') || 'none',
                             answers: Q.map(function (q) { return q.id + '=' + (A[q.id] || '-'); }).join('  |  ')
                         })
@@ -400,8 +419,9 @@
 
                 h += '<div class="tell">' + p.tell + '</div>';
 
-                h += '<div class="inbox"><h3>Now the fixes</h3><p>The step-by-step for this finding, and the list of things <b>not</b> to do about it, are in the full report. The wrong fix is the expensive part, so that second list matters more than this page does.</p>' +
-                    '<p style="margin-top:16px"><a class="btn" href="../report/">Read the fixes</a></p></div>';
+                h += '<div class="inbox"><h3>The fixes are on their way</h3><p>I have just emailed <b>' +
+                    lead.email.replace(/[<>&]/g, '') + '</b> the step-by-step for this finding, plus the list of things <b>not</b> to do about it. The wrong fix is the expensive part, so that second list is the one that matters.</p>' +
+                    '<p style="margin-top:12px">If it is not there in a minute, check spam.</p></div>';
 
                 h += '<p class="again"><button class="btn" id="restart" type="button">Run it on another ad</button></p>';
 
