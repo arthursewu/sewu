@@ -12,7 +12,7 @@
   --accent-wash-2:rgba(242,245,248,.05);
   --nav-cta:#ffffff; --nav-cta-ink:#0d1117;
   /* nav */
-  --nav-bg:rgba(11,13,16,.82); --nav-ink:#f2f5f8; --nav-line:#232936;
+  --nav-bg:rgba(11,13,16,.82); --nav-ink:#f2f5f8; --nav-line:#232936; --nav-mute:#98a4b3;
   /* states */
   --warn:#b45309; --warn-ink:#fcd9a4; --warn-wash:rgba(180,83,9,.1); --err:#fca5a5;
   --shadow:0 18px 44px rgba(0,0,0,.45);
@@ -29,7 +29,7 @@ html[data-theme="light"]{
   --accent-wash-2:rgba(13,17,23,.03);
   /* the nav is dark in both themes, so its cta must invert or it vanishes */
   --nav-cta:#ffffff; --nav-cta-ink:#0d1117;
-  --nav-bg:rgba(13,17,23,.94); --nav-ink:#ffffff; --nav-line:#0d1117;
+  --nav-bg:rgba(13,17,23,.94); --nav-ink:#ffffff; --nav-line:#0d1117; --nav-mute:#98a4b3;
   --warn:#b45309; --warn-ink:#7c3d06; --warn-wash:rgba(180,83,9,.08); --err:#b91c1c;
   --shadow:0 10px 30px rgba(13,17,23,.08);
   --lead:#334155;
@@ -110,7 +110,7 @@ footer p{max-width:none}
 .nav .brand b{font-size:1em;font-weight:800;letter-spacing:-.03em}
 .nav .brand .mk{width:1.238em;height:.809em;display:block;flex:0 0 1.238em}
 .nav ul{list-style:none;display:flex;align-items:center;gap:26px;margin:0;padding:0}
-.nav a.lnk{color:var(--mute);text-decoration:none;font-size:15px;font-weight:600}
+.nav a.lnk{color:var(--nav-mute);text-decoration:none;font-size:15px;font-weight:600}
 .nav a.lnk:hover,.nav a.lnk[aria-current]{color:var(--nav-ink)}
 .nav a.cta{background:var(--nav-cta);color:var(--nav-cta-ink);text-decoration:none;font-weight:800;
   font-size:14.5px;padding:10px 18px;border-radius:8px}
