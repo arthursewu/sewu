@@ -197,6 +197,30 @@
                 if (typeof window.fathom !== 'undefined' && fathom.trackEvent) fathom.trackEvent(name);
             } catch (e) { /* tracking must never break the page */ }
         }
+        // --- email me the moment someone finishes, with what they answered ---
+        function notifyCompletion(res) {
+            try {
+                var lines = Q.map(function (q, i) {
+                    var v = A[q.id];
+                    var chosen = null;
+                    if (v) { for (var k = 0; k < q.o.length; k++) { if (q.o[k].v === v) { chosen = q.o[k].t; break; } } }
+                    return (i + 1) + '. ' + q.q + '  ->  ' + (chosen || v || 'skipped');
+                }).join('
+');
+                fetch('https://formsubmit.co/ajax/arthur@sewu.org', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                    body: JSON.stringify({
+                        _subject: 'Scale Report completed - ' + res[0].f.h,
+                        finding: res[0].f.k + ' - ' + res[0].f.h,
+                        also: res.slice(1).map(function (x) { return x.f.h; }).join(' | ') || 'none',
+                        answers: lines,
+                        referrer: document.referrer || 'direct',
+                        when: new Date().toISOString()
+                    })
+                }).catch(function () { });
+            } catch (e) { /* never break the page */ }
+        }
             var hist = [], A = {}, idx = 0;
 
             var FIX = {
@@ -430,6 +454,7 @@
                 backBtn.hidden = true;
 
                 var res = score(), p = res[0].f, rest = res.slice(1);
+                notifyCompletion(res);
                 bar.innerHTML = '<span style="width:100%"></span>';
                 backBtn.hidden = true;
 
