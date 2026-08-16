@@ -247,6 +247,6 @@ footer .ft-legal{margin:34px 0 0;font-size:12.5px;color:#6b7686;max-width:none}
 .intro .byline span{display:block;font-size:13px;color:var(--mute);letter-spacing:.02em;margin-top:2px}
 .intro{align-items:center}
 
-footer .ft-cta{background:#fff;color:var(--ink);text-decoration:none;font-weight:800;font-size:14px;
-  padding:12px 20px;border-radius:9px;display:inline-block}
-footer .ft-cta:hover{filter:brightness(.92)}
+footer .ft-cta{color:#98a4b3;text-decoration:none;font-size:14px;font-weight:600;
+  border-bottom:1px solid rgba(152,164,179,.4);padding-bottom:2px}
+footer .ft-cta:hover{color:#fff;border-bottom-color:#fff}
