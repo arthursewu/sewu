@@ -204,7 +204,7 @@ ul.cases{gap:28px 36px}
 .hero .stats{gap:40px;margin-top:38px}
 .hero .stat{border-top:2px solid #3a4453;padding:18px 0 0}
 .hero .stat b{display:block;font-size:clamp(44px,6.6vw,82px);line-height:.9;letter-spacing:-.045em;color:#fff}
-.hero .stat span{display:block;margin-top:12px;font-size:13px;color:#98a4b3;max-width:24ch}
+.hero .stat span{display:block;margin-top:12px;font-size:13px;color:#98a4b3;max-width:none}
 @media(max-width:760px){
   .hero{padding:44px 0 40px}
   .hero .stats{gap:26px;margin-top:28px}
