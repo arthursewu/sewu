@@ -219,19 +219,14 @@ ul.cases{gap:28px 36px}
 .hero .lead{font-size:clamp(19px,2.2vw,25px);margin-top:22px}
 @media(max-width:760px){ .hero h1{letter-spacing:-.03em;max-width:none} }
 
-/* inner-page heroes carry body copy and links, not just a headline */
-.hero a:not(.btn):not(.cta){color:#fff;border-bottom:1px solid rgba(255,255,255,.35)}
-.hero a:not(.btn):not(.cta):hover{border-bottom-color:#fff}
-.hero b,.hero strong{color:#fff}
-.hero .doc p{color:#98a4b3}
-.hero label{color:#c7d0dc}
-.hero input,.hero select,.hero textarea{background:#0b0d10;color:#fff;border-color:#3a4453}
-.hero table.ladder thead th{background:#fff;color:var(--ink)}
-.hero table.ladder thead th .n{background:var(--ink);color:#fff}
-.hero table.ladder thead tr.sub th{background:#1b212b;color:#98a4b3;border-bottom-color:#3a4453}
-.hero table.ladder .rowhead{background:#1b212b;color:#fff}
-.hero table.ladder th,.hero table.ladder td{border-bottom-color:#2a323e}
-.hero table.ladder td{color:#98a4b3}
-.hero table.ladder td b{color:#fff}
-.hero table.ladder tfoot td{background:#1b212b;color:#fff}
-.hero .src{color:#7d8798}
+
+/* heading band only - page content stays on white */
+.hero-band{background:var(--ink);color:#fff;padding:56px 0 46px}
+.hero-band .eyebrow{color:#98a4b3}
+.hero-band h1{color:#fff;font-size:clamp(42px,8vw,100px);line-height:.98;letter-spacing:-.04em;max-width:16ch}
+.hero-band .lead{color:#c7d0dc;font-size:clamp(19px,2.2vw,25px);margin:22px 0 0}
+.hero-band .lead:last-child,.hero-band h1:last-child{margin-bottom:0}
+@media(max-width:760px){
+  .hero-band{padding:38px 0 32px}
+  .hero-band h1{font-size:clamp(46px,11.5vw,64px);max-width:none;letter-spacing:-.03em}
+}
