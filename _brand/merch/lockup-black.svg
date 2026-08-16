@@ -1,6 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 261 64" width="261" height="64">
-  <rect width="64" height="64" rx="15" fill="#0b0d10"/>
-  <path d="M16 44 28 32l8 8 12-16" stroke="#ffffff" stroke-width="7" fill="none"
-        stroke-linecap="round" stroke-linejoin="round"/><text x="78" y="47" font-family="Inter, Helvetica, Arial, sans-serif"
-        font-weight="800" font-size="42" letter-spacing="-1.6" fill="#0b0d10">sewu.org</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 261 64" width="261" height="64"><rect x="6" y="40" width="12" height="13" rx="3" fill="#0d1117"/><rect x="23" y="30" width="14" height="23" rx="3.5" fill="#0d1117"/><rect x="42" y="19" width="16" height="34" rx="4" fill="#0d1117"/><text x="78" y="47" font-family="Inter, Helvetica, Arial, sans-serif" font-weight="800" font-size="42" letter-spacing="-1.6" fill="#0d1117">sewu.org</text></svg>
