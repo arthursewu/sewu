@@ -258,3 +258,9 @@ footer .ft-cta:hover{color:#fff;border-bottom-color:#fff}
   .intro img{width:68px;height:68px}
   .intro .bio{margin-top:16px}
 }
+
+footer .ft-right{display:flex;align-items:center;gap:22px}
+footer .ft-ico-row{display:inline-flex;gap:14px}
+footer .ft-ico{color:#98a4b3;display:inline-flex;align-items:center}
+footer .ft-ico:hover{color:#fff}
+@media(max-width:620px){ footer .ft-right{gap:18px} }
