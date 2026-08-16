@@ -187,6 +187,16 @@
     <script>
         (function () {
             var card = document.getElementById('card'), bar = document.getElementById('bar'), backBtn = document.getElementById('back');
+        // --- funnel tracking. no-ops until a provider script is added ---
+        function track(name, props) {
+            props = props || {};
+            try {
+                if (window.dataLayer) window.dataLayer.push(Object.assign({ event: name }, props));
+                if (typeof window.gtag === 'function') window.gtag('event', name, props);
+                if (typeof window.plausible === 'function') window.plausible(name, { props: props });
+                if (typeof window.fathom !== 'undefined' && fathom.trackEvent) fathom.trackEvent(name);
+            } catch (e) { /* tracking must never break the page */ }
+        }
             var hist = [], A = {}, idx = 0;
 
             var FIX = {
@@ -406,6 +416,7 @@
 
 
             function revealForm(key) {
+                track('scale_email_shown');
                 var box = document.getElementById('bhv');
                 if (!box) return;
                 box.hidden = false;
@@ -414,6 +425,7 @@
             }
 
             function finish() {
+                track('scale_completed', { answered: Object.keys(A).length });
                 bar.innerHTML = '<span style="width:100%"></span>';
                 backBtn.hidden = true;
 
@@ -444,7 +456,9 @@
             document.addEventListener('click', function (e) {
                 var b = e.target.closest('.opts button'); if (!b) return;
                 var q = Q[idx], o = q.o[+b.getAttribute('data-i')];
-                A[q.id] = o.v; hist.push(idx); idx++; render();
+                A[q.id] = o.v; hist.push(idx); idx++;
+                track('scale_answered', { step: idx, of: Q.length, question: q.id, answer: o.v });
+                render();
             });
 
             backBtn.addEventListener('click', function () {
@@ -452,7 +466,7 @@
                 idx = hist.pop(); render();
             });
 
-            idx = 0; render();
+            idx = 0; track('scale_started'); render();
         })();
     </script>
 </body>
