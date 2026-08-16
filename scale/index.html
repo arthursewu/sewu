@@ -19,7 +19,7 @@
 
         .card {
             background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
-            padding: 32px 30px 28px; min-height: 300px; display: flex; flex-direction: column;
+            padding: 32px 30px 28px; min-height: 320px; display: flex; flex-direction: column;
         }
         .step { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 16px; }
         .q { font-size: clamp(21px, 3.2vw, 28px); font-weight: 800; line-height: 1.2; letter-spacing: -.02em; margin: 0 0 10px; }
@@ -36,6 +36,7 @@
         .bar { display: flex; gap: 5px; margin: 0 0 20px; }
         .bar i { height: 3px; flex: 1; background: var(--line); border-radius: 2px; }
         .bar i.on { background: var(--accent); }
+        .counter { font-size: 13px; color: var(--mute); margin: 0 0 18px; }
 
         #back { background: none; border: 0; color: var(--mute); font: inherit; font-size: 14px; cursor: pointer; padding: 14px 0 0; }
         #back[hidden] { display: none; }
@@ -49,19 +50,22 @@
         .verdict h2 { margin-bottom: 12px; font-size: clamp(22px,3.2vw,30px); }
         .verdict p { color: var(--mute); margin: 0 0 12px; }
         .verdict p.lead-in { color: var(--ink); font-size: 17px; }
+        .verdict p:last-child { margin-bottom: 0; }
 
-        .blk { margin-top: 26px; border-top: 1px solid var(--line); padding-top: 20px; }
-        .blk h3 { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-        .blk.no h3 { color: #fca5a5; }
-        .blk ul { list-style: none; padding: 0; margin: 0; }
-        .blk li { padding: 9px 0 9px 22px; position: relative; color: var(--mute); font-size: 15.5px; border-bottom: 1px solid var(--line); }
-        .blk li:last-child { border-bottom: 0; }
-        .blk li:before { content: ""; position: absolute; left: 2px; top: 17px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
-        .blk.no li:before { background: #fca5a5; }
-        .blk li b { color: var(--ink); }
+        .also { margin-top: 26px; border-top: 1px solid var(--line); padding-top: 20px; }
+        .also h3 { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); margin-bottom: 14px; }
+        .also .row { padding: 13px 0; border-bottom: 1px solid var(--line); }
+        .also .row:last-child { border-bottom: 0; }
+        .also .row b { display: block; color: var(--ink); font-size: 16px; margin-bottom: 3px; }
+        .also .row span { color: var(--mute); font-size: 15px; }
 
         .tell { margin-top: 22px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; font-size: 15px; color: var(--mute); }
         .tell b { color: var(--ink); }
+
+        .inbox { margin-top: 24px; border: 1px solid var(--accent); border-radius: 12px; padding: 22px 24px; background: rgba(74,222,128,.05); }
+        .inbox h3 { margin-bottom: 8px; font-size: 19px; }
+        .inbox p { color: var(--mute); margin: 0; font-size: 15.5px; }
+        .inbox p b { color: var(--ink); }
 
         ol.trace { list-style: none; counter-reset: s; padding: 0; margin: 24px 0 0; }
         ol.trace li { counter-increment: s; position: relative; padding: 11px 0 11px 36px; border-bottom: 1px solid var(--line); color: var(--mute); font-size: 15px; }
@@ -101,15 +105,15 @@
             <h1>Get your Scale Report. In under 60 seconds.</h1>
             <p class="lead">The one thing holding this account back: creative, media buying, or funnel. Most people
                 guess, fix the wrong one, and pay for it twice.</p>
-            <p>Every question compares your account against itself. There are no benchmarks in here, because another
-                brand's numbers tell you nothing about yours.</p>
+            <p>Nine questions, all of them comparing your account against itself. There are no benchmarks in here,
+                because another brand's numbers tell you nothing about yours.</p>
 
             <div class="preview">
                 <span class="pk">Media buying &middot; over-launching</span>
                 <h3>Your budget cannot judge this many ads</h3>
                 <p>An ad needs about one conversion a day to be judgeable. Below that it accumulates spend without ever
                     producing a verdict, and it takes delivery from ads that were about to prove themselves.</p>
-                <p class="cap">&uarr; an example of what your Scale Report says</p>
+                <p class="cap">&uarr; an example of what your Scale Report finds</p>
             </div>
         </div>
     </section>
@@ -142,309 +146,265 @@
     <script>
         (function () {
             var card = document.getElementById('card'), bar = document.getElementById('bar'), backBtn = document.getElementById('back');
-            var lead = { name: '', email: '' }, hist = [], trace = [], cur = 'intake';
+            var lead = { name: '', email: '' }, hist = [], A = {}, idx = 0;
 
-            var V = {
+            // ---------- FINDINGS ----------
+            var F = {
                 TRACKING: {
-                    tone: 'amber', k: 'Tracking — stop here',
+                    w: 100, tone: 'amber', k: 'Tracking',
                     h: 'Your numbers are not real yet',
-                    lead: 'Meta is reporting materially more revenue than your store is banking. Until that gap closes, every other diagnosis is guesswork on fiction.',
-                    body: 'A large share of reported conversions are view-throughs — people who saw an ad and never clicked it. Accounts routinely run 60–70% view-through and look excellent in Ads Manager while the bank account says otherwise.',
-                    fix: [
-                        '<b>Change your REPORTING to 7-day click.</b> Ads Manager, Columns, Compare attribution settings.',
-                        '<b>Do not change the optimisation window.</b> 1-day view feeds the conversion model. This is a reporting change only.',
-                        'Exclude existing customers on cold campaigns, then check whether platform ROAS lands near your acquisition MER.',
-                        'Re-run this diagnostic once the two numbers agree.'
-                    ],
-                    no: ['Brief a creative round off the current numbers.', 'Scale anything that looks like a winner on the inflated figure.'],
+                    lead: 'Meta is reporting materially more revenue than your store is banking. Until that gap closes, every other finding below is a read on fiction.',
+                    body: 'A large share of reported conversions are view-throughs, meaning people who saw an ad and never clicked it. Accounts routinely run at 60 to 70% view-through and look excellent in Ads Manager while the bank account disagrees.',
+                    short: 'Platform revenue is running well ahead of banked revenue.',
                     tell: 'One audited ad reported <b>12.84 ROAS</b>. On new audiences it was 5. On incremental attribution it was <b>1.71</b>. Same ad, three lenses.'
                 },
                 SELFINFLICTED: {
-                    tone: '', k: 'Media buying — self-inflicted',
+                    w: 90, tone: '', k: 'Media buying',
                     h: 'You turned off ads that were carrying the account',
-                    lead: 'Killing a low-ROAS ad that was taking a lot of spend is the most expensive routine mistake in this job, and it does not look like a mistake.',
+                    lead: 'Killing a low-ROAS ad that was taking a lot of spend is the most expensive routine mistake in this job, and it does not look like a mistake at the time.',
                     body: 'Meta attributes on last click but optimises across the whole click sequence. A high-spending ad with a mediocre ROAS is often doing work that a later ad gets credited for. Remove it and the sequence breaks.',
-                    fix: [
-                        '<b>Turn them back on.</b> Same targets, same budgets.',
-                        'Judge ads on <b>amount spent</b>, not ad-level ROAS. Meta decides where spend goes and it is rarely wrong about that.',
-                        'Move your KPI up a level, to ad set or campaign, where the attribution is reliable.',
-                        'Never kill a low-ROAS ad inside an ad set that is hitting its target.'
-                    ],
-                    no: ['Replace them with new creative. The creative was not the problem.', 'Judge the replacements on ad-level ROAS either.'],
-                    tell: 'This is the first move on a new account for one operator managing eight-figure spend — switching the killed high-spenders back on, <b>and it almost always recovers around 30% of spend at the same target</b>.'
+                    short: 'High-spending ads were recently switched off on ad-level ROAS.',
+                    tell: 'For one operator running eight-figure spend, switching the killed high-spenders back on is the first move on any new account, and it <b>almost always recovers around 30% of spend at the same target</b>.'
                 },
-                CREATIVE_WEAK: {
-                    tone: '', k: 'Creative — not earning attention',
-                    h: 'The ad is not earning the click',
-                    lead: 'It underperformed the ads beside it from the day it launched. This is the one verdict where making a new ad is genuinely the fix.',
-                    body: 'A low click rate from launch means the visual is not stopping anyone, or the message is aimed at the wrong awareness level. It is not fatigue — fatigue starts high and decays.',
-                    fix: [
-                        '<b>A new concept, not a new edit.</b> A different argument, not a different crop.',
-                        'Three ads per ad set, all versions of <b>one</b> concept, so you learn which idea won rather than which edit won.',
-                        'Test in order: <b>angle, then offer, then avatar, then format.</b> Format is the last axis and it is where most people start.',
-                        'Pull the language from reviews and ad comments. The words they use beat the words you would choose.'
-                    ],
-                    no: ['Rewrite the landing page. Nothing after the click has been reached yet.', 'Chase a higher hook rate as the goal. It does not correlate with conversion.'],
-                    tell: 'Click rate means nothing across accounts. Profitable accounts run at <b>0.5% and at 3%</b>. It only means something against the ads sitting next to it.'
+                OVERLAUNCH: {
+                    w: 80, tone: '', k: 'Media buying',
+                    h: 'Your budget cannot judge this many ads',
+                    lead: 'Lots of live ads are getting almost no spend. They are not losing. They are untested, and they are taking delivery from the ads that were about to prove themselves.',
+                    body: 'An ad needs roughly one conversion a day before it can be judged, by you or by the algorithm. Below that it accumulates spend for weeks and produces no verdict, while the auction gets more crowded with your own inventory.',
+                    short: 'Many live ads sit below the spend needed to judge them.',
+                    tell: 'A real account: <b>186 ad objects on $141 a day, which is 76 cents per ad per day.</b> 151 of them never cleared $15 and produced three purchases between them.'
                 },
-                CREATIVE_FATIGUE: {
-                    tone: '', k: 'Creative — fatigue',
+                FATIGUE: {
+                    w: 76, tone: '', k: 'Creative',
                     h: 'It worked, and the same people have now seen it',
-                    lead: 'Performance started strong and decayed while frequency climbed. The idea is fine. The audience has finished with this execution of it.',
+                    lead: 'Performance started strong and decayed while frequency climbed, with only a handful of distinct ideas running. The idea is fine. The audience has finished with this execution of it.',
                     body: 'Meta serves an identical creative to a user only so many times before purchase probability collapses. A novel creative in that slot restores it, but a near-duplicate does not count as novel.',
-                    fix: [
-                        '<b>New versions of the thing that worked</b>, plus genuinely distinct concepts running beside them.',
-                        'Distinct means distinct. <b>Near-identical ads get grouped and serve to the same pool</b>, so ten variations of one idea buy you no new reach.',
-                        'Keep the winning variable fixed and change what surrounds it.',
-                        'Watch the direction frequency moves on this ad against its own history, not against a threshold from a podcast.'
-                    ],
-                    no: ['Scrap the concept. It earned its decay.', 'Add more edits of the same execution. They will be grouped with it.'],
+                    short: 'Decay with rising frequency, and few distinct ideas in rotation.',
                     tell: 'Frequency has no universal number. A 3 on $2k of spend in a week is a different animal to a 3 on $1m in a month. <b>Read the direction, never the level.</b>'
                 },
-                CREATIVE_DIVERSITY: {
-                    tone: '', k: 'Creative — diversity',
+                DIVERSITY: {
+                    w: 76, tone: '', k: 'Creative',
                     h: 'You have volume, but not variety',
                     lead: 'Plenty of ads are running and frequency is still climbing. You are feeding the same pool the same idea in different clothes.',
                     body: 'Meta groups near-identical ads into a small number of entities. Two hundred ads can collapse into roughly twenty, and everything inside a group serves the same people with no additional reach. This is why tripling output changes nothing.',
-                    fix: [
-                        '<b>Fewer, more different.</b> One genuinely new angle beats ten new edits.',
-                        'Change the argument, not the crop. If two ads share a hook, a claim and a format, they are one ad.',
-                        'Diversify in this order: <b>angle, offer, avatar, format.</b>',
-                        'Check reach, not ad count. If reach is flat while ad count rises, the new ads are not reaching anyone new.'
-                    ],
-                    no: ['Launch more variations. That is the thing that stopped working.', 'Blame audience size before checking whether your ads are actually distinct.'],
+                    short: 'Frequency climbing despite plenty of ads running.',
                     tell: 'One account ran <b>200 near-identical ads that grouped into about 20 entities</b>. The ten inside each group served the same pool with zero unique reach.'
                 },
-                MB_OVERLAUNCH: {
-                    tone: '', k: 'Media buying — over-launching',
-                    h: 'Your budget cannot judge this many ads',
-                    lead: 'Lots of live ads are getting almost no spend. They are not losing, they are untested, and they are taking delivery from the ads that were about to prove themselves.',
-                    body: 'An ad needs roughly one conversion a day before it can be judged, by you or by the algorithm. Below that it accumulates spend for weeks and produces no verdict, while the auction gets more crowded with your own inventory.',
-                    fix: [
-                        '<b>Cap live ad sets at daily budget divided by CPA.</b> At $2,000 a day and a $50 CPA that is 40. Most accounts are far past their own number.',
-                        '<b>Queue, do not launch.</b> New creative waits for a slot to open.',
-                        'Weekly, check the floor rather than the ceiling: <b>how many live ads got under $50 this week?</b> More than a couple and you launched too many.',
-                        'Three ads per ad set, one concept per ad set.'
-                    ],
-                    no: ['Clean up and repeat the cycle next month. Launching fewer is the fix, not tidying more.', 'Read a starved ad as a loser. It was never funded enough to be either.'],
-                    tell: 'A real account: <b>186 ad objects on $141 a day. That is 76 cents per ad per day.</b> 151 of them never cleared $15 and produced three purchases between them.'
+                FUNNEL_STEP: {
+                    w: 75, tone: '', k: 'Funnel',
+                    h: 'They clicked. Something after the click stopped them',
+                    lead: 'The ad did its job and won the visit. The drop is downstream, and one step is clearly worse than the rest.',
+                    body: 'Click to landing page view, landing page view to add to cart, add to cart to checkout, checkout to purchase. The transition that is out of line with your own history names the asset that is broken. None of them are the ad.',
+                    short: 'One step after the click is clearly below your normal.',
+                    tell: 'Your site conversion rate also sets your ad costs. Meta prices you partly on expected action rate, and one account took CVR from 2% to 4% while <b>CPC fell from $3 to $2 and CPA from $150 to $50</b>.'
                 },
-                MB_PRICE: {
-                    tone: '', k: 'Media buying — price and pool',
+                FUNNEL_FLAT: {
+                    w: 72, tone: '', k: 'Funnel',
+                    h: 'Nothing after the click converts well',
+                    lead: 'No single step fails. The whole path underperforms, which means the problem is not a broken button somewhere.',
+                    body: 'When every transition is mediocre rather than one being broken, the cause is usually upstream of the page: what is being sold, the terms it is sold on, or the price against the market. That is not something a new ad reaches.',
+                    short: 'The whole post-click path underperforms, with no single failing step.',
+                    tell: 'Judging this on blended conversion rate hides it. <b>A 2.5% blended store CVR is often 0.8 to 1.5% on cold traffic</b>, and break-even maths built on the blended number fails at scale.'
+                },
+                CREATIVE_WEAK: {
+                    w: 70, tone: '', k: 'Creative',
+                    h: 'The ad is not earning the click',
+                    lead: 'It underperformed the ads beside it from the day it launched. This is the one finding where making a new ad is genuinely the fix.',
+                    body: 'A low click rate from launch means the visual is not stopping anyone, or the message is aimed at the wrong awareness level. It is not fatigue, because fatigue starts high and decays.',
+                    short: 'Click rate was below the ads beside it from launch.',
+                    tell: 'Click rate means nothing across accounts. Profitable accounts run at <b>0.5% and at 3%</b>. It only means something against the ads sitting next to it.'
+                },
+                AOV: {
+                    w: 68, tone: '', k: 'Media buying',
+                    h: 'Your bidding is buying your cheapest customer',
+                    lead: 'Order value fell without you changing the offer. Volume-optimised bidding has no reference to order value, so it goes and finds the cheapest conversion available.',
+                    body: 'If a high-value and a low-value product share an ad set, the algorithm routes spend to whichever converts cheaper, which is almost always the cheap one. Your best product then looks like a slow mover and its ads look weak. They are not.',
+                    short: 'Order value fell with no offer change.',
+                    tell: 'Measured on one account switching bid strategy on identical creative: <b>average order value rose 11.5% across all 177 ad sets</b>. Same ads, different bidding, different customer.'
+                },
+                PRICE: {
+                    w: 65, tone: '', k: 'Media buying',
                     h: 'You are paying more to reach the same people',
-                    lead: 'CPM is up and it is not buying you better buyers. That is a price problem, and no new ad fixes a price.',
-                    body: 'This is usually one of three things: the auction got more expensive where you are buying, your pool is saturating, or your own campaigns are bidding against each other.',
-                    fix: [
-                        '<b>Check overlap first, because it is measurable.</b> Sum reach across your campaigns and compare it to account-level reach. Audits find 80% overlap.',
-                        'The tell for overlap: many campaigns, few ad sets each, lots of creative, moderate spend.',
-                        'If overlap is clean, widen the pool. New geos, new audiences, new placements.',
-                        'Check whether high-value and low-value products share an ad set. Volume bidding buys your cheapest conversion and makes your best product look weak.'
-                    ],
-                    no: ['Brief a creative round. The ads are earning their clicks.', 'Raise budgets into a saturating pool. That is what made it expensive.'],
+                    lead: 'CPM is up and it is not buying better buyers. That is a price problem, and no new ad fixes a price.',
+                    body: 'Usually one of three things: the auction got more expensive where you are buying, your pool is saturating, or your own campaigns are bidding against each other. The last one is measurable and it is the one people skip.',
+                    short: 'CPM up with no improvement in purchase efficiency.',
                     tell: 'A high CPM is not automatically bad. If purchases per 1,000 impressions rose with it, the auction found better people and <b>you are getting what you paid for</b>.'
                 },
-                FUNNEL_STEP: {
-                    tone: '', k: 'Funnel',
-                    h: 'They clicked. Something after the click stopped them',
-                    lead: 'The ad did its job and got you the visit. The drop is downstream, and the step that breaks names the thing to fix.',
-                    body: 'Walk the chain and find the transition that is out of line with your own history: click to landing page view, landing page view to add to cart, add to cart to checkout, checkout to purchase.',
-                    fix: [
-                        '<b>Fix the step, not the ad.</b> Add to cart failing is a product page or price problem. Checkout failing is a shipping, trust or mechanics problem.',
-                        'As a shape, add to cart, checkout and purchase run about <b>4:2:1</b>. A step far off that ratio is the one to open.',
-                        '<b>Judge cold traffic separately.</b> A 2.5% blended store conversion rate is often 0.8 to 1.5% on cold, and break-even maths built on the blended number fails at scale.',
-                        'Check the ad and the page make the same promise. Congruence, not just quality.'
-                    ],
-                    no: ['Brief new creative. The creative already won the click.', 'Use blended conversion rate to set your break-even.'],
-                    tell: 'Your site conversion rate also sets your ad costs. Meta prices you partly on expected action rate — one account took CVR from 2% to 4% and <b>CPC fell from $3 to $2, CPA from $150 to $50</b>.'
-                },
-                FUNNEL_OFFER: {
-                    tone: '', k: 'Offer',
-                    h: 'The ads are fine. The offer is the ceiling',
-                    lead: 'Ads get attention and clicks, and almost nothing converts at a rate worth scaling. When that holds across genuinely different angles, the problem is upstream of marketing.',
-                    body: 'A low hit rate across many distinct concepts is the signature. Under about 10% points at the offer or product-market fit. Between 10 and 20% points at angles rather than execution.',
-                    fix: [
-                        '<b>Run the ablation test.</b> One brand turned off ads, then email, then flows, then partnerships, and demand held. They pulled the trial offer and demand halved instantly.',
-                        'Change what is being sold, or the terms it is sold on, before writing another ad.',
-                        'Check margin and order value. Under $100 AOV is structurally hard on cold paid traffic.',
-                        'Test offer before format. Format is the last thing that moves the number.'
-                    ],
-                    no: ['Order another creative batch. You already know creative is not the variable.', 'Blame the media buyer. This one sits above the account.'],
-                    tell: 'Test hit rate maps cleanly: <b>under 10% is offer, 10 to 20% is angles, 20 to 30% is execution</b>, and above 30% but stuck is a media buying problem.'
-                },
                 SEASONAL: {
-                    tone: 'grey', k: 'Not yours',
+                    w: 60, tone: 'grey', k: 'Not yours',
                     h: 'This looks like demand, not your account',
-                    lead: 'Performance faded without frequency rising. Nobody is over-seeing your ads. Fewer people are in the market.',
-                    body: 'Creative fatigue has a fingerprint: decay with rising frequency. Decay on flat frequency is a demand-side change, and it is very hard to fix from inside an ad account.',
-                    fix: [
-                        'Confirm it against the same period last year, and against a second channel.',
-                        'Check whether anything changed off-platform. A promotion ending, a PR spike stopping, an email flow paused.',
-                        'Hold your structure. Do not rebuild an account around a demand dip.',
-                        'If it is a season you know, plan the offer for it rather than the creative.'
-                    ],
-                    no: ['Rebuild the creative library. It was not the creative.', 'Cut spend hard and lose the compounding when demand returns.'],
+                    lead: 'Performance faded and frequency stayed flat. Nobody is over-seeing your ads. Fewer people are in the market.',
+                    body: 'Creative fatigue has a fingerprint, which is decay with rising frequency. Decay on flat frequency is a demand-side change, and it is very hard to fix from inside an ad account.',
+                    short: 'Performance fell while frequency stayed flat.',
                     tell: 'A fade with no frequency spike is <b>demand-side</b>. One brand’s decay reversed entirely on a single product drop, inside an unchanged campaign structure.'
                 },
                 UNCLEAR: {
-                    tone: 'grey', k: 'Nothing conclusive',
+                    w: 1, tone: 'grey', k: 'Nothing conclusive',
                     h: 'Nothing here is clearly broken',
                     lead: 'On these answers no single layer stands out. That is a finding, not a failure.',
-                    body: 'Either the gap is smaller than the noise in the account, or the number that would show it has not been checked yet. Both are reasons to stop rather than to act.',
-                    fix: [
-                        'Get three numbers before deciding anything: click rate against the ads beside it, CPM against this ad’s own history, and the step-by-step drop-off after the click.',
-                        'Check the window is big enough to say anything. A handful of purchases cannot prove or rule out a difference.',
-                        'Name the control before you name a cause. If you cannot find one, the cause is unknown.'
-                    ],
-                    no: ['Brief a creative round to feel like you did something. That is the expensive version of this moment.'],
+                    body: 'Either the gap is smaller than the noise in the account, or the numbers that would show it have not been checked yet. Both are reasons to stop rather than to act.',
+                    short: 'No single layer stands out on these answers.',
                     tell: 'The most common error in account diagnosis is a real gap with an invented cause attached. <b>If no control separates the explanations, the honest answer is "not tested yet."</b>'
                 }
             };
 
-            var Q = {
-                gate: {
-                    step: 'First check', q: 'Does the revenue Meta reports roughly match what your store actually banked?',
-                    why: 'Same date range, Meta against Shopify. You are not looking for an exact match, only whether they are in the same neighbourhood.',
-                    o: [
-                        { t: 'Meta reports a lot more', s: 'noticeably higher than the store', go: 'END', v: 'TRACKING', trace: 'Meta is reporting materially more revenue than the store banked.' },
-                        { t: 'They are roughly in line', go: 'killed', trace: 'Platform revenue is broadly in line with the store.' },
-                        { t: 'I have not compared them', go: 'killed', trace: 'Platform against store revenue was not checked, so everything below is unverified.' }
-                    ]
+            // ---------- QUESTIONS (all asked, none exit early) ----------
+            var Q = [
+                {
+                    id: 'track', step: 'Measurement', q: 'Does the revenue Meta reports roughly match what your store actually banked?',
+                    why: 'Same date range, Meta against Shopify. Not an exact match, just the same neighbourhood.',
+                    o: [{ t: 'Meta reports a lot more', s: 'noticeably higher than the store', v: 'gap' },
+                    { t: 'They are roughly in line', v: 'ok' },
+                    { t: 'I have not compared them', v: 'unknown' }]
                 },
-                killed: {
-                    step: 'Quick check', q: 'Have you recently turned off ads that were spending a lot but showed a poor ROAS?',
+                {
+                    id: 'killed', step: 'Recent changes', q: 'Have you recently turned off ads that were spending a lot but showed a poor ROAS?',
                     why: 'The most expensive routine mistake in the job, and the easiest one to reverse.',
-                    o: [
-                        { t: 'Yes, in the last few weeks', go: 'END', v: 'SELFINFLICTED', trace: 'High-spending ads were recently switched off for poor ad-level ROAS.' },
-                        { t: 'No', go: 'moved', trace: 'No high-spending ads were recently killed.' }
-                    ]
+                    o: [{ t: 'Yes, in the last few weeks', v: 'yes' }, { t: 'No', v: 'no' }, { t: 'Not sure', v: 'unknown' }]
                 },
-                moved: {
-                    step: 'The main question', q: 'Which number moved against your own normal?',
-                    why: 'ROAS is only ever four numbers multiplied: <b>CPM, click rate, conversion rate and order value</b>. If ROAS moved, one of them moved. Pick the clearest.',
-                    o: [
-                        { t: 'Click rate is down', s: 'fewer people clicking', go: 'ctrwhen', trace: 'Click rate is down against the account’s own normal.' },
-                        { t: 'Site conversion rate is down', s: 'they click, they do not buy', go: 'funnelwhich', trace: 'Conversion rate after the click is down.' },
-                        { t: 'CPM is up', s: 'costs more to reach people', go: 'cpmeff', trace: 'CPM is up against this ad’s own history.' },
-                        { t: 'Order value is down', s: 'same sales, less money', go: 'END', v: 'FUNNEL_OFFER', trace: 'Average order value fell. The mix or the offer moved, not the ads.' },
-                        { t: 'I am not sure which', go: 'ctrwhen', trace: 'Which input moved was not established, so this read is provisional.' }
-                    ]
+                {
+                    id: 'ctr', step: 'Click rate', q: 'How is the click rate against the other ads in the same campaign?',
+                    why: 'Compare it to the ads beside it, never to a number you read somewhere. The middle one, not the average.',
+                    o: [{ t: 'Low from the day it launched', v: 'launch' },
+                    { t: 'It was good, then fell', v: 'fell' },
+                    { t: 'Fine, in line or better', v: 'fine' },
+                    { t: 'I do not know', v: 'unknown' }]
                 },
-                ctrwhen: {
-                    step: 'Creative', q: 'Was the click rate always low, or did it fall over time?',
-                    why: 'Low from launch and decayed from a high are two different problems with two different fixes.',
-                    o: [
-                        { t: 'Low from the day it launched', go: 'END', v: 'CREATIVE_WEAK', trace: 'It never earned the click. Low from launch.' },
-                        { t: 'It was good, then fell', go: 'freq', trace: 'It started strong and decayed.' },
-                        { t: 'I do not know', go: 'cpmeff', trace: 'Could not establish when the click rate fell.' }
-                    ]
+                {
+                    id: 'freq', step: 'Frequency', q: 'Which way is frequency moving on that ad?',
+                    why: 'Against its own history over the last couple of weeks. <b>The direction matters, not the level.</b>',
+                    o: [{ t: 'Climbing', v: 'up' }, { t: 'Flat or falling', v: 'flat' }, { t: 'I do not know', v: 'unknown' }]
                 },
-                freq: {
-                    step: 'Creative', q: 'As it fell, did frequency climb?',
-                    why: 'This is the fork. Decay <b>with</b> frequency rising is fatigue. Decay on <b>flat</b> frequency is demand, and no creative fixes that.',
-                    o: [
-                        { t: 'Yes, frequency went up', go: 'concepts', trace: 'Frequency rose as performance fell.' },
-                        { t: 'No, frequency stayed flat', go: 'END', v: 'SEASONAL', trace: 'Performance fell while frequency stayed flat.' },
-                        { t: 'I do not know', go: 'concepts', trace: 'Frequency direction unknown.' }
-                    ]
-                },
-                concepts: {
-                    step: 'Creative', q: 'How many genuinely different ideas are running in that campaign?',
+                {
+                    id: 'concepts', step: 'Creative variety', q: 'How many genuinely different ideas are running in that campaign?',
                     why: 'Different <b>arguments</b>, not different edits. If two ads share a hook, a claim and a format, count them as one.',
-                    o: [
-                        { t: 'Three or fewer', go: 'END', v: 'CREATIVE_FATIGUE', trace: 'Few distinct ideas running. The pool has nothing new to see.' },
-                        { t: 'Four or more', go: 'END', v: 'CREATIVE_DIVERSITY', trace: 'Many ads running but frequency still climbing. Variety is missing, not volume.' }
-                    ]
+                    o: [{ t: 'Three or fewer', v: 'few' }, { t: 'Four or more', v: 'many' }, { t: 'I do not know', v: 'unknown' }]
                 },
-                cpmeff: {
-                    step: 'Media buying', q: 'Did purchases per 1,000 impressions go up at the same time as CPM?',
-                    why: 'Almost nobody asks this. A rising CPM can mean the auction found <b>better</b> people, which is working, not broken.',
-                    o: [
-                        { t: 'Yes, they went up too', go: 'END', v: 'UNCLEAR', trace: 'CPM rose and purchase efficiency rose with it. You are paying more for better people.' },
-                        { t: 'No, flat or down', go: 'starved', trace: 'CPM rose with no improvement in purchase efficiency.' },
-                        { t: 'I do not know', go: 'starved', trace: 'Could not tell whether the higher CPM bought better people.' }
-                    ]
+                {
+                    id: 'cpm', step: 'Cost to reach', q: 'Is CPM up, and if so did purchases per 1,000 impressions go up with it?',
+                    why: 'Almost nobody asks the second half. A rising CPM can mean the auction found <b>better</b> people, which is working, not broken.',
+                    o: [{ t: 'CPM up, purchases per 1,000 also up', v: 'up-good' },
+                    { t: 'CPM up, purchases flat or down', v: 'up-bad' },
+                    { t: 'CPM is about normal', v: 'normal' },
+                    { t: 'I do not know', v: 'unknown' }]
                 },
-                starved: {
-                    step: 'Media buying', q: 'How many of your live ads got under $50 of spend last week?',
-                    why: 'An ad needs roughly one conversion a day to be judgeable. Below that it is not losing, it is untested, and it is taking delivery from ads that were about to prove themselves.',
-                    o: [
-                        { t: 'Quite a few', s: 'more than a couple', go: 'END', v: 'MB_OVERLAUNCH', trace: 'Many live ads are running below the spend needed to judge them.' },
-                        { t: 'Hardly any', go: 'END', v: 'MB_PRICE', trace: 'Spend is concentrated well enough to judge. This is a price or pool problem.' },
-                        { t: 'I do not know', go: 'END', v: 'MB_PRICE', trace: 'Spend distribution not checked.' }
-                    ]
+                {
+                    id: 'starved', step: 'Spend spread', q: 'How many of your live ads got under $50 of spend last week?',
+                    why: 'An ad below that is not losing, it is untested, and it is taking delivery from ads that were about to prove themselves.',
+                    o: [{ t: 'Quite a few', s: 'more than a couple', v: 'many' }, { t: 'Hardly any', v: 'few' }, { t: 'I do not know', v: 'unknown' }]
                 },
-                funnelwhich: {
-                    step: 'Funnel', q: 'Where do they drop off?',
-                    why: 'Walk the chain: click, landing page view, add to cart, checkout, purchase. The step that breaks names the thing to fix.',
-                    o: [
-                        { t: 'One step is clearly worse', s: 'page, cart or checkout', go: 'END', v: 'FUNNEL_STEP', trace: 'One step after the click is clearly below normal.' },
-                        { t: 'It is flat all the way down', s: 'nothing converts well', go: 'END', v: 'FUNNEL_OFFER', trace: 'No single step fails. The whole path underperforms.' },
-                        { t: 'I do not know', go: 'END', v: 'FUNNEL_STEP', trace: 'Step-by-step drop-off not checked.' }
-                    ]
+                {
+                    id: 'aov', step: 'Order value', q: 'Has your average order value dropped without you changing the offer?',
+                    why: 'Volume bidding has no reference to order value. If a cheap product and an expensive one share an ad set, it will go and buy the cheap one.',
+                    o: [{ t: 'Yes, it has fallen', v: 'down' }, { t: 'No, it is steady', v: 'steady' }, { t: 'I do not know', v: 'unknown' }]
+                },
+                {
+                    id: 'funnel', step: 'After the click', q: 'Where do people drop off after clicking?',
+                    why: 'Walk it: click, landing page view, add to cart, checkout, purchase. Compare each step to your own normal.',
+                    o: [{ t: 'One step is clearly worse', s: 'page, cart or checkout', v: 'step' },
+                    { t: 'It is flat all the way down', s: 'nothing converts well', v: 'flat' },
+                    { t: 'It looks normal', v: 'fine' },
+                    { t: 'I do not know', v: 'unknown' }]
                 }
-            };
+            ];
 
-            var ORDER = ['intake', 'gate', 'killed', 'moved', 'ctrwhen', 'freq', 'concepts', 'cpmeff', 'starved', 'funnelwhich'];
+            function score() {
+                var out = [];
+                function add(k) { if (F[k]) out.push({ key: k, f: F[k] }); }
+
+                if (A.track === 'gap') add('TRACKING');
+                if (A.killed === 'yes') add('SELFINFLICTED');
+                if (A.starved === 'many') add('OVERLAUNCH');
+                if (A.ctr === 'launch') add('CREATIVE_WEAK');
+                if (A.ctr === 'fell' && A.freq === 'up' && A.concepts === 'few') add('FATIGUE');
+                if (A.freq === 'up' && A.concepts === 'many') add('DIVERSITY');
+                if (A.ctr === 'fell' && A.freq === 'flat') add('SEASONAL');
+                if (A.cpm === 'up-bad') add('PRICE');
+                if (A.aov === 'down') add('AOV');
+                if (A.funnel === 'step') add('FUNNEL_STEP');
+                if (A.funnel === 'flat') add('FUNNEL_FLAT');
+
+                // de-dupe, sort by weight
+                var seen = {}, uniq = [];
+                out.forEach(function (r) { if (!seen[r.key]) { seen[r.key] = 1; uniq.push(r); } });
+                uniq.sort(function (a, b) { return b.f.w - a.f.w; });
+                if (!uniq.length) uniq.push({ key: 'UNCLEAR', f: F.UNCLEAR });
+                return uniq;
+            }
 
             function drawBar() {
-                var i = ORDER.indexOf(cur);
-                bar.innerHTML = ORDER.map(function (_, j) { return '<i class="' + (j <= i ? 'on' : '') + '"></i>'; }).join('');
+                bar.innerHTML = Q.map(function (_, j) { return '<i class="' + (j < idx ? 'on' : '') + '"></i>'; }).join('');
             }
 
             function renderIntake() {
-                drawBar(); backBtn.hidden = true;
+                bar.innerHTML = Q.map(function () { return '<i></i>'; }).join('');
+                backBtn.hidden = true;
                 card.innerHTML = '<div class="step">First</div>' +
                     '<div class="q">Where should I send your Scale Report?</div>' +
-                    '<p class="why">You get the result on screen straight away. I email you a copy so you still have it next week. Unsubscribe whenever.</p>' +
+                    '<p class="why">You get your findings on screen straight away. <b>The step-by-step fixes come by email</b>, because they run longer than a web page should.</p>' +
                     '<div class="intake">' +
                     '<label for="nm">Your name</label><input id="nm" type="text" autocomplete="given-name" placeholder="Arthur">' +
                     '<label for="em">Email</label><input id="em" type="email" autocomplete="email" placeholder="you@brand.com">' +
                     '<div id="er"></div>' +
-                    '<button class="btn btn-block" id="go" type="button">Get my Scale Report</button>' +
+                    '<button class="btn btn-block" id="go" type="button">Start the report</button>' +
                     '<p class="fineprint">No spam, no selling your details, no sales call unless you ask for one.</p></div>';
                 document.getElementById('go').addEventListener('click', function () {
                     var nm = document.getElementById('nm').value.trim(), em = document.getElementById('em').value.trim();
                     var ok = /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(em);
                     if (!nm || !ok) { document.getElementById('er').innerHTML = '<p class="err">' + (!nm ? 'Name first. ' : '') + (!ok ? 'That email does not look right.' : '') + '</p>'; return; }
-                    lead.name = nm; lead.email = em;
-                    hist.push({ k: 'intake', t: false }); cur = 'gate'; render();
+                    lead.name = nm; lead.email = em; idx = 0; render();
                 });
             }
 
             function render() {
-                if (cur === 'intake') return renderIntake();
-                var q = Q[cur]; drawBar(); backBtn.hidden = hist.length <= 1;
-                card.innerHTML = '<div class="step">' + q.step + '</div><div class="q">' + q.q + '</div><p class="why">' + q.why + '</p>' +
+                if (idx < 0) return renderIntake();
+                if (idx >= Q.length) return finish();
+                var q = Q[idx]; drawBar(); backBtn.hidden = idx === 0;
+                card.innerHTML = '<div class="step">' + q.step + '</div>' +
+                    '<p class="counter">Question ' + (idx + 1) + ' of ' + Q.length + '</p>' +
+                    '<div class="q">' + q.q + '</div><p class="why">' + q.why + '</p>' +
                     '<div class="opts">' + q.o.map(function (o, i) {
                         return '<button data-i="' + i + '">' + o.t + (o.s ? '<small>' + o.s + '</small>' : '') + '</button>';
                     }).join('') + '</div>';
             }
 
-            function sendLead(v, key) {
+            function sendLead(res) {
                 try {
                     fetch('https://formsubmit.co/ajax/arthur@sewu.org', {
                         method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                         body: JSON.stringify({
-                            _subject: 'Scale Report: ' + key + ' (' + lead.name + ')',
-                            name: lead.name, email: lead.email, verdict: key, headline: v.h,
-                            answers: trace.map(function (t, i) { return (i + 1) + '. ' + t.t.replace(/<[^>]*>/g, ''); }).join('  |  ')
+                            _subject: 'Scale Report: ' + res[0].key + ' (' + lead.name + ')',
+                            name: lead.name, email: lead.email,
+                            primary: res[0].key + ' — ' + res[0].f.h,
+                            also: res.slice(1).map(function (r) { return r.key; }).join(', ') || 'none',
+                            answers: Q.map(function (q) { return q.id + '=' + (A[q.id] || '-'); }).join('  |  ')
                         })
                     }).catch(function () { });
                 } catch (e) { }
             }
 
-            function finish(key) {
-                var v = V[key];
-                sendLead(v, key);
-                bar.innerHTML = ORDER.map(function () { return '<i class="on"></i>'; }).join('');
+            function finish() {
+                var res = score(), p = res[0].f, rest = res.slice(1);
+                sendLead(res);
+                bar.innerHTML = Q.map(function () { return '<i class="on"></i>'; }).join('');
                 backBtn.hidden = true;
-                var h = '<div class="verdict ' + v.tone + '"><span class="k">' + v.k + '</span><h2>' + v.h + '</h2>' +
-                    '<p class="lead-in">' + v.lead + '</p><p>' + v.body + '</p></div>' +
-                    '<div class="blk"><h3>What to do</h3><ul>' + v.fix.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul></div>' +
-                    '<div class="blk no"><h3>What not to do</h3><ul>' + v.no.map(function (f) { return '<li>' + f + '</li>'; }).join('') + '</ul></div>' +
-                    '<div class="tell">' + v.tell + '</div>' +
-                    '<ol class="trace">' + trace.map(function (t) { return '<li class="' + (t.hit ? 'hit' : '') + '">' + t.t + '</li>'; }).join('') + '</ol>' +
-                    '<p class="again"><button class="btn" id="restart" type="button">Run it on another ad</button></p>';
+
+                var h = '<div class="verdict ' + p.tone + '"><span class="k">' + p.k + '</span><h2>' + p.h + '</h2>' +
+                    '<p class="lead-in">' + p.lead + '</p><p>' + p.body + '</p></div>';
+
+                if (rest.length) {
+                    h += '<div class="also"><h3>Also worth checking</h3>' + rest.map(function (r) {
+                        return '<div class="row"><b>' + r.f.k + ' &middot; ' + r.f.h + '</b><span>' + r.f.short + '</span></div>';
+                    }).join('') + '</div>';
+                }
+
+                h += '<div class="tell">' + p.tell + '</div>';
+
+                h += '<div class="inbox"><h3>The fixes are on their way</h3><p>The step-by-step for this finding, and the list of things <b>not</b> to do about it, are in the email heading to <b>' +
+                    lead.email.replace(/[<>&]/g, '') + '</b> now. The wrong fix is the expensive part, so that list matters more than this page does.</p></div>';
+
+                h += '<p class="again"><button class="btn" id="restart" type="button">Run it on another ad</button></p>';
+
                 card.outerHTML = '<div id="card">' + h + '</div>';
                 document.getElementById('card').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 document.getElementById('restart').addEventListener('click', function () { location.reload(); });
@@ -452,19 +412,16 @@
 
             document.addEventListener('click', function (e) {
                 var b = e.target.closest('.opts button'); if (!b) return;
-                var o = Q[cur].o[+b.getAttribute('data-i')];
-                if (o.trace) trace.push({ t: o.trace, hit: !!o.v });
-                hist.push({ k: cur, t: !!o.trace });
-                if (o.go === 'END') { cur = 'END'; finish(o.v); } else { cur = o.go; render(); }
+                var q = Q[idx], o = q.o[+b.getAttribute('data-i')];
+                A[q.id] = o.v; hist.push(idx); idx++; render();
             });
 
             backBtn.addEventListener('click', function () {
-                var last = hist.pop(); if (!last) return;
-                if (last.t) trace.pop();
-                cur = last.k; render();
+                if (!hist.length) return;
+                idx = hist.pop(); render();
             });
 
-            render();
+            idx = -1; render();
         })();
     </script>
 </body>
