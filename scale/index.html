@@ -32,36 +32,36 @@
         .doc p { max-width: 62ch; }
 
         .card {
-            background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 16px;
-            padding: 30px 30px 26px; display: flex; flex-direction: column;
-            box-shadow: var(--shadow);
+            background: transparent; border: 0; border-radius: 0;
+            padding: 0; display: block; box-shadow: none;
         }
         .step { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text);
                 font-weight: 700; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: baseline; }
         .step em { font-style: normal; color: var(--faint); letter-spacing: .06em; font-weight: 600; }
-        .q { font-size: clamp(21px, 3.2vw, 28px); font-weight: 800; line-height: 1.2; letter-spacing: -.02em; margin: 0 0 10px; }
-        .why { color: var(--mute-2); font-size: 15px; margin: 0 0 24px; max-width: 54ch; line-height: 1.55; }
+        .q { font-size: clamp(23px, 3.4vw, 34px); font-weight: 800; line-height: 1.18; letter-spacing: -.025em; margin: 0 0 14px; max-width: 22ch; }
+        .why { color: var(--mute); font-size: 16px; margin: 0 0 40px; max-width: 52ch; line-height: 1.6; }
         .why b { color: var(--ink); }
-        .opts { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
+        .opts { display: flex; flex-direction: column; gap: 0; margin: 0; border-top: 1px solid var(--line); }
         .opts button {
-            position: relative; text-align: left; background: var(--raise); color: var(--ink);
-            border: 1px solid var(--line-3); border-radius: 11px; padding: 15px 46px 15px 18px;
-            font: inherit; font-size: 16.5px; font-weight: 600; cursor: pointer;
-            transition: background .12s, border-color .12s, transform .08s;
+            position: relative; text-align: left; background: transparent; color: var(--ink);
+            border: 0; border-bottom: 1px solid var(--line); border-radius: 0;
+            padding: 22px 52px 22px 4px; min-height: 76px; width: 100%;
+            display: flex; flex-direction: column; justify-content: center;
+            font: inherit; font-size: 18px; font-weight: 600; cursor: pointer;
+            transition: background .12s, padding-left .12s;
         }
         .opts button:after {
-            content: ""; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px;
+            content: ""; position: absolute; right: 10px; top: 50%; width: 9px; height: 9px;
             border-right: 2px solid var(--chev); border-bottom: 2px solid var(--chev);
-            transform: translateY(-60%) rotate(-45deg); transition: border-color .12s;
+            transform: translateY(-60%) rotate(-45deg); transition: border-color .12s, right .12s;
         }
-        .opts button:hover {
-            background: var(--raise-2); border-color: var(--accent-text); transform: translateX(2px);
-        }
-        .opts button:hover:after { border-color: var(--accent-text); }
-        .opts button:active { transform: translateX(0) scale(.995); }
-        .opts button small { display: block; font-weight: 400; font-size: 13.5px; color: var(--mute-2); margin-top: 3px; }
+        .opts button:hover { background: var(--panel); padding-left: 12px; }
+        .opts button:hover:after { right: 6px; }
+        .opts button:focus-visible { background: var(--panel); outline: 2px solid var(--ink); outline-offset: -2px; }
+        .opts button:active { background: var(--raise-2); }
+        .opts button small { display: block; font-weight: 400; font-size: 15px; color: var(--mute); margin-top: 5px; line-height: 1.45; }
 
-        .bar { height: 4px; background: var(--raise); border-radius: 3px; margin: 0 0 22px; overflow: hidden; }
+        .bar { height: 3px; background: var(--line); border-radius: 0; margin: 0 0 34px; overflow: hidden; }
         .bar span { display: block; height: 100%; background: var(--accent-text); border-radius: 3px;
                     transition: width .25s ease; }
 
@@ -340,56 +340,56 @@
             // ---------- QUESTIONS (all asked, none exit early) ----------
             var Q = [
                 {
-                    id: 'track', step: 'Measurement', q: 'Does the revenue Meta reports roughly match what your store actually banked?',
-                    why: 'Same date range, Meta against Shopify. Not an exact match, just the same neighbourhood.',
+                    id: 'track', step: 'Measurement', q: 'Does Meta's revenue match what your store actually banked?',
+                    why: 'Same dates, Meta against Shopify. Close enough is fine.',
                     o: [{ t: 'Meta reports a lot more', s: 'noticeably higher than the store', v: 'gap' },
                     { t: 'They are roughly in line', v: 'ok' },
                     { t: 'I have not compared them', v: 'unknown' }]
                 },
                 {
-                    id: 'killed', step: 'Recent changes', q: 'Have you recently turned off ads that were spending a lot but showed a poor ROAS?',
-                    why: 'The most expensive routine mistake in the job, and the easiest one to reverse.',
+                    id: 'killed', step: 'Recent changes', q: 'Have you turned off any big-spending ads lately for low ROAS?',
+                    why: 'The costliest routine mistake in this job, and the easiest to undo.',
                     o: [{ t: 'Yes, in the last few weeks', v: 'yes' }, { t: 'No', v: 'no' }, { t: 'Not sure', v: 'unknown' }]
                 },
                 {
-                    id: 'ctr', step: 'Click rate', q: 'How is the click rate against the other ads in the same campaign?',
-                    why: 'Compare it to the ads beside it, never to a number you read somewhere. The middle one, not the average.',
+                    id: 'ctr', step: 'Click rate', q: 'How is the click rate next to the other ads in that campaign?',
+                    why: 'Compare it to the ads beside it, not to a number you read somewhere.',
                     o: [{ t: 'Low from the day it launched', v: 'launch' },
                     { t: 'It was good, then fell', v: 'fell' },
                     { t: 'Fine, in line or better', v: 'fine' },
                     { t: 'I do not know', v: 'unknown' }]
                 },
                 {
-                    id: 'freq', step: 'Frequency', q: 'Which way is frequency moving on that ad?',
-                    why: 'Against its own history over the last couple of weeks. <b>The direction matters, not the level.</b>',
+                    id: 'freq', step: 'Frequency', q: 'Is frequency going up or down on that ad?',
+                    why: 'Over the last couple of weeks. <b>The direction matters, not the number.</b>',
                     o: [{ t: 'Climbing', v: 'up' }, { t: 'Flat or falling', v: 'flat' }, { t: 'I do not know', v: 'unknown' }]
                 },
                 {
-                    id: 'concepts', step: 'Creative variety', q: 'How many genuinely different ideas are running in that campaign?',
-                    why: 'Different <b>arguments</b>, not different edits. If two ads share a hook, a claim and a format, count them as one.',
+                    id: 'concepts', step: 'Creative variety', q: 'How many different ideas are running in that campaign?',
+                    why: 'Different <b>arguments</b>, not different edits. Same hook and claim counts as one.',
                     o: [{ t: 'Three or fewer', v: 'few' }, { t: 'Four or more', v: 'many' }, { t: 'I do not know', v: 'unknown' }]
                 },
                 {
-                    id: 'cpm', step: 'Cost to reach', q: 'Is CPM up, and if so did purchases per 1,000 impressions go up with it?',
-                    why: 'Almost nobody asks the second half. A rising CPM can mean the auction found <b>better</b> people, which is working, not broken.',
+                    id: 'cpm', step: 'Cost to reach', q: 'If CPM went up, did sales per 1,000 views go up too?',
+                    why: 'Most people skip the second half. A higher CPM can mean you found <b>better</b> buyers.',
                     o: [{ t: 'CPM up, purchases per 1,000 also up', v: 'up-good' },
                     { t: 'CPM up, purchases flat or down', v: 'up-bad' },
                     { t: 'CPM is about normal', v: 'normal' },
                     { t: 'I do not know', v: 'unknown' }]
                 },
                 {
-                    id: 'starved', step: 'Spend spread', q: 'How many of your live ads got under $50 of spend last week?',
-                    why: 'An ad below that is not losing, it is untested, and it is taking delivery from ads that were about to prove themselves.',
+                    id: 'starved', step: 'Spend spread', q: 'How many live ads spent under $50 last week?',
+                    why: 'An ad under that has not lost. It is untested, and it is eating someone else's delivery.',
                     o: [{ t: 'Quite a few', s: 'more than a couple', v: 'many' }, { t: 'Hardly any', v: 'few' }, { t: 'I do not know', v: 'unknown' }]
                 },
                 {
-                    id: 'aov', step: 'Order value', q: 'Has your average order value dropped without you changing the offer?',
-                    why: 'Volume bidding has no reference to order value. If a cheap product and an expensive one share an ad set, it will go and buy the cheap one.',
+                    id: 'aov', step: 'Order value', q: 'Has your average order value dropped on its own?',
+                    why: 'Bidding for volume ignores order value. Put a cheap and a pricey product together and it buys the cheap one.',
                     o: [{ t: 'Yes, it has fallen', v: 'down' }, { t: 'No, it is steady', v: 'steady' }, { t: 'I do not know', v: 'unknown' }]
                 },
                 {
-                    id: 'funnel', step: 'After the click', q: 'Where do people drop off after clicking?',
-                    why: 'Walk it: click, landing page view, add to cart, checkout, purchase. Compare each step to your own normal.',
+                    id: 'funnel', step: 'After the click', q: 'Where do people drop off after they click?',
+                    why: 'Walk it: click, page view, add to cart, checkout, purchase. Compare each step to your own normal.',
                     o: [{ t: 'One step is clearly worse', s: 'page, cart or checkout', v: 'step' },
                     { t: 'It is flat all the way down', s: 'nothing converts well', v: 'flat' },
                     { t: 'It looks normal', v: 'fine' },
