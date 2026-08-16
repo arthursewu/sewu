@@ -230,3 +230,6 @@ ul.cases{gap:28px 36px}
   .hero-band{padding:38px 0 32px}
   .hero-band h1{font-size:clamp(46px,11.5vw,64px);max-width:none;letter-spacing:-.03em}
 }
+
+/* at 100px, weight 800 closes the counters and reads as volume, not authority */
+.hero h1,.hero-band h1{font-weight:600}
