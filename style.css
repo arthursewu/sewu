@@ -278,18 +278,10 @@ footer .ft-legal{margin:40px 0 0;padding-top:22px;border-top:1px solid #232936;f
 }
 @media(max-width:420px){ footer .ft-grid{grid-template-columns:1fr} }
 
-/* ---- contact: copy left, form right, white ground ---- */
+/* ---- contact: everything stacked left ---- */
 .contact{padding:64px 0 80px}
-.contact-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.05fr);gap:64px;align-items:start}
-.contact-form{order:1}
-.contact-copy{order:2}
-.contact-copy h1{font-size:clamp(40px,5.4vw,72px);line-height:1;letter-spacing:-.035em;font-weight:600;max-width:12ch}
+.contact-grid{display:block;max-width:640px}
+.contact-copy h1{font-size:clamp(40px,5.4vw,72px);line-height:1;letter-spacing:-.035em;font-weight:600}
 .contact-copy .lead{font-size:clamp(18px,1.6vw,21px);margin-top:20px;max-width:34ch}
-.contact-form form{margin:0;max-width:none;padding-top:8px}
-@media(max-width:860px){
-  .contact{padding:44px 0 56px}
-  .contact-grid{grid-template-columns:1fr;gap:36px}
-  .contact-copy{order:1}
-  .contact-form{order:2}
-  .contact-copy h1{max-width:none}
-}
+.contact-form form{margin:44px 0 0;max-width:none}
+@media(max-width:860px){ .contact{padding:44px 0 56px} .contact-form form{margin-top:34px} }
