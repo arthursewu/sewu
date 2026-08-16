@@ -355,7 +355,7 @@
                 backBtn.hidden = true;
                 card.innerHTML = '<div class="step">First</div>' +
                     '<div class="q">Where should I send your Scale Report?</div>' +
-                    '<p class="why">Your report is <b>emailed to you</b>, not shown here. Use an address you actually read.</p>' +
+                    '<p class="why">Your findings appear on screen. <b>The Scale Report with the fixes is emailed to you</b>, so use an address you actually read.</p>' +
                     '<div class="intake">' +
                     '<label for="nm">Your name</label><input id="nm" type="text" autocomplete="given-name" placeholder="Arthur">' +
                     '<label for="em">Email</label><input id="em" type="email" autocomplete="email" placeholder="you@brand.com">' +
@@ -383,76 +383,49 @@
             }
 
 
-            function stripTags(x) { return String(x).replace(/<[^>]*>/g, ''); }
+            // Subscribes to beehiiv, which sends the welcome email carrying the
+            // report link. Publication is set in BEEHIIV_FORM below.
+            var BEEHIIV_FORM = '';   // <-- paste the beehiiv embed form action URL here
 
-            function buildEmail(res) {
-                var p = res[0], f = FIX[p.key] || FIX.UNCLEAR, i, L = [];
-                L.push('Here it is.');
-                L.push('');
-                L.push('WHAT WE FOUND');
-                L.push(p.f.k.toUpperCase() + ' - ' + stripTags(p.f.h));
-                L.push('');
-                L.push(stripTags(p.f.lead));
-                L.push('');
-                L.push(stripTags(p.f.body));
-                L.push('');
-                L.push('WHAT TO DO');
-                for (i = 0; i < f.d.length; i++) { L.push((i + 1) + '. ' + f.d[i]); }
-                L.push('');
-                L.push('WHAT NOT TO DO');
-                for (i = 0; i < f.n.length; i++) { L.push('- ' + f.n[i]); }
-                L.push('');
-                L.push('Read that second list first. The wrong fix is the expensive part.');
-                L.push('');
-                L.push('THE TELL');
-                L.push(stripTags(p.f.tell));
-                if (res.length > 1) {
-                    L.push('');
-                    L.push('ALSO WORTH CHECKING');
-                    for (i = 1; i < res.length; i++) { L.push('- ' + res[i].f.k + ': ' + stripTags(res[i].f.h)); }
-                    L.push('');
-                    L.push('The fixes for those are here: https://sewu.org/report');
-                }
-                L.push('');
-                L.push('I am Arthur. I run Meta and Google ads for DTC brands and I make the ads too.');
-                L.push('I will email you when I have something worth reading. Not before.');
-                L.push('');
-                L.push('Arthur');
-                L.push('sewu.org');
-                return L.join('\n');
-            }
-
-            function sendLead(res) {
+            function subscribe(res) {
+                if (!BEEHIIV_FORM) return;
                 try {
-                    fetch('https://formsubmit.co/ajax/arthur@sewu.org', {
-                        method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-                        body: JSON.stringify({
-                            _subject: 'Scale Report: ' + res[0].key + ' (' + lead.name + ')',
-                            _replyto: lead.email,
-                            _autoresponse: buildEmail(res),
-                            name: lead.name, email: lead.email,
-                            primary: res[0].key + ' - ' + res[0].f.h,
-                            also: res.slice(1).map(function (r) { return r.key; }).join(', ') || 'none',
-                            answers: Q.map(function (q) { return q.id + '=' + (A[q.id] || '-'); }).join('  |  ')
-                        })
-                    }).catch(function () { });
+                    var fd = new FormData();
+                    fd.append('email', lead.email);
+                    fd.append('first_name', lead.name);
+                    fd.append('utm_source', 'scale-report');
+                    fd.append('utm_medium', res[0].key);
+                    fetch(BEEHIIV_FORM, { method: 'POST', body: fd, mode: 'no-cors' }).catch(function () { });
                 } catch (e) { }
             }
 
             function finish() {
-                var res = score(), p = res[0].f, rest = res.slice(1);
-                sendLead(res);
                 bar.innerHTML = Q.map(function () { return '<i class="on"></i>'; }).join('');
                 backBtn.hidden = true;
 
+                var res = score(), p = res[0].f, rest = res.slice(1);
                 var safe = lead.email.replace(/[<>&]/g, '');
-                var h = '<div class="verdict"><span class="k">Done</span>' +
-                    '<h2>Your Scale Report is on its way</h2>' +
-                    '<p class="lead-in">I have just emailed it to <b>' + safe + '</b>.</p>' +
-                    '<p>It names what we found, the step by step for fixing it, and the list of things <b>not</b> to do about it. That second list is the one that matters, because the wrong fix is the expensive part.</p>' +
-                    '<p>If it is not there in a minute, check spam.</p></div>' +
-                    '<div class="tell">The report is only sent by email, so it needs an address you actually read. Nothing else is shown here.</div>' +
-                    '<p class="again"><button class="btn" id="restart" type="button">Run it on another ad</button></p>';
+                subscribe(res);
+                bar.innerHTML = Q.map(function () { return '<i class="on"></i>'; }).join('');
+                backBtn.hidden = true;
+
+                var h = '<div class="verdict ' + p.tone + '"><span class="k">' + p.k + '</span><h2>' + p.h + '</h2>' +
+                    '<p class="lead-in">' + p.lead + '</p><p>' + p.body + '</p></div>';
+
+                if (rest.length) {
+                    h += '<div class="also"><h3>Also worth checking</h3>' + rest.map(function (r) {
+                        return '<div class="row"><b>' + r.f.k + ' &middot; ' + r.f.h + '</b><span>' + r.f.short + '</span></div>';
+                    }).join('') + '</div>';
+                }
+
+                h += '<div class="tell">' + p.tell + '</div>';
+
+                h += '<div class="inbox"><h3>The fixes are on their way</h3>' +
+                    '<p>That is what is wrong. <b>What to do about it, and the list of things not to do</b>, are in the Scale Report heading to <b>' + safe + '</b> now.</p>' +
+                    '<p style="margin-top:12px">The second list is the one that matters. The wrong fix is the expensive part.</p></div>';
+
+                h += '<p class="again"><button class="btn" id="restart" type="button">Run it on another ad</button></p>';
+
                 card.outerHTML = '<div id="card">' + h + '</div>';
                 document.getElementById('card').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 document.getElementById('restart').addEventListener('click', function () { location.reload(); });
