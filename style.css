@@ -160,3 +160,16 @@ ul.cases li{background:var(--panel);border:1px solid var(--line);border-left:3px
 ul.cases p{color:var(--mute);margin:0 0 6px;font-size:15.5px;line-height:1.5;max-width:none}
 ul.cases b{display:block;margin-top:10px;color:var(--ink);font-size:17px;font-weight:800}
 @media(max-width:700px){ ul.cases{grid-template-columns:1fr} }
+
+/* ---- mobile nav: logo + one button only ---- */
+.nav a.cta,.nav a.lnk{white-space:nowrap}
+@media(max-width:620px){
+  .nav .wrap{padding:11px 18px}
+  .nav a.lnk{display:none}          /* secondary route lives on /contact, reachable from the report */
+  .nav .brand b{font-size:18px}
+  .nav a.cta{font-size:13px;padding:9px 13px}
+}
+@media(max-width:380px){
+  .nav .brand b{font-size:17px}
+  .nav a.cta{font-size:12.5px;padding:8px 11px}
+}
