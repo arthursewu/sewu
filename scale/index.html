@@ -89,6 +89,12 @@
         .preview p { color: var(--mute); font-size: 14.5px; margin: 0; }
         .preview .cap { font-size: 12px; color: var(--mute); margin-top: 13px; letter-spacing: .04em; text-transform: uppercase; }
         .again { margin-top: 22px; }
+        .getfix { border: 1px solid var(--accent); border-radius: 14px; padding: 30px 30px 26px; background: rgba(74,222,128,.05); }
+        .getfix h2 { margin-bottom: 12px; }
+        .getfix p { color: var(--mute); }
+        .getfix p b { color: var(--ink); }
+        .bhv-embed { margin: 22px 0 6px; }
+        #bhv[hidden] { display: none; }
         .backlink { font-size: 14px; color: var(--mute); text-decoration: none; }
         .backlink:hover { color: var(--ink); }
     </style>
@@ -105,7 +111,7 @@
             <h1>Get your Scale Report. In under 60 seconds.</h1>
             <p class="lead">The one thing holding this account back: creative, media buying, or funnel. Most people
                 guess, fix the wrong one, and pay for it twice.</p>
-            <p>Nine questions, all of them comparing your account against itself. There are no benchmarks in here,
+            <p>Nine questions, no email needed to answer them, all of them comparing your account against itself. There are no benchmarks in here,
                 because another brand's numbers tell you nothing about yours.</p>
 
             <div class="preview">
@@ -123,6 +129,23 @@
             <div class="bar" id="bar"></div>
             <div class="card" id="card"></div>
             <button id="back" hidden>&larr; back</button>
+        </div>
+    </section>
+
+    <section id="bhv" hidden>
+        <div class="wrap doc">
+            <div class="getfix">
+                <p class="eyebrow">Now the fixes</p>
+                <h2>Where should I send the Scale Report?</h2>
+                <p>That is what is wrong. The report is the other half: the step by step for fixing it, and the list of
+                    things <b>not</b> to do about it. The second list is the one that matters, because the wrong fix is
+                    the expensive part.</p>
+                <div class="bhv-embed">
+                    <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js"
+                        data-beehiiv-form="6081c35f-2a79-4340-8cc8-b874394ae699"></script>
+                </div>
+                <p class="fineprint">No spam, no selling your details, no sales call unless you ask for one.</p>
+            </div>
         </div>
     </section>
 
@@ -145,7 +168,7 @@
     <script>
         (function () {
             var card = document.getElementById('card'), bar = document.getElementById('bar'), backBtn = document.getElementById('back');
-            var lead = { name: '', email: '' }, hist = [], A = {}, idx = 0;
+            var hist = [], A = {}, idx = 0;
 
             var FIX = {
                 TRACKING: { d: ['Change your REPORTING to 7-day click. Ads Manager, Columns, Compare attribution settings.','Do NOT change your optimisation window. 1-day view feeds the conversion model. Reporting only.','Exclude existing customers on cold campaigns, then see if platform ROAS lands near your acquisition MER.','If account MER says 3 and Meta says 9, find the attribution column that equals 3 and use only that one.'], n: ['Brief a creative round off the current numbers.','Scale anything that looks like a winner on the inflated figure.'] },
@@ -350,28 +373,8 @@
                 bar.innerHTML = Q.map(function (_, j) { return '<i class="' + (j < idx ? 'on' : '') + '"></i>'; }).join('');
             }
 
-            function renderIntake() {
-                bar.innerHTML = Q.map(function () { return '<i></i>'; }).join('');
-                backBtn.hidden = true;
-                card.innerHTML = '<div class="step">First</div>' +
-                    '<div class="q">Where should I send your Scale Report?</div>' +
-                    '<p class="why">Your findings appear on screen. <b>The Scale Report with the fixes is emailed to you</b>, so use an address you actually read.</p>' +
-                    '<div class="intake">' +
-                    '<label for="nm">Your name</label><input id="nm" type="text" autocomplete="given-name" placeholder="Arthur">' +
-                    '<label for="em">Email</label><input id="em" type="email" autocomplete="email" placeholder="you@brand.com">' +
-                    '<div id="er"></div>' +
-                    '<button class="btn btn-block" id="go" type="button">Start the report</button>' +
-                    '<p class="fineprint">No spam, no selling your details, no sales call unless you ask for one.</p></div>';
-                document.getElementById('go').addEventListener('click', function () {
-                    var nm = document.getElementById('nm').value.trim(), em = document.getElementById('em').value.trim();
-                    var ok = /^[^@\s]+@[^@\s]+\.[^@\s]{2,}$/.test(em);
-                    if (!nm || !ok) { document.getElementById('er').innerHTML = '<p class="err">' + (!nm ? 'Name first. ' : '') + (!ok ? 'That email does not look right.' : '') + '</p>'; return; }
-                    lead.name = nm; lead.email = em; idx = 0; render();
-                });
-            }
 
             function render() {
-                if (idx < 0) return renderIntake();
                 if (idx >= Q.length) return finish();
                 var q = Q[idx]; drawBar(); backBtn.hidden = idx === 0;
                 card.innerHTML = '<div class="step">' + q.step + '</div>' +
@@ -383,20 +386,12 @@
             }
 
 
-            // Subscribes to beehiiv, which sends the welcome email carrying the
-            // report link. Publication is set in BEEHIIV_FORM below.
-            var BEEHIIV_FORM = '';   // <-- paste the beehiiv embed form action URL here
-
-            function subscribe(res) {
-                if (!BEEHIIV_FORM) return;
-                try {
-                    var fd = new FormData();
-                    fd.append('email', lead.email);
-                    fd.append('first_name', lead.name);
-                    fd.append('utm_source', 'scale-report');
-                    fd.append('utm_medium', res[0].key);
-                    fetch(BEEHIIV_FORM, { method: 'POST', body: fd, mode: 'no-cors' }).catch(function () { });
-                } catch (e) { }
+            function revealForm(key) {
+                var box = document.getElementById('bhv');
+                if (!box) return;
+                box.hidden = false;
+                var t = document.getElementById('bhv-track');
+                if (t) { t.value = key; }
             }
 
             function finish() {
@@ -404,8 +399,6 @@
                 backBtn.hidden = true;
 
                 var res = score(), p = res[0].f, rest = res.slice(1);
-                var safe = lead.email.replace(/[<>&]/g, '');
-                subscribe(res);
                 bar.innerHTML = Q.map(function () { return '<i class="on"></i>'; }).join('');
                 backBtn.hidden = true;
 
@@ -419,14 +412,10 @@
                 }
 
                 h += '<div class="tell">' + p.tell + '</div>';
-
-                h += '<div class="inbox"><h3>The fixes are on their way</h3>' +
-                    '<p>That is what is wrong. <b>What to do about it, and the list of things not to do</b>, are in the Scale Report heading to <b>' + safe + '</b> now.</p>' +
-                    '<p style="margin-top:12px">The second list is the one that matters. The wrong fix is the expensive part.</p></div>';
-
                 h += '<p class="again"><button class="btn" id="restart" type="button">Run it on another ad</button></p>';
 
                 card.outerHTML = '<div id="card">' + h + '</div>';
+                revealForm(res[0].key);
                 document.getElementById('card').scrollIntoView({ behavior: 'smooth', block: 'start' });
                 document.getElementById('restart').addEventListener('click', function () { location.reload(); });
             }
@@ -442,7 +431,7 @@
                 idx = hist.pop(); render();
             });
 
-            idx = -1; render();
+            idx = 0; render();
         })();
     </script>
 </body>
