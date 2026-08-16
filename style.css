@@ -278,14 +278,12 @@ footer .ft-legal{margin:40px 0 0;padding-top:22px;border-top:1px solid #232936;f
 }
 @media(max-width:420px){ footer .ft-grid{grid-template-columns:1fr} }
 
-/* ---- contact: copy + form stacked LEFT, proof aside RIGHT ---- */
-.contact{padding:64px 0 80px}
+/* ---- contact: dark heading band, then form LEFT + proof aside RIGHT on white ---- */
+.contact{padding:56px 0 80px}
 .contact-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:72px;align-items:start;max-width:none}
 .contact-main{max-width:600px}
-.contact-copy h1{font-size:clamp(40px,5.4vw,72px);line-height:1;letter-spacing:-.035em;font-weight:600}
-.contact-copy .lead{font-size:clamp(18px,1.6vw,21px);margin-top:20px;max-width:34ch}
-.contact-form form{margin:44px 0 0;max-width:none}
-.contact-aside{padding-top:10px}
+.contact-form form{margin:0;max-width:none}
+.contact-aside{padding-top:2px}
 .aside-k{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--mute);font-weight:800;margin:0 0 18px}
 .aside-list{list-style:none;padding:0;margin:0}
 .aside-list li{padding:14px 0;border-top:1px solid var(--line);color:var(--mute);font-size:15px;line-height:1.5}
@@ -295,8 +293,7 @@ footer .ft-legal{margin:40px 0 0;padding-top:22px;border-top:1px solid #232936;f
 .aside-stats b{display:block;font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1;color:var(--ink)}
 .aside-stats span{display:block;margin-top:8px;font-size:13px;color:var(--mute)}
 @media(max-width:900px){
-  .contact{padding:44px 0 56px}
+  .contact{padding:40px 0 56px}
   .contact-grid{grid-template-columns:1fr;gap:44px}
   .contact-main{max-width:none}
-  .contact-form form{margin-top:34px}
 }
