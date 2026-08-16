@@ -1,7 +1,35 @@
 :root{
-  --bg:#0b0d10; --panel:#131720; --line:#232936;
-  --ink:#f2f5f8; --mute:#98a4b3; --accent:#4ade80; --accent-ink:#06240f;
-  --w:960px;
+  /* surfaces */
+  --bg:#0b0d10; --panel:#131720; --panel-2:#151b26; --raise:#1e2634; --raise-2:#263142;
+  --line:#232936; --line-2:#263041; --line-3:#334054;
+  /* type */
+  --ink:#f2f5f8; --mute:#98a4b3; --mute-2:#93a0b4; --faint:#6f7c90; --chev:#7c8aa0;
+  /* brand green */
+  --accent:#4ade80;          /* fills only  */
+  --accent-ink:#06240f;      /* text on a fill */
+  --accent-text:#4ade80;     /* green as text / border / icon */
+  --accent-wash:rgba(74,222,128,.07);
+  --accent-wash-2:rgba(74,222,128,.05);
+  /* nav */
+  --nav-bg:rgba(11,13,16,.82); --nav-ink:#f2f5f8; --nav-line:#232936;
+  /* states */
+  --warn:#b45309; --warn-ink:#fcd9a4; --warn-wash:rgba(180,83,9,.1); --err:#fca5a5;
+  --shadow:0 18px 44px rgba(0,0,0,.45);
+  --lead:#dbe3ec;
+}
+html[data-theme="light"]{
+  --bg:#ffffff; --panel:#f4f6f8; --panel-2:#ffffff; --raise:#ffffff; --raise-2:#f0f3f6;
+  --line:#e2e8f0; --line-2:#e2e8f0; --line-3:#cbd5e1;
+  --ink:#0d1117; --mute:#4d5866; --mute-2:#5b6673; --faint:#71808f; --chev:#94a3b8;
+  --accent:#4ade80;
+  --accent-ink:#06240f;
+  --accent-text:#15803d;     /* 5.02:1 on white - the bright green fails at 1.74:1 */
+  --accent-wash:rgba(21,128,61,.06);
+  --accent-wash-2:rgba(21,128,61,.04);
+  --nav-bg:rgba(13,17,23,.94); --nav-ink:#ffffff; --nav-line:#0d1117;
+  --warn:#b45309; --warn-ink:#7c3d06; --warn-wash:rgba(180,83,9,.08); --err:#b91c1c;
+  --shadow:0 10px 30px rgba(13,17,23,.08);
+  --lead:#334155;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
@@ -15,8 +43,8 @@ h1{font-size:clamp(32px,6vw,56px);font-weight:800}
 h2{font-size:clamp(26px,4vw,38px);font-weight:800}
 h3{font-size:20px;font-weight:700;margin-bottom:8px}
 p{margin:0 0 14px;max-width:62ch}
-.lead{font-size:clamp(19px,2.4vw,24px);color:#dbe3ec;font-weight:600;max-width:60ch}
-.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);font-weight:700;margin-bottom:16px}
+.lead{font-size:clamp(19px,2.4vw,24px);color:var(--lead);font-weight:600;max-width:60ch}
+.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text);font-weight:700;margin-bottom:16px}
 .logo{font-size:22px;font-weight:800;letter-spacing:-.03em}
 header{padding:28px 0}
 .btn{display:inline-block;background:var(--accent);color:var(--accent-ink);
@@ -36,25 +64,25 @@ header{padding:28px 0}
 .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:24px}
 .card p{color:var(--mute);margin:0;font-size:16px}
-.case{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);
+.case{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent-text);
   border-radius:10px;padding:28px}
 .case p{margin:0 0 8px}
-.case .big{font-size:clamp(22px,3.2vw,30px);font-weight:800;color:var(--accent);margin-top:14px}
+.case .big{font-size:clamp(22px,3.2vw,30px);font-weight:800;color:var(--accent-text);margin-top:14px}
 .shots{display:grid;grid-template-columns:1fr;gap:18px;margin-top:26px;max-width:760px}
-figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+figure{margin:0;background:var(--bg);border:1px solid var(--line);border-radius:10px;overflow:hidden}
 figure img{display:block;width:100%;height:auto}
 figcaption{font-size:13px;color:var(--mute);padding:12px 14px;border-top:1px solid var(--line)}
 ul.plain{list-style:none;padding:0;margin:0}
 ul.plain{max-width:70ch}
 ul.plain li{padding:11px 0 11px 28px;border-bottom:1px solid var(--line);position:relative;color:var(--mute)}
-ul.plain li:before{content:"";position:absolute;left:4px;top:19px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+ul.plain li:before{content:"";position:absolute;left:4px;top:19px;width:8px;height:8px;border-radius:50%;background:var(--accent-text)}
 ul.plain li b{color:var(--ink)}
 form{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:28px;margin-top:28px}
 label{display:block;font-size:14px;font-weight:600;margin:18px 0 7px}
 input,select,textarea{width:100%;background:var(--bg);color:var(--ink);border:1px solid var(--line);
   border-radius:8px;padding:14px;font:inherit;font-size:16px}
 textarea{min-height:110px;resize:vertical}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:1px}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent-text);outline-offset:1px}
 form .btn-block{margin-top:26px}
 footer{padding:44px 0 60px;border-top:1px solid var(--line);color:var(--mute);font-size:13px}
 footer p{max-width:none}
@@ -69,15 +97,15 @@ footer p{max-width:none}
 .announce a{color:var(--accent-ink);text-decoration:none;border-bottom:1px solid rgba(6,36,15,.4)}
 .announce a:hover{border-bottom-color:var(--accent-ink)}
 
-.nav{position:sticky;top:0;z-index:50;background:rgba(11,13,16,.88);
-  backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--line)}
+.nav{position:sticky;top:0;z-index:50;background:var(--nav-bg);
+  backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--nav-line)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 24px}
-.nav .brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--ink)}
+.nav .brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--nav-ink)}
 .nav .brand b{font-size:20px;font-weight:800;letter-spacing:-.03em}
 .nav .brand .mk{width:26px;height:26px;display:block;flex:0 0 26px}
 .nav ul{list-style:none;display:flex;align-items:center;gap:26px;margin:0;padding:0}
 .nav a.lnk{color:var(--mute);text-decoration:none;font-size:15px;font-weight:600}
-.nav a.lnk:hover,.nav a.lnk[aria-current]{color:var(--ink)}
+.nav a.lnk:hover,.nav a.lnk[aria-current]{color:var(--nav-ink)}
 .nav a.cta{background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:800;
   font-size:14.5px;padding:10px 18px;border-radius:8px}
 .nav a.cta:hover{filter:brightness(1.08)}

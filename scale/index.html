@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
@@ -19,48 +19,48 @@
         .doc p { max-width: 62ch; }
 
         .card {
-            background: #151b26; border: 1px solid #263041; border-radius: 16px;
+            background: var(--panel-2); border: 1px solid var(--line-2); border-radius: 16px;
             padding: 30px 30px 26px; display: flex; flex-direction: column;
-            box-shadow: 0 18px 44px rgba(0,0,0,.45);
+            box-shadow: var(--shadow);
         }
-        .step { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+        .step { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text);
                 font-weight: 700; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: baseline; }
-        .step em { font-style: normal; color: #6f7c90; letter-spacing: .06em; font-weight: 600; }
+        .step em { font-style: normal; color: var(--faint); letter-spacing: .06em; font-weight: 600; }
         .q { font-size: clamp(21px, 3.2vw, 28px); font-weight: 800; line-height: 1.2; letter-spacing: -.02em; margin: 0 0 10px; }
-        .why { color: #97a3b6; font-size: 15px; margin: 0 0 24px; max-width: 54ch; line-height: 1.55; }
+        .why { color: var(--mute-2); font-size: 15px; margin: 0 0 24px; max-width: 54ch; line-height: 1.55; }
         .why b { color: var(--ink); }
         .opts { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
         .opts button {
-            position: relative; text-align: left; background: #1e2634; color: var(--ink);
-            border: 1px solid #334054; border-radius: 11px; padding: 15px 46px 15px 18px;
+            position: relative; text-align: left; background: var(--raise); color: var(--ink);
+            border: 1px solid var(--line-3); border-radius: 11px; padding: 15px 46px 15px 18px;
             font: inherit; font-size: 16.5px; font-weight: 600; cursor: pointer;
             transition: background .12s, border-color .12s, transform .08s;
         }
         .opts button:after {
             content: ""; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px;
-            border-right: 2px solid #7c8aa0; border-bottom: 2px solid #7c8aa0;
+            border-right: 2px solid var(--chev); border-bottom: 2px solid var(--chev);
             transform: translateY(-60%) rotate(-45deg); transition: border-color .12s;
         }
         .opts button:hover {
-            background: #263142; border-color: var(--accent); transform: translateX(2px);
+            background: var(--raise-2); border-color: var(--accent-text); transform: translateX(2px);
         }
-        .opts button:hover:after { border-color: var(--accent); }
+        .opts button:hover:after { border-color: var(--accent-text); }
         .opts button:active { transform: translateX(0) scale(.995); }
-        .opts button small { display: block; font-weight: 400; font-size: 13.5px; color: #93a0b4; margin-top: 3px; }
+        .opts button small { display: block; font-weight: 400; font-size: 13.5px; color: var(--mute-2); margin-top: 3px; }
 
-        .bar { height: 4px; background: #1e2634; border-radius: 3px; margin: 0 0 22px; overflow: hidden; }
-        .bar span { display: block; height: 100%; background: var(--accent); border-radius: 3px;
+        .bar { height: 4px; background: var(--raise); border-radius: 3px; margin: 0 0 22px; overflow: hidden; }
+        .bar span { display: block; height: 100%; background: var(--accent-text); border-radius: 3px;
                     transition: width .25s ease; }
 
         #back { background: none; border: 0; color: var(--mute); font: inherit; font-size: 14px; cursor: pointer; padding: 14px 0 0; }
         #back[hidden] { display: none; }
 
-        .verdict { border: 1px solid var(--accent); border-left: 4px solid var(--accent); background: rgba(74,222,128,.07); border-radius: 12px; padding: 26px 28px; }
-        .verdict.grey { border-color: var(--line); border-left-color: #6b7280; background: var(--panel); }
-        .verdict.amber { border-color: #b45309; border-left-color: #b45309; background: rgba(180,83,9,.1); }
-        .verdict .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 700; display: block; margin-bottom: 10px; }
+        .verdict { border: 1px solid var(--accent-text); border-left: 4px solid var(--accent-text); background: var(--accent-wash); border-radius: 12px; padding: 26px 28px; }
+        .verdict.grey { border-color: var(--line); border-left-color: var(--faint); background: var(--panel); }
+        .verdict.amber { border-color: var(--warn); border-left-color: var(--warn); background: var(--warn-wash); }
+        .verdict .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); font-weight: 700; display: block; margin-bottom: 10px; }
         .verdict.grey .k { color: var(--mute); }
-        .verdict.amber .k { color: #fcd9a4; }
+        .verdict.amber .k { color: var(--warn-ink); }
         .verdict h2 { margin-bottom: 12px; font-size: clamp(22px,3.2vw,30px); }
         .verdict p { color: var(--mute); margin: 0 0 12px; }
         .verdict p.lead-in { color: var(--ink); font-size: 17px; }
@@ -76,7 +76,7 @@
         .tell { margin-top: 22px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; font-size: 15px; color: var(--mute); }
         .tell b { color: var(--ink); }
 
-        .inbox { margin-top: 24px; border: 1px solid var(--accent); border-radius: 12px; padding: 22px 24px; background: rgba(74,222,128,.05); }
+        .inbox { margin-top: 24px; border: 1px solid var(--accent-text); border-radius: 12px; padding: 22px 24px; background: var(--accent-wash-2); }
         .inbox h3 { margin-bottom: 8px; font-size: 19px; }
         .inbox p { color: var(--mute); margin: 0; font-size: 15.5px; }
         .inbox p b { color: var(--ink); }
@@ -89,21 +89,21 @@
             display: flex; align-items: center; justify-content: center;
         }
         ol.trace li.hit { color: var(--ink); }
-        ol.trace li.hit:before { border-color: var(--accent); color: var(--accent); }
+        ol.trace li.hit:before { border-color: var(--accent-text); color: var(--accent-text); }
 
         .intake label { margin-top: 15px; }
         .intake input { width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 9px; padding: 14px; font: inherit; font-size: 16px; }
-        .intake input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+        .intake input:focus { outline: 2px solid var(--accent-text); outline-offset: 1px; }
         .intake .btn { margin-top: 20px; }
         .fineprint { font-size: 13px; color: var(--mute); margin: 13px 0 0; }
-        .err { color: #fca5a5; font-size: 14px; margin: 9px 0 0; }
+        .err { color: var(--err); font-size: 14px; margin: 9px 0 0; }
         .preview { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 20px 22px; margin: 24px 0 0; }
-        .preview .pk { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+        .preview .pk { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); font-weight: 700; }
         .preview h3 { margin: 8px 0 6px; font-size: 19px; }
         .preview p { color: var(--mute); font-size: 14.5px; margin: 0; }
         .preview .cap { font-size: 12px; color: var(--mute); margin-top: 13px; letter-spacing: .04em; text-transform: uppercase; }
         .again { margin-top: 22px; }
-        .getfix { border: 1px solid var(--accent); border-radius: 14px; padding: 30px 30px 26px; background: rgba(74,222,128,.05); }
+        .getfix { border: 1px solid var(--accent-text); border-radius: 14px; padding: 30px 30px 26px; background: var(--accent-wash-2); }
         .getfix h2 { margin-bottom: 12px; }
         .getfix p { color: var(--mute); }
         .getfix p b { color: var(--ink); }
