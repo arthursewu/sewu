@@ -175,9 +175,6 @@ ul.cases b{display:block;margin-top:10px;color:var(--ink);font-size:17px;font-we
 }
 
 /* ---- editorial: serif display, rules instead of card fills ---- */
-h1{font-family:'Instrument Serif',Georgia,'Times New Roman',serif;font-weight:400;
-   letter-spacing:-.01em;line-height:1.03}
-.lead{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400}
 /* static content loses its box and gains a rule; interactive elements keep their fill */
 .stat,ul.cases li{background:transparent;border:0;border-top:1px solid var(--ink);
    border-radius:0;padding:15px 0 0}
@@ -186,8 +183,6 @@ ul.cases{gap:28px 36px}
 @media(max-width:760px){ .stats{gap:20px} ul.cases{gap:22px} }
 
 /* h2/h3 follow h1 into the serif so the hierarchy is one voice */
-h2{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-.01em}
-h3{font-family:'Instrument Serif',Georgia,serif;font-weight:400;letter-spacing:-.01em}
 /* static panels on /scale and /report lose their fill, same as the homepage */
 .preview,.toc,.sub,.also,.tell{background:transparent!important}
 .preview,.toc{border:0!important;border-top:1px solid var(--ink)!important;border-radius:0!important;
