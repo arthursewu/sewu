@@ -1,0 +1,76 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0d10;color:#f2f5f8;font:400 14px/1.5 Inter,sans-serif;padding:40px}
+h1{font-size:23px;font-weight:800;margin:0 0 4px}
+.sub{color:#98a4b3;font-size:14px;margin:0 0 26px;max-width:90ch}
+.sub b{color:#4ade80}
+h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#4ade80;margin:30px 0 13px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}
+.c{background:#151b26;border:1px solid #263041;border-radius:11px;padding:18px 14px 13px;text-align:center}
+.c .lg{width:64px;height:64px;margin:0 auto}
+.c .rowm{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:13px;padding-top:12px;border-top:1px solid #263041}
+.c .s24{width:24px;height:24px}.c .s18{width:18px;height:18px}.c .s14{width:14px;height:14px}
+.c .id{font-size:12.5px;font-weight:800;margin-top:10px}
+.c .nm{font-size:11.5px;color:#8d99ab;line-height:1.4;margin-top:3px;min-height:32px}
+.locks{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;max-width:820px}
+.lock{background:#0b0d10;border:1px solid #232936;border-radius:10px;padding:14px 17px;display:flex;align-items:center;gap:11px}
+.lock b{font-size:20px;font-weight:800;letter-spacing:-.03em}
+.lock .m{width:26px;height:26px;flex:0 0 26px}
+.tab{display:inline-flex;align-items:center;gap:7px;background:#1e2634;border-radius:7px 7px 0 0;padding:8px 13px 8px 10px;font-size:12.5px;color:#c7d0dc;margin-top:8px}
+</style></head><body>
+<h1>Growth lines — the full family</h1>
+<p class="sub">Bars read as <b>wifi</b> at small size, so they are out. A line has no such collision. The test here is the 14px column: strokes thin out, so the boxed versions and the heavier strokes survive best.</p>
+<div id="out"></div>
+<script>
+var A='#4ade80', D='#06240f';
+function bx(inner){return '<rect width="64" height="64" rx="15" fill="'+A+'"/>'+inner}
+function ln(c,w,d){return '<path d="'+d+'" stroke="'+c+'" stroke-width="'+w+'" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'}
+
+var ZIG='M14 46 27 33l9 9 14-18';
+var ZIG2='M12 48 26 34l10 10 16-22';
+var SOFT='M12 48C24 48 30 40 36 30s10-14 16-14';
+
+var FAM={
+ 'Boxed — strongest at small size':{
+  N1:['Zigzag, boxed', bx(ln(D,7,'M16 44 28 32l8 8 12-16'))],
+  N2:['Zigzag + arrowhead', bx(ln(D,7,'M16 44 28 32l8 8 12-16')+ln(D,7,'M40 16h8v8'))],
+  N3:['Zigzag, heavier', bx(ln(D,9,'M17 43 29 31l7 7 11-15'))],
+  N4:['Curve, boxed', bx(ln(D,7,'M16 44C26 44 30 38 34 30s8-12 14-12'))]
+ },
+ 'Open — lighter in the nav':{
+  N5:['Zigzag + dot', ln(A,7,ZIG)+'<circle cx="52" cy="27" r="8" fill="'+A+'"/>'],
+  N6:['Zigzag + arrowhead', ln(A,8,ZIG2)+ln(A,8,'M42 12h12v12')],
+  N7:['Zigzag, plain', ln(A,9,ZIG2)],
+  N8:['Curve + dot', ln(A,8,SOFT)+'<circle cx="53" cy="15" r="7" fill="'+A+'"/>']
+ },
+ 'Line with a base — grounded':{
+  N9:['Line on baseline', '<rect x="8" y="52" width="48" height="5" rx="2.5" fill="'+A+'" opacity=".3"/>'+ln(A,8,'M14 44 27 31l9 9 14-19')],
+  N10:['Line in a frame', '<rect x="5" y="5" width="54" height="54" rx="14" fill="none" stroke="'+A+'" stroke-width="4" opacity=".3"/>'+ln(A,7,'M17 43 28 32l8 8 12-15')],
+  N11:['Rising, thick to thin', ln(A,10,'M13 49 30 32')+ln(A,7,'M30 32l9 9')+ln(A,10,'M39 41 53 21')],
+  N12:['Step-line hybrid', ln(A,8,'M12 48h10l8-12h9l9-16h10')]
+ }
+};
+
+var out=document.getElementById('out');
+Object.keys(FAM).forEach(function(f){
+ var h='<h2>'+f+'</h2><div class="grid">', g=FAM[f];
+ Object.keys(g).forEach(function(id){
+  var inner=g[id][1];
+  function s(){return '<svg viewBox="0 0 64 64" width="100%" height="100%">'+inner+'</svg>'}
+  h+='<div class="c"><div class="lg">'+s()+'</div><div class="rowm"><div class="s24">'+s()+'</div><div class="s18">'+s()+'</div><div class="s14">'+s()+'</div></div><div class="id">'+id+'</div><div class="nm">'+g[id][0]+'</div></div>';
+ });
+ out.insertAdjacentHTML('beforeend',h+'</div>');
+});
+
+var picks=['N1','N2','N5','N6','N9','N12'];
+var all={}; Object.keys(FAM).forEach(function(f){Object.keys(FAM[f]).forEach(function(k){all[k]=FAM[f][k]})});
+var lh='<h2>In the nav, and as a browser tab</h2><div class="locks">';
+picks.forEach(function(p){
+ lh+='<div class="lock"><span class="m"><svg viewBox="0 0 64 64" width="100%" height="100%">'+all[p][1]+'</svg></span><b>sewu</b>'+
+     '<span class="tab"><svg viewBox="0 0 64 64" width="15" height="15">'+all[p][1]+'</svg>Scale Report</span>'+
+     '<span style="margin-left:auto;color:#6f7c90;font-size:11px;font-weight:700">'+p+'</span></div>';
+});
+out.insertAdjacentHTML('beforeend', lh+'</div>');
+</script></body></html>

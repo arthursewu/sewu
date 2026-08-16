@@ -1,0 +1,93 @@
+<!DOCTYPE html><html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0d10;color:#f2f5f8;font:400 14px/1.5 Inter,sans-serif;padding:40px}
+h1{font-size:23px;font-weight:800;margin:0 0 4px}
+.sub{color:#98a4b3;font-size:14px;margin:0 0 26px}
+h2{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#4ade80;margin:34px 0 14px;font-weight:700}
+.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.c{background:#151b26;border:1px solid #263041;border-radius:11px;padding:16px 12px 12px;text-align:center}
+.c .lg{width:56px;height:56px;margin:0 auto}
+.c .rowm{display:flex;align-items:center;justify-content:center;gap:8px;margin-top:12px;padding-top:11px;border-top:1px solid #263041}
+.c .sm{width:18px;height:18px}
+.c .xs{width:14px;height:14px}
+.c .id{font-size:12px;font-weight:800;color:#f2f5f8;margin-top:9px}
+.c .nm{font-size:11px;color:#8d99ab;line-height:1.35;margin-top:2px;min-height:28px}
+.locks{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.lock{background:#0b0d10;border:1px solid #232936;border-radius:10px;padding:14px 16px;display:flex;align-items:center;gap:10px}
+.lock b{font-size:19px;font-weight:800;letter-spacing:-.03em}
+.lock .m{width:24px;height:24px;flex:0 0 24px}
+</style></head><body>
+<h1>sewu — every variation</h1>
+<p class="sub">Each shown at 56px, then 18px and 14px. Green <span style="color:#4ade80">#4ade80</span> on the site's dark ground.</p>
+<div id="out"></div>
+<script>
+var A='#4ade80', D='#06240f', M='#f2f5f8';
+function box(inner){return '<rect width="64" height="64" rx="15" fill="'+A+'"/>'+inner}
+
+var FAM = {
+ 'Bars and steps': {
+  V1:['Steps, boxed', box('<rect x="15" y="38" width="10" height="12" rx="3" fill="'+D+'"/><rect x="27" y="28" width="10" height="22" rx="3" fill="'+D+'"/><rect x="39" y="16" width="10" height="34" rx="3" fill="'+D+'"/>')],
+  V2:['Steps, open', '<rect x="6" y="40" width="14" height="18" rx="4" fill="'+A+'" opacity=".45"/><rect x="25" y="26" width="14" height="32" rx="4" fill="'+A+'" opacity=".7"/><rect x="44" y="8" width="14" height="50" rx="4" fill="'+A+'"/>'],
+  V3:['Steps, solid', '<rect x="6" y="40" width="14" height="18" rx="4" fill="'+A+'"/><rect x="25" y="26" width="14" height="32" rx="4" fill="'+A+'"/><rect x="44" y="8" width="14" height="50" rx="4" fill="'+A+'"/>'],
+  V4:['Steps, 4 bars', '<rect x="5" y="44" width="10" height="14" rx="3" fill="'+A+'" opacity=".35"/><rect x="19" y="34" width="10" height="24" rx="3" fill="'+A+'" opacity=".55"/><rect x="33" y="22" width="10" height="36" rx="3" fill="'+A+'" opacity=".75"/><rect x="47" y="8" width="10" height="50" rx="3" fill="'+A+'"/>'],
+  V5:['Steps, joined', '<path d="M6 44a4 4 0 0 1 4-4h10v18H6Zm20-14a4 4 0 0 1 4-4h10v32H26Zm20-16a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v44H46Z" fill="'+A+'"/>'],
+  V6:['Steps + cap', '<rect x="6" y="40" width="14" height="18" rx="4" fill="'+A+'" opacity=".4"/><rect x="25" y="26" width="14" height="32" rx="4" fill="'+A+'" opacity=".65"/><rect x="44" y="14" width="14" height="44" rx="4" fill="'+A+'"/><circle cx="51" cy="7" r="5" fill="'+A+'"/>']
+ },
+ 'Arrows': {
+  X1:['Arrow, boxed', box('<path d="M32 46V20m0 0-11 11m11-11 11 11" stroke="'+D+'" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>')],
+  X2:['Arrow, open', '<path d="M32 54V14m0 0-15 15m15-15 15 15" stroke="'+A+'" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'],
+  X3:['Arrow, solid', '<path d="M32 6 58 34H45v22H19V34H6Z" fill="'+A+'"/>'],
+  X4:['Diagonal arrow', '<path d="M16 48 48 16m0 0H26m22 0v22" stroke="'+A+'" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'],
+  X5:['Chevron up', '<path d="M12 42 32 22l20 20" stroke="'+A+'" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'],
+  X6:['Double chevron', '<path d="M14 34 32 16l18 18" stroke="'+A+'" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".45"/><path d="M14 50 32 32l18 18" stroke="'+A+'" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>']
+ },
+ 'Growth lines': {
+  L1:['Climb + dot', '<path d="M8 50 26 32l10 10 14-22" stroke="'+A+'" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/><circle cx="52" cy="17" r="9" fill="'+A+'"/>'],
+  L2:['Climb, boxed', box('<path d="M16 44 28 32l8 8 12-16" stroke="'+D+'" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>')],
+  L3:['Curve up', '<path d="M8 52C22 52 34 44 40 28s10-16 16-16" stroke="'+A+'" stroke-width="8" fill="none" stroke-linecap="round"/>'],
+  L4:['Line + bars', '<rect x="8" y="42" width="9" height="16" rx="3" fill="'+A+'" opacity=".3"/><rect x="22" y="34" width="9" height="24" rx="3" fill="'+A+'" opacity=".3"/><rect x="36" y="26" width="9" height="32" rx="3" fill="'+A+'" opacity=".3"/><path d="M10 40 26 30l14 -8 14 -12" stroke="'+A+'" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>']
+ },
+ 'Scale as repetition': {
+  R1:['Nested squares', '<rect x="24" y="24" width="16" height="16" rx="4" fill="'+A+'"/><rect x="14" y="14" width="36" height="36" rx="9" fill="none" stroke="'+A+'" stroke-width="5" opacity=".55"/><rect x="4" y="4" width="56" height="56" rx="14" fill="none" stroke="'+A+'" stroke-width="5" opacity=".25"/>'],
+  R2:['Nested, heavy', '<rect x="26" y="26" width="12" height="12" rx="3" fill="'+A+'"/><rect x="15" y="15" width="34" height="34" rx="9" fill="none" stroke="'+A+'" stroke-width="7"/><rect x="4" y="4" width="56" height="56" rx="15" fill="none" stroke="'+A+'" stroke-width="7" opacity=".35"/>'],
+  R3:['Three squares', '<rect x="4" y="38" width="16" height="16" rx="4" fill="'+A+'" opacity=".4"/><rect x="24" y="28" width="26" height="26" rx="6" fill="'+A+'" opacity=".7"/><rect x="24" y="4" width="0" height="0"/><rect x="38" y="10" width="22" height="44" rx="6" fill="'+A+'"/>'],
+  R4:['Dot to block', '<circle cx="12" cy="46" r="7" fill="'+A+'" opacity=".4"/><rect x="24" y="30" width="16" height="24" rx="5" fill="'+A+'" opacity=".7"/><rect x="44" y="12" width="16" height="42" rx="5" fill="'+A+'"/>']
+ },
+ 'Multiplier and number': {
+  G1:['x, boxed', box('<path d="M22 22 42 42M42 22 22 42" stroke="'+D+'" stroke-width="8" stroke-linecap="round"/>')],
+  G2:['x, open', '<path d="M16 16 48 48M48 16 16 48" stroke="'+A+'" stroke-width="11" stroke-linecap="round"/>'],
+  K1:['Three zeros', '<circle cx="14" cy="32" r="9" fill="none" stroke="'+A+'" stroke-width="6" opacity=".45"/><circle cx="32" cy="32" r="9" fill="none" stroke="'+A+'" stroke-width="6" opacity=".75"/><circle cx="50" cy="32" r="9" fill="'+A+'"/>'],
+  K2:['Zeros, heavy', '<circle cx="15" cy="32" r="11" fill="none" stroke="'+A+'" stroke-width="8"/><circle cx="49" cy="32" r="11" fill="'+A+'"/>']
+ },
+ 'Letterform': {
+  S1:['Block S', '<path d="M10 14a8 8 0 0 1 8-8h28v14H24v8h22a8 8 0 0 1 8 8v14a8 8 0 0 1-8 8H18V44h22v-8H18a8 8 0 0 1-8-8Z" fill="'+A+'"/>'],
+  S2:['S, boxed', box('<path d="M20 22a6 6 0 0 1 6-6h18v10H30v6h14a6 6 0 0 1 6 6v10a6 6 0 0 1-6 6H24V44h14v-6H26a6 6 0 0 1-6-6Z" fill="'+D+'"/>')],
+  S3:['S as steps', '<rect x="8" y="10" width="30" height="11" rx="5" fill="'+A+'" opacity=".5"/><rect x="17" y="27" width="30" height="11" rx="5" fill="'+A+'" opacity=".75"/><rect x="26" y="44" width="30" height="11" rx="5" fill="'+A+'"/>']
+ }
+};
+
+var out=document.getElementById('out');
+Object.keys(FAM).forEach(function(fam){
+  var html='<h2>'+fam+'</h2><div class="grid">';
+  var g=FAM[fam];
+  Object.keys(g).forEach(function(id){
+    var nm=g[id][0], inner=g[id][1];
+    function svg(w){return '<svg viewBox="0 0 64 64" width="100%" height="100%">'+inner+'</svg>'}
+    html+='<div class="c"><div class="lg">'+svg()+'</div>'+
+      '<div class="rowm"><div class="sm">'+svg()+'</div><div class="xs">'+svg()+'</div></div>'+
+      '<div class="id">'+id+'</div><div class="nm">'+nm+'</div></div>';
+  });
+  out.insertAdjacentHTML('beforeend', html+'</div>');
+});
+
+// lockups for the strongest few
+var picks=[['V1',FAM['Bars and steps'].V1],['V2',FAM['Bars and steps'].V2],['X1',FAM['Arrows'].X1],
+           ['R2',FAM['Scale as repetition'].R2],['L2',FAM['Growth lines'].L2],['S1',FAM['Letterform'].S1]];
+var lh='<h2>In the nav</h2><div class="locks">';
+picks.forEach(function(p){
+  lh+='<div class="lock"><span class="m"><svg viewBox="0 0 64 64" width="100%" height="100%">'+p[1][1]+'</svg></span><b>sewu</b><span style="margin-left:auto;color:#6f7c90;font-size:11px;font-weight:700">'+p[0]+'</span></div>';
+});
+out.insertAdjacentHTML('beforeend', lh+'</div>');
+</script></body></html>
