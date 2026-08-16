@@ -5,11 +5,12 @@
   /* type */
   --ink:#f2f5f8; --mute:#98a4b3; --mute-2:#93a0b4; --faint:#6f7c90; --chev:#7c8aa0;
   /* brand green */
-  --accent:#4ade80;          /* fills only  */
-  --accent-ink:#06240f;      /* text on a fill */
-  --accent-text:#4ade80;     /* green as text / border / icon */
-  --accent-wash:rgba(74,222,128,.07);
-  --accent-wash-2:rgba(74,222,128,.05);
+  --accent:#f2f5f8;          /* fills - on a dark ground the fill is light */
+  --accent-ink:#0b0d10;      /* text on a fill */
+  --accent-text:#f2f5f8;     /* text / border / icon */
+  --accent-wash:rgba(242,245,248,.07);
+  --accent-wash-2:rgba(242,245,248,.05);
+  --nav-cta:#ffffff; --nav-cta-ink:#0d1117;
   /* nav */
   --nav-bg:rgba(11,13,16,.82); --nav-ink:#f2f5f8; --nav-line:#232936;
   /* states */
@@ -21,11 +22,13 @@ html[data-theme="light"]{
   --bg:#ffffff; --panel:#f4f6f8; --panel-2:#ffffff; --raise:#ffffff; --raise-2:#f0f3f6;
   --line:#e2e8f0; --line-2:#e2e8f0; --line-3:#cbd5e1;
   --ink:#0d1117; --mute:#4d5866; --mute-2:#5b6673; --faint:#71808f; --chev:#94a3b8;
-  --accent:#4ade80;
-  --accent-ink:#06240f;
-  --accent-text:#15803d;     /* 5.02:1 on white - the bright green fails at 1.74:1 */
-  --accent-wash:rgba(21,128,61,.06);
-  --accent-wash-2:rgba(21,128,61,.04);
+  --accent:#0d1117;          /* black fill, white label */
+  --accent-ink:#ffffff;
+  --accent-text:#0d1117;     /* 19.46:1 on white */
+  --accent-wash:rgba(13,17,23,.05);
+  --accent-wash-2:rgba(13,17,23,.03);
+  /* the nav is dark in both themes, so its cta must invert or it vanishes */
+  --nav-cta:#ffffff; --nav-cta-ink:#0d1117;
   --nav-bg:rgba(13,17,23,.94); --nav-ink:#ffffff; --nav-line:#0d1117;
   --warn:#b45309; --warn-ink:#7c3d06; --warn-wash:rgba(180,83,9,.08); --err:#b91c1c;
   --shadow:0 10px 30px rgba(13,17,23,.08);
@@ -107,7 +110,7 @@ footer p{max-width:none}
 .nav ul{list-style:none;display:flex;align-items:center;gap:26px;margin:0;padding:0}
 .nav a.lnk{color:var(--mute);text-decoration:none;font-size:15px;font-weight:600}
 .nav a.lnk:hover,.nav a.lnk[aria-current]{color:var(--nav-ink)}
-.nav a.cta{background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:800;
+.nav a.cta{background:var(--nav-cta);color:var(--nav-cta-ink);text-decoration:none;font-weight:800;
   font-size:14.5px;padding:10px 18px;border-radius:8px}
 .nav a.cta:hover{filter:brightness(1.08)}
 @media(max-width:720px){
