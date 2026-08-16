@@ -18,25 +18,38 @@
         .doc p { max-width: 62ch; }
 
         .card {
-            background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
-            padding: 32px 30px 28px; min-height: 320px; display: flex; flex-direction: column;
+            background: #151b26; border: 1px solid #263041; border-radius: 16px;
+            padding: 30px 30px 26px; display: flex; flex-direction: column;
+            box-shadow: 0 18px 44px rgba(0,0,0,.45);
         }
-        .step { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-bottom: 16px; }
+        .step { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+                font-weight: 700; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: baseline; }
+        .step em { font-style: normal; color: #6f7c90; letter-spacing: .06em; font-weight: 600; }
         .q { font-size: clamp(21px, 3.2vw, 28px); font-weight: 800; line-height: 1.2; letter-spacing: -.02em; margin: 0 0 10px; }
-        .why { color: var(--mute); font-size: 15px; margin: 0 0 22px; max-width: 54ch; }
+        .why { color: #97a3b6; font-size: 15px; margin: 0 0 24px; max-width: 54ch; line-height: 1.55; }
         .why b { color: var(--ink); }
         .opts { display: flex; flex-direction: column; gap: 10px; margin-top: auto; }
         .opts button {
-            text-align: left; background: var(--bg); color: var(--ink); border: 1px solid var(--line);
-            border-radius: 10px; padding: 16px 19px; font: inherit; font-size: 16px; font-weight: 600; cursor: pointer;
+            position: relative; text-align: left; background: #1e2634; color: var(--ink);
+            border: 1px solid #334054; border-radius: 11px; padding: 15px 46px 15px 18px;
+            font: inherit; font-size: 16.5px; font-weight: 600; cursor: pointer;
+            transition: background .12s, border-color .12s, transform .08s;
         }
-        .opts button:hover { border-color: var(--accent); color: var(--accent); }
-        .opts button small { display: block; font-weight: 400; font-size: 13.5px; color: var(--mute); margin-top: 3px; }
+        .opts button:after {
+            content: ""; position: absolute; right: 18px; top: 50%; width: 8px; height: 8px;
+            border-right: 2px solid #7c8aa0; border-bottom: 2px solid #7c8aa0;
+            transform: translateY(-60%) rotate(-45deg); transition: border-color .12s;
+        }
+        .opts button:hover {
+            background: #263142; border-color: var(--accent); transform: translateX(2px);
+        }
+        .opts button:hover:after { border-color: var(--accent); }
+        .opts button:active { transform: translateX(0) scale(.995); }
+        .opts button small { display: block; font-weight: 400; font-size: 13.5px; color: #93a0b4; margin-top: 3px; }
 
-        .bar { display: flex; gap: 5px; margin: 0 0 20px; }
-        .bar i { height: 3px; flex: 1; background: var(--line); border-radius: 2px; }
-        .bar i.on { background: var(--accent); }
-        .counter { font-size: 13px; color: var(--mute); margin: 0 0 18px; }
+        .bar { height: 4px; background: #1e2634; border-radius: 3px; margin: 0 0 22px; overflow: hidden; }
+        .bar span { display: block; height: 100%; background: var(--accent); border-radius: 3px;
+                    transition: width .25s ease; }
 
         #back { background: none; border: 0; color: var(--mute); font: inherit; font-size: 14px; cursor: pointer; padding: 14px 0 0; }
         #back[hidden] { display: none; }
@@ -370,15 +383,15 @@
             }
 
             function drawBar() {
-                bar.innerHTML = Q.map(function (_, j) { return '<i class="' + (j < idx ? 'on' : '') + '"></i>'; }).join('');
+                var pct = Math.round((idx / Q.length) * 100);
+                bar.innerHTML = '<span style="width:' + pct + '%"></span>';
             }
 
 
             function render() {
                 if (idx >= Q.length) return finish();
                 var q = Q[idx]; drawBar(); backBtn.hidden = idx === 0;
-                card.innerHTML = '<div class="step">' + q.step + '</div>' +
-                    '<p class="counter">Question ' + (idx + 1) + ' of ' + Q.length + '</p>' +
+                card.innerHTML = '<div class="step">' + q.step + '<em>' + (idx + 1) + ' / ' + Q.length + '</em></div>' +
                     '<div class="q">' + q.q + '</div><p class="why">' + q.why + '</p>' +
                     '<div class="opts">' + q.o.map(function (o, i) {
                         return '<button data-i="' + i + '">' + o.t + (o.s ? '<small>' + o.s + '</small>' : '') + '</button>';
@@ -395,11 +408,11 @@
             }
 
             function finish() {
-                bar.innerHTML = Q.map(function () { return '<i class="on"></i>'; }).join('');
+                bar.innerHTML = '<span style="width:100%"></span>';
                 backBtn.hidden = true;
 
                 var res = score(), p = res[0].f, rest = res.slice(1);
-                bar.innerHTML = Q.map(function () { return '<i class="on"></i>'; }).join('');
+                bar.innerHTML = '<span style="width:100%"></span>';
                 backBtn.hidden = true;
 
                 var h = '<div class="verdict ' + p.tone + '"><span class="k">' + p.k + '</span><h2>' + p.h + '</h2>' +
