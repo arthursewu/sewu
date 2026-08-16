@@ -100,9 +100,10 @@ footer p{max-width:none}
 .nav{position:sticky;top:0;z-index:50;background:var(--nav-bg);
   backdrop-filter:saturate(140%) blur(10px);border-bottom:1px solid var(--nav-line)}
 .nav .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 24px}
-.nav .brand{display:flex;align-items:center;gap:9px;text-decoration:none;color:var(--nav-ink)}
-.nav .brand b{font-size:20px;font-weight:800;letter-spacing:-.03em}
-.nav .brand .mk{width:26px;height:26px;display:block;flex:0 0 26px}
+/* proportions locked to the merch lockup: mark ink 52x34, wordmark 42, gap 14.3 */
+.nav .brand{display:flex;align-items:center;gap:.340em;text-decoration:none;color:var(--nav-ink);font-size:20px}
+.nav .brand b{font-size:1em;font-weight:800;letter-spacing:-.03em}
+.nav .brand .mk{width:1.238em;height:.809em;display:block;flex:0 0 1.238em}
 .nav ul{list-style:none;display:flex;align-items:center;gap:26px;margin:0;padding:0}
 .nav a.lnk{color:var(--mute);text-decoration:none;font-size:15px;font-weight:600}
 .nav a.lnk:hover,.nav a.lnk[aria-current]{color:var(--nav-ink)}
