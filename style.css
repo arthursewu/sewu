@@ -209,7 +209,9 @@ ul.cases{gap:28px 36px}
 @media(max-width:760px){
   .hero{padding:44px 0 40px}
   .hero .stats{gap:26px;margin-top:28px}
-  .hero .stat b{font-size:clamp(40px,13vw,56px)}
+  /* stat numbers must stay under the headline at every width */
+  .hero .stat b{font-size:clamp(30px,9vw,40px)}
+  .hero h1{font-size:clamp(46px,11.5vw,64px)}
 }
 
 /* hero headline must out-scale the stat numbers, not sit under them */
