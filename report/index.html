@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Scale Report — the fixes</title>
+    <meta name="description" content="What to do about a creative, media buying or funnel problem. And what not to do.">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .doc { max-width: 720px; }
+        .doc p, .doc li { max-width: 68ch; }
+
+        .toc { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 22px 24px; margin-top: 28px; }
+        .toc h3 { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+        .toc a { display: block; color: var(--ink); text-decoration: none; padding: 9px 0; border-bottom: 1px solid var(--line); font-weight: 600; }
+        .toc a:last-child { border-bottom: 0; }
+        .toc a:hover { color: var(--accent); }
+        .toc a span { display: block; font-weight: 400; font-size: 14px; color: var(--mute); margin-top: 2px; }
+
+        .bucket { border-top: 2px solid var(--accent); padding-top: 8px; margin-top: 20px; }
+        .bucket .tag { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+
+        .sub { background: var(--panel); border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: 10px; padding: 24px 26px; margin: 0 0 18px; }
+        .sub h3 { margin-bottom: 6px; font-size: 21px; }
+        .sub .sig { font-size: 14px; color: var(--mute); margin: 0 0 16px; }
+        .sub .sig b { color: var(--ink); }
+
+        .do h4, .dont h4 { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; margin: 18px 0 10px; }
+        .do h4 { color: var(--accent); }
+        .dont h4 { color: #fca5a5; }
+        .sub ul { list-style: none; padding: 0; margin: 0; }
+        .sub li { padding: 8px 0 8px 20px; position: relative; color: var(--mute); font-size: 15.5px; }
+        .sub li:before { content: ""; position: absolute; left: 2px; top: 16px; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+        .dont li:before { background: #fca5a5; }
+        .sub li b { color: var(--ink); }
+
+        .tell { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 15px; color: var(--mute); }
+        .tell b { color: var(--ink); }
+        .tell em { color: var(--accent); font-style: normal; font-weight: 600; }
+
+        .warn { border: 1px solid #b45309; background: rgba(180,83,9,.1); border-radius: 10px; padding: 20px 22px; margin: 24px 0; color: #fcd9a4; }
+        .warn h3 { color: #fcd9a4; margin-bottom: 8px; }
+        .warn p { color: #f0d3aa; margin: 0 0 10px; }
+        .warn p:last-child { margin-bottom: 0; }
+
+        .backlink { font-size: 14px; color: var(--mute); text-decoration: none; }
+        .backlink:hover { color: var(--ink); }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="wrap"><a class="backlink" href="../">sewu</a></div>
+    </header>
+
+    <section>
+        <div class="wrap doc">
+            <p class="eyebrow">Scale Report</p>
+            <h1>What to do about it. And what not to.</h1>
+            <p class="lead">The wrong fix is the expensive part. Rewriting copy for a problem that happened before the
+                click, or launching creative into a pool that cannot see it, costs weeks and a production budget and
+                changes nothing.</p>
+            <p>Find your finding below. Every fix here compares your account against itself, never against someone
+                else's benchmark.</p>
+
+            <div class="toc">
+                <h3>Your finding</h3>
+                <a href="#tracking">Tracking &mdash; the numbers are not real yet<span>Meta reports more than the store
+                        banked</span></a>
+                <a href="#selfinflicted">Media buying &mdash; you turned off ads that were carrying the
+                    account<span>Killed high-spending, low-ROAS ads</span></a>
+                <a href="#overlaunch">Media buying &mdash; your budget cannot judge this many ads<span>Lots of live ads
+                        under $50 a week</span></a>
+                <a href="#price">Media buying &mdash; paying more to reach the same people<span>CPM up, purchase
+                        efficiency flat</span></a>
+                <a href="#aov">Media buying &mdash; your bidding is buying your cheapest customer<span>Order value fell
+                        with no offer change</span></a>
+                <a href="#weak">Creative &mdash; the ad is not earning the click<span>Low click rate from
+                        launch</span></a>
+                <a href="#fatigue">Creative &mdash; fatigue<span>Decay with frequency climbing, few distinct
+                        ideas</span></a>
+                <a href="#diversity">Creative &mdash; volume without variety<span>Frequency climbing despite plenty of
+                        ads</span></a>
+                <a href="#funnelstep">Funnel &mdash; one step drops off<span>They clicked and something stopped
+                        them</span></a>
+                <a href="#funnelflat">Funnel &mdash; nothing converts well<span>No single failing step</span></a>
+                <a href="#seasonal">Not yours &mdash; this looks like demand<span>Decay with flat frequency</span></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRACKING -->
+    <section>
+        <div class="wrap doc">
+            <div class="bucket"><span class="tag">Tracking</span></div>
+            <h2 id="tracking">The numbers are not real yet</h2>
+            <div class="warn">
+                <h3>Do this before anything else on this page</h3>
+                <p>If Meta reports materially more revenue than your store banked, every other finding is a read on
+                    fiction. Fix the reporting, then diagnose.</p>
+            </div>
+            <div class="sub">
+                <p class="sig"><b>The signature:</b> platform revenue running well ahead of banked revenue, over the
+                    same dates.</p>
+                <div class="do">
+                    <h4>What to do</h4>
+                    <ul>
+                        <li><b>Change your reporting to 7-day click.</b> Ads Manager, Columns, Compare attribution
+                            settings.</li>
+                        <li><b>Do not change your optimisation window.</b> 1-day view feeds the conversion model and
+                            removing it makes delivery worse. This is a reporting change only.</li>
+                        <li>Exclude existing customers on cold campaigns, then check whether platform ROAS lands near
+                            your acquisition MER.</li>
+                        <li>If account MER says 3 and Meta says 9, open the attribution breakdown, find the column that
+                            equals 3, and use only that column from now on.</li>
+                        <li>Re-run the diagnostic once the two numbers agree.</li>
+                    </ul>
+                </div>
+                <div class="dont">
+                    <h4>What not to do</h4>
+                    <ul>
+                        <li>Brief a creative round off the current numbers.</li>
+                        <li>Scale anything that looks like a winner on the inflated figure.</li>
+                        <li>Strip 1-day view out of the campaign itself. That is a different change and it hurts.</li>
+                    </ul>
+                </div>
+                <p class="tell"><em>The tell.</em> One audited ad reported <b>12.84 ROAS</b>. On new audiences it was 5.
+                    On incremental attribution it was <b>1.71</b>. Same ad, three lenses. Another account was
+                    <b>raising budget</b> on an ad set running 70% view-through.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- MEDIA BUYING -->
+    <section>
+        <div class="wrap doc">
+            <div class="bucket"><span class="tag">Media buying</span></div>
+            <h2 id="selfinflicted">You turned off ads that were carrying the account</h2>
+            <div class="sub">
+                <p class="sig"><b>The signature:</b> you recently killed ads that were taking a lot of spend because
+                    their ad-level ROAS looked poor.</p>
+                <div class="do">
+                    <h4>What to do</h4>
+                    <ul>
+                        <li><b>Turn them back on.</b> Same targets, same budgets.</li>
+                        <li>Judge ads on <b>amount spent</b>, not ad-level ROAS. Meta decides where spend goes and it is
+                            rarely wrong about that.</li>
+                        <li>Move your KPI up a level, to ad set or campaign, where attribution is reliable.</li>
+                        <li>Set a rule: never kill a low-ROAS ad inside an ad set that is hitting its target.</li>
+                    </ul>
+                </div>
+                <div class="dont">
+                    <h4>What not to do</h4>
+                    <ul>
+                        <li>Replace them with new creative. The creative was not the problem.</li>
+                        <li>Judge the replacements on ad-level ROAS either.</li>
+                    </ul>
+                </div>
+                <p class="tell"><em>The tell.</em> Meta attributes on last click but optimises across the whole click
+                    sequence, so a high-spending, mediocre-ROAS ad is often doing work a later ad gets credited for. For
+                    one operator running eight-figure spend, switching the killed high-spenders back on is the first
+                    move on any new account, and it <b>almost always recovers around 30% of spend at the same
+                        target</b>.</p>
+            </div>
+
+            <h2 id="overlaunch">Your budget cannot judge this many ads</h2>
+            <div class="sub">
+                <p class="sig"><b>The signature:</b> more than a couple of live ads got under $50 last week.</p>
+                <div class="do">
+                    <h4>What to do</h4>
+                    <ul>
+                        <li><b>Cap live ad sets at daily budget divided by CPA.</b> At $2,000 a day and a $50 CPA that
+                            is 40. Most accounts are well past their own number.</li>
+                        <li><b>Queue, do not launch.</b> New creative waits for a slot to open.</li>
+                        <li>Three ads per ad set, and all three must be versions of <b>one</b> concept, so you learn
+                            which idea won rather than which edit won.</li>
+                        <li>Weekly, check the floor rather than the ceiling: <b>how many live ads got under $50 this
+                                week?</b></li>
+                    </ul>
+                </div>
+                <div class="dont">
+                    <h4>What not to do</h4>
+                    <ul>
+                        <li>Clean up and repeat the cycle next month. Launching fewer is the fix, not tidying more.</li>
+                        <li>Read a starved ad as a loser. It was never funded enough to be either.</li>
+                    </ul>
+                </div>
+                <p class="tell"><em>The tell.</em> A real account ran <b>186 ad objects on $141 a day, which is 76 cents
+                        per ad per day.</b> 151 of them never cleared $15 and produced three purchases between them. An
+                    ad at that rate accumulates $23 in a month. It can never be judged.</p>
+            </div>
+
+            <h2 id="price">You are paying more to reach the same people</h2>
+            <div class="sub">
+                <p class="sig"><b>The signature:</b> CPM up, and purchases per 1,000 impressions flat or down.</p>
+                <div class="do">
+                    <h4>What to do</h4>
+                    <ul>
+                        <li><b>Check overlap first, because it is measurable.</b> Sum reach across your campaigns and
+                            compare it to account-level reach. Audits find 80% overlap.</li>
+                        <li>The tell for overlap: many campaigns, few ad sets each, lots of creative, moderate spend.
+                            Consolidate.</li>
+                        <li>If overlap is clean, widen the pool. New geos, new audiences, new placements.</li>
+                        <li>Check your own campaigns are not bidding against each other before you blame the auction.
+                        </li>
+                    </ul>
+                </div>
+                <div class="dont">
+                    <h4>What not to do</h4>
+                    <ul>
+                        <li>Brief a creative round. The ads are earning their clicks.</li>
+                        <li>Raise budgets into a saturating pool. That is what made it expensive.</li>
+                    </ul>
+                </div>
+                <p class="tell"><em>The tell.</em> A high CPM is not automatically bad. If purchases per 1,000
+                    impressions rose with it, the auction found better people and <b>you are getting what you paid
+                        for</b>. Check that before you treat cost as a problem.</p>
+            </div>
+
+            <h2 id="aov">Your bidding is buying your cheapest customer</h2>
+            <div class="sub">
+                <p class="sig"><b>The signature:</b> average order value fell and you did not change the offer.</p>
+                <div class="do">
+                    <h4>What to do</h4>
+                    <ul>
+                        <li><b>Check whether a high-value and a low-value product share an ad set.</b> If they do,
+                            separate them.</li>
+                        <li>Volume-optimised bidding has no reference to order value, so it routes spend to whichever
+                            converts cheaper. That is almost always the cheap one.</li>
+                        <li>If you have a real spread in order value, a value-based target is worth testing. If your
+                            catalogue is one price point, it is not.</li>
+                        <li>Re-read the ads on your high-value SKU after separating. They usually were not the problem.
+                        </li>
+                    </ul>
+                </div>
+                <div class="dont">
+                    <h4>What not to do</h4>
+                    <ul>
+                        <li>Kill the ads on your expensive product because they "underperform". They were outbid, not
+                            outperformed.</li>
+                        <li>Set a cost cap without reference to what you actually realise per order.</li>
+                    </ul>
+                </div>
+                <p class="tell"><em>The tell.</em> Measured on one account switching bid strategy on identical creative:
+                    <b>average order value rose 11.5% across all 177 ad sets</b>. Same ads, different bidding, a
+                    different customer walked in.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CREATIVE -->
+    <section>
+        <div class="wrap doc">
+            <div class="bucket"><span class="tag">Creative</span></div>
+            <h2 id="weak">The ad is not earning the click</h2>
+            <div class="sub">
+                <p class="sig"><b>The signature:</b> click rate was below the ads beside it from the day it launched.
+                </p>
+                <div class="do">
+                    <h4>What to do</h4>
+                    <ul>
+                        <li><b>A new concept, not a new edit.</b> A different argument, not a different crop.</li>
+                        <li>Test in this order: <b>angle, then offer, then avatar, then format.</b> Format is the last
+                            axis and it is where most people start.</li>
+                        <li>Pull the language from reviews and ad comments. The words they use beat the words you would
+                            choose.</li>
+                        <li>Check you are speaking at the right awareness level. Benefits do not land on someone who
+                            does not know they have the problem.</li>
+                    </ul>
+                </div>
+                <div class="dont">
+                    <h4>What not to do</h4>
+                    <ul>
+                        <li>Rewrite the landing page. Nothing after the click has been reached yet.</li>
+                        <li>Chase a higher hook rate as the goal. It does not correlate with conversion.</li>
+                        <li>Compare your click rate to a number from a podcast.</li>
+                    </ul>
+                </div>
+                <p class="tell"><em>The tell.</em> Click rate means nothing across accounts. Profitable accounts run at
+                    <b>0.5% and at 3%</b>. It only means something against the ads sitting next to it.</p>
+            </div>
+
+            <h2 id="fatigue">Fatigue</h2>
+            <div class="sub">
+                <p class="sig"><b>The signature:</b> it started strong and decayed <b>while frequency climbed</b>, with
+                    only a handful of distinct ideas running.</p>
+                <div class="do">
+                    <h4>What to do</h4>
+                    <ul>
+                        <li><b>New versions of the thing that worked</b>, plus genuinely distinct concepts running
+                            beside them.</li>
+                        <li>Keep the winning variable fixed and change what surrounds it.</li>
+                        <li>Watch the direction frequency moves on this ad against its own history. The level is
+                            meaningless without the window and the spend attached.</li>
+                    </ul>
+                </div>
+                <div class="dont">
+                    <h4>What not to do</h4>
+                    <ul>
+                        <li>Scrap the concept. It earned its decay.</li>
+                        <li>Add more edits of the same execution. They will be grouped with it and reach nobody new.
+                        </li>
+                    </ul>
+                </div>
+                <p class="tell"><em>The tell.</em> Frequency has no universal number. A 3 on $2k of spend in a week is a
+                    different animal to a 3 on $1m in a month. <b>Read the direction, never the level.</b></p>
+            </div>
+
+            <h2 id="diversity">Volume without variety</h2>
+            <div class="sub">
+                <p class="sig"><b>The signature:</b> plenty of ads running, frequency still climbing, reach flat.</p>
+                <div class="do">
+                    <h4>What to do</h4>
+                    <ul>
+                        <li><b>Fewer, more different.</b> One genuinely new angle beats ten new edits.</li>
+                        <li>If two ads share a hook, a claim and a format, count them as one ad. That is roughly how the
+                            platform counts them too.</li>
+                        <li>Check reach, not ad count. If reach is flat while ad count rises, the new ads are not
+                            reaching anyone new.</li>
+                        <li>Diversify along angle first, then offer, then avatar, then format.</li>
+                    </ul>
+                </div>
+                <div class="dont">
+                    <h4>What not to do</h4>
+                    <ul>
+                        <li>Launch more variations. That is the thing that stopped working.</li>
+                        <li>Blame audience size before checking whether your ads are actually distinct.</li>
+                    </ul>
+                </div>
+                <p class="tell"><em>The tell.</em> One account ran <b>200 near-identical ads that grouped into about 20
+                        entities</b>. The ten inside each group served the same pool with zero unique reach. That is why
+                    tripling output changes nothing.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FUNNEL -->
+    <section>
+        <div class="wrap doc">
+            <div class="bucket"><span class="tag">Funnel</span></div>
+            <h2 id="funnelstep">One step drops off</h2>
+            <div class="sub">
+                <p class="sig"><b>The signature:</b> they clicked, and one transition after the click is clearly worse
+                    than the rest.</p>
+                <div class="do">
+                    <h4>What to do</h4>
+                    <ul>
+                        <li><b>Fix the step, not the ad.</b> Add to cart failing is a product page or price problem.
+                            Checkout failing is a shipping, trust or mechanics problem.</li>
+                        <li>As a shape, add to cart, checkout and purchase run about <b>4:2:1</b>. A step far off that
+                            ratio is the one to open.</li>
+                        <li><b>Judge cold traffic separately.</b> A 2.5% blended store conversion rate is often 0.8 to
+                            1.5% on cold.</li>
+                        <li>Check the ad and the page make the same promise. Congruence, not just quality.</li>
+                    </ul>
+                </div>
+                <div class="dont">
+                    <h4>What not to do</h4>
+                    <ul>
+                        <li>Brief new creative. The creative already won the click.</li>
+                        <li>Use blended conversion rate to set your break-even. It fails at scale.</li>
+                    </ul>
+                </div>
+                <p class="tell"><em>The tell.</em> Your site conversion rate also sets your ad costs, because the
+                    platform prices you partly on expected action rate. One account took CVR from 2% to 4% and <b>CPC
+                        fell from $3 to $2, CPA from $150 to $50</b>. The funnel was making the media look expensive.
+                </p>
+            </div>
+
+            <h2 id="funnelflat">Nothing converts well</h2>
+            <div class="sub">
+                <p class="sig"><b>The signature:</b> no single step fails. Every transition is mediocre.</p>
+                <div class="do">
+                    <h4>What to do</h4>
+                    <ul>
+                        <li>Look above the page. When everything is mediocre rather than one thing broken, the cause is
+                            usually what is being sold or the terms it is sold on.</li>
+                        <li><b>Run the ablation test.</b> One brand turned off ads, then email, then flows, then
+                            partnerships, and demand held. They changed the offer and demand halved instantly. That is
+                            how you find out what was actually carrying it.</li>
+                        <li>Check margin and order value against your acquisition cost before touching the ads again.
+                        </li>
+                    </ul>
+                </div>
+                <div class="dont">
+                    <h4>What not to do</h4>
+                    <ul>
+                        <li>Order another creative batch. You already know creative is not the variable.</li>
+                        <li>A/B test button colours on a page nobody wanted to be on.</li>
+                    </ul>
+                </div>
+                <p class="tell"><em>The tell.</em> Test hit rate maps cleanly. <b>Under 10% points above the account
+                        entirely. 10 to 20% is angles. 20 to 30% is execution.</b> Above 30% and still stuck is a media
+                    buying problem, not a creative one.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SEASONAL -->
+    <section>
+        <div class="wrap doc">
+            <div class="bucket"><span class="tag">Not yours</span></div>
+            <h2 id="seasonal">This looks like demand</h2>
+            <div class="sub">
+                <p class="sig"><b>The signature:</b> performance faded and <b>frequency stayed flat</b>.</p>
+                <div class="do">
+                    <h4>What to do</h4>
+                    <ul>
+                        <li>Confirm it against the same period last year, and against a second channel.</li>
+                        <li>Check whether anything changed off-platform. A promotion ending, a PR spike stopping, an
+                            email flow paused.</li>
+                        <li>Hold your structure. Do not rebuild an account around a demand dip.</li>
+                        <li>If it is a season you know, plan the offer for it rather than the creative.</li>
+                    </ul>
+                </div>
+                <div class="dont">
+                    <h4>What not to do</h4>
+                    <ul>
+                        <li>Rebuild the creative library. It was not the creative.</li>
+                        <li>Cut spend hard and lose the compounding when demand returns.</li>
+                    </ul>
+                </div>
+                <p class="tell"><em>The tell.</em> Creative fatigue has a fingerprint, and it is decay <b>with</b>
+                    rising frequency. Decay on flat frequency is demand-side. One brand's decay reversed entirely on a
+                    single product drop, inside an unchanged campaign structure.</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="wrap doc">
+            <h2>Want me to run this on your whole account?</h2>
+            <p>Send me the export and I'll do it for every ad, then tell you which ones are worth a new round and which
+                ones were never a creative problem. Free, no call required.</p>
+            <p>One filter: you need to be spending at least $10,000 a day.</p>
+            <p><a class="btn" href="../#apply">Get a free ad audit</a></p>
+        </div>
+    </section>
+
+    <footer>
+        <div class="wrap">
+            <p>A diagnostic aid, not a guarantee. Every check here compares your account against itself.</p>
+            <p>&copy; 2026 Arthur Sewu. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+
+</html>
