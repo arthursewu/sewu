@@ -205,8 +205,7 @@
                     var chosen = null;
                     if (v) { for (var k = 0; k < q.o.length; k++) { if (q.o[k].v === v) { chosen = q.o[k].t; break; } } }
                     return (i + 1) + '. ' + q.q + '  ->  ' + (chosen || v || 'skipped');
-                }).join('
-');
+                }).join(String.fromCharCode(10));
                 fetch('https://formsubmit.co/ajax/arthur@sewu.org', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
