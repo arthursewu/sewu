@@ -123,9 +123,8 @@
             <p class="lead">Send me your account and I'll tell you what's actually wrong with it.</p>
             <p>You get back which ads are carrying the account, which ones are quietly draining it, and for each
                 problem, the layer that can actually fix it. No call required. If it's useful, we talk.</p>
-            <p><b>One filter: you need to be spending at least $10,000 a day on ads.</b> Below that there isn't enough
-                daily signal for this to say anything true, and I'd be reading noise back to you. If you're under it,
-                come back when you're over it.</p>
+            <p>One thing worth knowing: the read gets sharper the more daily signal your account produces. On very
+                small spend I'll tell you what the numbers can and can't support rather than guess.</p>
 
             <form action="https://formsubmit.co/arthur@sewu.org" method="POST">
                 <input type="hidden" name="_subject" value="New audit request from sewu.org">
@@ -143,7 +142,8 @@
                 <label for="revenue">Current monthly revenue</label>
                 <select id="revenue" name="revenue" required>
                     <option value="">Select a range</option>
-                    <option>Under $100k/mo</option>
+                    <option>Under $25k/mo</option>
+                    <option>$25k - $100k/mo</option>
                     <option>$100k - $250k/mo</option>
                     <option>$250k - $500k/mo</option>
                     <option>$500k - $1M/mo</option>
@@ -151,7 +151,7 @@
                 </select>
 
                 <label for="spend">Current daily ad spend</label>
-                <input id="spend" type="text" name="spend" placeholder="e.g. $12,000 a day" required>
+                <input id="spend" type="text" name="spend" placeholder="e.g. $2,000 a day" required>
 
                 <label for="stuck">What's not adding up in the account?</label>
                 <textarea id="stuck" name="bottleneck" required></textarea>
