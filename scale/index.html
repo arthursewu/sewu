@@ -341,7 +341,7 @@
                 backBtn.hidden = true;
                 card.innerHTML = '<div class="step">First</div>' +
                     '<div class="q">Where should I send your Scale Report?</div>' +
-                    '<p class="why">You get your findings on screen straight away. <b>The step-by-step fixes come by email</b>, because they run longer than a web page should.</p>' +
+                    '<p class="why">You get your findings and the full fix list straight away. I keep your email so I can send you the odd thing worth reading. Unsubscribe whenever.</p>' +
                     '<div class="intake">' +
                     '<label for="nm">Your name</label><input id="nm" type="text" autocomplete="given-name" placeholder="Arthur">' +
                     '<label for="em">Email</label><input id="em" type="email" autocomplete="email" placeholder="you@brand.com">' +
@@ -400,8 +400,8 @@
 
                 h += '<div class="tell">' + p.tell + '</div>';
 
-                h += '<div class="inbox"><h3>The fixes are in your inbox</h3><p>I have sent <b>' +
-                    lead.email.replace(/[<>&]/g, '') + '</b> a link to <b>sewu.org/report</b> — the step-by-step for this finding, and the list of things <b>not</b> to do about it. The wrong fix is the expensive part, so that list matters more than this page does.</p></div>';
+                h += '<div class="inbox"><h3>Now the fixes</h3><p>The step-by-step for this finding, and the list of things <b>not</b> to do about it, are in the full report. The wrong fix is the expensive part, so that second list matters more than this page does.</p>' +
+                    '<p style="margin-top:16px"><a class="btn" href="../report/">Read the fixes</a></p></div>';
 
                 h += '<p class="again"><button class="btn" id="restart" type="button">Run it on another ad</button></p>';
 
