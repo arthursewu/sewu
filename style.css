@@ -153,8 +153,8 @@ table.ladder tfoot .rowhead{border-bottom:0}
 ul.cases{list-style:none;padding:0;margin:26px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:900px}
 ul.cases li{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent-text);
   border-radius:10px;padding:20px 22px}
-ul.cases p{color:var(--mute);margin:0 0 6px;font-size:15.5px;line-height:1.5;max-width:none}
-ul.cases b{display:block;margin-top:10px;color:var(--ink);font-size:17px;font-weight:800}
+ul.cases p{color:var(--mute);margin:0 0 6px;font-size:14.5px;line-height:1.55;max-width:none}
+ul.cases b{display:block;margin:0 0 12px;color:var(--ink);font-size:clamp(20px,2.1vw,26px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
 @media(max-width:700px){ ul.cases{grid-template-columns:1fr} }
 
 /* ---- mobile nav: logo + one button only ---- */
@@ -264,3 +264,5 @@ footer .ft-ico-row{display:inline-flex;gap:14px}
 footer .ft-ico{color:#98a4b3;display:inline-flex;align-items:center}
 footer .ft-ico:hover{color:#fff}
 @media(max-width:620px){ footer .ft-right{gap:18px} }
+
+ul.cases li{border-top-width:2px}
