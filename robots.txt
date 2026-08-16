@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /report/
+Disallow: /diagnose/
+
+Sitemap: https://sewu.org/sitemap.xml
