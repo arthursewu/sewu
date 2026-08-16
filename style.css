@@ -173,3 +173,14 @@ ul.cases b{display:block;margin-top:10px;color:var(--ink);font-size:17px;font-we
   .nav .brand b{font-size:17px}
   .nav a.cta{font-size:12.5px;padding:8px 11px}
 }
+
+/* ---- editorial: serif display, rules instead of card fills ---- */
+h1{font-family:'Instrument Serif',Georgia,'Times New Roman',serif;font-weight:400;
+   letter-spacing:-.01em;line-height:1.03}
+.lead{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400}
+/* static content loses its box and gains a rule; interactive elements keep their fill */
+.stat,ul.cases li{background:transparent;border:0;border-top:1px solid var(--ink);
+   border-radius:0;padding:15px 0 0}
+.stats{gap:28px}
+ul.cases{gap:28px 36px}
+@media(max-width:760px){ .stats{gap:20px} ul.cases{gap:22px} }
