@@ -80,24 +80,19 @@
             line-height: 1.03; letter-spacing: -.035em; max-width: 19ch; margin: 0; }
         .reveal .lead { margin-top: 24px; max-width: 48ch; }
 
-        /* ---------- lane readout: closes the promise the headline makes ---------- */
-        .lanes { margin: 0 0 48px; }
-        .lanes h3 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
-            color: var(--mute); font-weight: 700; margin: 0 0 16px; }
-        .lane-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-        .lane-card { border: 1px solid var(--line); padding: 19px 18px 17px; }
-        .lane-card b { display: block; font-size: 15.5px; letter-spacing: -.012em;
-            color: var(--ink); margin-bottom: 8px; }
-        .lane-card span { display: block; font-size: 13.5px; color: var(--mute); }
-        .lane-card.clear b { color: var(--mute); }
-        .lane-card.hit { background: var(--ink); border-color: var(--ink); }
-        .lane-card.hit b { color: #fff; }
-        .lane-card.hit span { color: #c7d0dc; }
-        .lane-block { background: var(--ink); border: 1px solid var(--ink);
-            padding: 19px 20px 17px; margin-bottom: 10px; }
-        .lane-block b { display: block; font-size: 15.5px; color: #fff; margin-bottom: 8px; }
-        .lane-block span { font-size: 13.5px; color: #c7d0dc; }
-        @media (max-width: 560px) { .lane-grid { grid-template-columns: 1fr; } }
+        /* ---------- the chain: where in the account it breaks ---------- */
+        .lanes { margin: 10px 0 60px; }
+        .chain { display: block; width: 100%; height: auto; overflow: visible; }
+        .chain text { font-family: inherit; }
+        .chain .cl { font-size: 15px; letter-spacing: .15em; font-weight: 700; fill: var(--mute); }
+        .chain .cl.on { fill: var(--ink); }
+        .chain .cn { font-size: 17px; fill: var(--mute); }
+        .chain .cn.on { fill: var(--ink); font-weight: 700; }
+        @media (max-width: 620px) {
+            .lanes { margin: 6px 0 46px; }
+            .chain .cl { font-size: 22px; letter-spacing: .1em; }
+            .chain .cn { font-size: 24px; }
+        }
 
         /* ---------- the finding ---------- */
         .res-body { font-size: 18.5px; line-height: 1.62; color: var(--ink); margin: 0 0 36px; max-width: 62ch; }
@@ -421,6 +416,37 @@
             }
 
 
+            // an account is a chain: money buys delivery, delivery buys the click,
+            // the click has to survive the site. tracking is the layer over all of it.
+            function chain(hit, cnt, LANES) {
+                var x0 = 18, x1 = 662, seg = (x1 - x0) / 3, y = 152,
+                    tOn = hit === 'Tracking', DIM = 'var(--line-3)', ON = 'var(--ink)';
+                var s = '<svg class="chain" viewBox="0 0 680 218" role="img" aria-label="Where the account breaks">';
+
+                // the tracking rail runs over the whole chain
+                s += '<path d="M' + x0 + ' 66 V48 H' + x1 + ' V66" fill="none" stroke="' + (tOn ? ON : DIM) +
+                    '" stroke-width="' + (tOn ? 5 : 2) + '"' + (tOn ? '' : ' stroke-dasharray="5 7"') + '/>' +
+                    '<text x="340" y="28" text-anchor="middle" class="cl' + (tOn ? ' on' : '') + '">TRACKING</text>';
+
+                for (var i = 0; i < 3; i++) {
+                    var a = x0 + seg * i, on = LANES[i] === hit, n = cnt[LANES[i]] || 0;
+                    s += '<line x1="' + (a + 4) + '" y1="' + y + '" x2="' + (a + seg - 4) + '" y2="' + y +
+                        '" stroke="' + (on ? ON : DIM) + '" stroke-width="' + (on ? 20 : 3) + '"/>' +
+                        '<text x="' + (a + seg / 2) + '" y="' + (y - 38) + '" text-anchor="middle" class="cl' +
+                        (on ? ' on' : '') + '">' + LANES[i].toUpperCase() + '</text>' +
+                        '<text x="' + (a + seg / 2) + '" y="' + (y + 48) + '" text-anchor="middle" class="cn' +
+                        (on ? ' on' : '') + '">' + (n ? n + (n === 1 ? ' finding' : ' findings') : 'clear') + '</text>';
+                }
+
+                for (var j = 0; j <= 3; j++) {
+                    var cx = x0 + seg * j,
+                        near = (LANES[j - 1] === hit) || (LANES[j] === hit);
+                    s += '<circle cx="' + cx + '" cy="' + y + '" r="' + (near ? 11 : 7) + '" fill="' +
+                        (near ? ON : '#fff') + '" stroke="' + (near ? ON : DIM) + '" stroke-width="3"/>';
+                }
+                return s + '</svg>';
+            }
+
             function finish() {
                 track('scale_completed', { answered: Object.keys(A).length });
                 backBtn.hidden = true;
@@ -443,19 +469,7 @@
                 LANES.forEach(function (l) { flagged += cnt[l] || 0; });
 
                 var h = '<div class="res">';
-                if (flagged) {
-                    h += '<div class="lanes"><h3>Where it is coming from</h3>';
-                    // tracking is a prerequisite, not a lane - it sits above and blocks the read
-                    if (p.k === 'Tracking') {
-                        h += '<div class="lane-block"><b>Tracking &middot; fix this first</b>' +
-                            '<span>Until the numbers are real, everything below is a read on fiction.</span></div>';
-                    }
-                    h += '<div class="lane-grid">' + LANES.map(function (l) {
-                        var n = cnt[l] || 0, cls = l === p.k ? ' hit' : (n ? '' : ' clear');
-                        return '<div class="lane-card' + cls + '"><b>' + l + '</b><span>' +
-                            (n ? n + (n === 1 ? ' finding' : ' findings') : 'Clear') + '</span></div>';
-                    }).join('') + '</div></div>';
-                }
+                if (flagged) h += '<div class="lanes">' + chain(p.k, cnt, LANES) + '</div>';
                 h += '<p class="res-body">' + p.body + '</p>' +
                     '<div class="tell">' + p.tell + '</div>';
 
