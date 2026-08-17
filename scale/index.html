@@ -71,42 +71,56 @@
         #back { background: none; border: 0; color: var(--mute); font: inherit; font-size: 14px; cursor: pointer; padding: 14px 0 0; }
         #back[hidden] { display: none; }
 
-        /* ---------- the reveal takes the hero slot ---------- */
-        .reveal .res-chip { display: inline-block; background: #f5a623; color: #0d1117;
-            font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 800;
-            padding: 8px 14px; margin: 0 0 26px; }
-        .reveal.grey .res-chip { background: #c7d0dc; }
-        .reveal .res-h { color: #fff; font-weight: 700; font-size: clamp(42px, 5.6vw, 62px);
-            line-height: .99; letter-spacing: -.04em; max-width: 17ch; margin: 0; }
-        .reveal .lead { margin-top: 24px; max-width: 46ch; }
+        .verdict { border: 1px solid var(--accent-text); border-left: 4px solid var(--accent-text); background: var(--accent-wash); border-radius: 12px; padding: 26px 28px; }
+        .verdict.grey { border-color: var(--line); border-left-color: var(--faint); background: var(--panel); }
+        .verdict.amber { border-color: var(--warn); border-left-color: var(--warn); background: var(--warn-wash); }
+        .verdict .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); font-weight: 700; display: block; margin-bottom: 10px; }
+        .verdict.grey .k { color: var(--mute); }
+        .verdict.amber .k { color: var(--warn-ink); }
+        .verdict h2 { margin-bottom: 12px; font-size: clamp(22px,3.2vw,30px); }
+        .verdict p { color: var(--mute); margin: 0 0 12px; }
+        .verdict p.lead-in { color: var(--ink); font-size: 17px; }
+        .verdict p:last-child { margin-bottom: 0; }
 
-        /* ---------- the finding, on a white slab ---------- */
-        .b-slab { background: #fff; border-top: 0; padding: 48px 0 54px; }
-        .kicker { font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
-            color: var(--mute); font-weight: 800; margin: 0 0 18px; }
-        .res-body { font-size: 19px; line-height: 1.6; color: var(--ink); margin: 0 0 34px; max-width: 60ch; }
-
-        /* the figure is pulled out of the finding's own tell - never invented */
-        .fig, .tell { border-top: 3px solid var(--ink); padding: 24px 0 0; margin: 0 0 46px; }
-        .fig b { display: block; font-size: clamp(40px, 6vw, 56px); line-height: 1;
-            letter-spacing: -.04em; color: var(--ink); font-weight: 700; }
-        .fig span { display: block; font-size: 16px; color: var(--mute); margin-top: 14px;
-            max-width: 48ch; line-height: 1.55; }
-        .tell { font-size: 17px; line-height: 1.55; color: var(--mute); max-width: 56ch; }
-        .tell b { color: var(--ink); font-weight: 700; }
-
-        .also h3 { font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
-            color: var(--mute); font-weight: 800; margin: 0 0 4px; }
-        .also .row { padding: 18px 0; border-bottom: 1px solid var(--line); }
+        .also { margin-top: 26px; border-top: 1px solid var(--line); padding-top: 20px; }
+        .also h3 { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); margin-bottom: 14px; }
+        .also .row { padding: 13px 0; border-bottom: 1px solid var(--line); }
         .also .row:last-child { border-bottom: 0; }
-        .also .row b { display: block; color: var(--ink); font-size: 16.5px; margin-bottom: 4px; }
-        .also .row span { color: var(--mute); font-size: 15.5px; line-height: 1.5; }
+        .also .row b { display: block; color: var(--ink); font-size: 16px; margin-bottom: 3px; }
+        .also .row span { color: var(--mute); font-size: 15px; }
 
-        .b-ink { background: var(--ink); border-top: 0; border-bottom: 1px solid #232936;
-            padding: 50px 0 56px; }
-        .b-ink .close-q { color: #fff; font-size: clamp(24px, 3.2vw, 32px); font-weight: 700;
-            letter-spacing: -.03em; line-height: 1.14; margin: 0 0 26px; max-width: 18ch; }
-        .b-ink .btn { background: #f5a623; color: #0d1117; }
+        .tell { margin-top: 22px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; font-size: 15px; color: var(--mute); }
+        .tell b { color: var(--ink); }
+
+        .inbox { margin-top: 24px; border: 1px solid var(--accent-text); border-radius: 12px; padding: 22px 24px; background: var(--accent-wash-2); }
+        .inbox h3 { margin-bottom: 8px; font-size: 19px; }
+        .inbox p { color: var(--mute); margin: 0; font-size: 15.5px; }
+        .inbox p b { color: var(--ink); }
+
+        ol.trace { list-style: none; counter-reset: s; padding: 0; margin: 24px 0 0; }
+        ol.trace li { counter-increment: s; position: relative; padding: 11px 0 11px 36px; border-bottom: 1px solid var(--line); color: var(--mute); font-size: 15px; }
+        ol.trace li:before {
+            content: counter(s); position: absolute; left: 0; top: 11px; width: 24px; height: 24px; border-radius: 50%;
+            background: var(--panel); border: 1px solid var(--line); color: var(--mute); font-size: 12px; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+        }
+        ol.trace li.hit { color: var(--ink); }
+        ol.trace li.hit:before { border-color: var(--accent-text); color: var(--accent-text); }
+
+        .intake label { margin-top: 15px; }
+        .intake input { width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 9px; padding: 14px; font: inherit; font-size: 16px; }
+        .intake input:focus { outline: 2px solid var(--accent-text); outline-offset: 1px; }
+        .intake .btn { margin-top: 20px; }
+        .fineprint { font-size: 13px; color: var(--mute); margin: 13px 0 0; }
+        .err { color: var(--err); font-size: 14px; margin: 9px 0 0; }
+        .preview { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 20px 22px; margin: 24px 0 0; }
+        .preview .pk { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); font-weight: 700; }
+        .preview h3 { margin: 8px 0 6px; font-size: 19px; }
+        .preview p { color: var(--mute); font-size: 14.5px; margin: 0; }
+        .preview .cap { font-size: 12px; color: var(--mute); margin-top: 13px; letter-spacing: .04em; text-transform: uppercase; }
+        .again { margin-top: 22px; }
+        .backlink { font-size: 14px; color: var(--mute); text-decoration: none; }
+        .backlink:hover { color: var(--ink); }
     </style>
 </head>
 
@@ -122,13 +136,13 @@
         </div>
     </nav>
     <section id="main" tabindex="-1" class="hero-band">
-        <div class="wrap doc" id="head">
+        <div class="wrap doc">
             <p class="eyebrow">For 7&ndash;8 figure DTC brands</p>
             <h1>Get your Scale Report. In under 60 seconds.</h1>
             <p class="lead">The one thing holding this account back: creative, media buying, or funnel. Most people
                 guess, fix the wrong one, and pay for it twice.</p></div>
     </section>
-    <section id="qsec">
+    <section>
         <div class="wrap doc">
             <div class="bar" id="bar"></div>
             <div class="card" id="card"></div>
@@ -411,54 +425,30 @@
             }
 
 
-            // the headline figure, lifted out of each finding's own tell - nothing invented here
-            var FIG = {
-                TRACKING: ['12.84 &rarr; 1.71', 'The same audited ad&rsquo;s ROAS, read through platform attribution and then through incrementality. On new audiences it was 5.'],
-                SELFINFLICTED: ['~30%', 'Of spend recovered at the same target, just by switching the killed high-spenders back on. For one operator at eight-figure spend it is the first move on any new account.'],
-                OVERLAUNCH: ['76&cent;', 'Per ad, per day. A real account running 186 ad objects on $141 &mdash; 151 of them never cleared $15 and produced three purchases between them.'],
-                DIVERSITY: ['200 &rarr; 20', 'Near-identical ads collapsing into about 20 entities. The ten inside each group served the same pool with zero unique reach.'],
-                FUNNEL_STEP: ['$150 &rarr; $50', 'CPA, after one account took site conversion rate from 2% to 4%. Meta prices you partly on expected action rate, so your site sets your ad costs.'],
-                FUNNEL_FLAT: ['0.8&ndash;1.5%', 'What a 2.5% blended store CVR is actually doing on cold traffic. Break-even maths built on the blended number fails at scale.'],
-                CREATIVE_WEAK: ['0.5&ndash;3%', 'The click-rate range across profitable accounts. It means nothing across accounts &mdash; only against the ads sitting beside it.'],
-                AOV: ['+11.5%', 'Average order value, from switching bid strategy on identical creative across 177 ad sets. Same ads, different bidding, different customer.']
-            };
-
             function finish() {
                 track('scale_completed', { answered: Object.keys(A).length });
+                bar.innerHTML = '<span style="width:100%"></span>';
+                backBtn.hidden = true;
 
                 var res = score(), p = res[0].f, rest = res.slice(1);
                 notifyCompletion(res);
+                bar.innerHTML = '<span style="width:100%"></span>';
+                backBtn.hidden = true;
 
-                // the reveal takes the hero slot - the answer outranks the invitation
-                var head = document.getElementById('head');
-                if (head) {
-                    head.className = 'wrap doc reveal ' + p.tone;
-                    head.innerHTML = '<p class="res-chip">' + p.k + '</p>' +
-                        '<h1 class="res-h">' + p.h + '</h1>' +
-                        '<p class="lead">' + p.lead + '</p>';
-                }
-
-                var h = '<section class="b-slab"><div class="wrap doc">' +
-                    '<p class="kicker">The finding</p>' +
-                    '<p class="res-body">' + p.body + '</p>';
-
-                var fg = FIG[res[0].key];
-                h += fg ? '<div class="fig"><b>' + fg[0] + '</b><span>' + fg[1] + '</span></div>'
-                        : '<div class="tell">' + p.tell + '</div>';
+                var h = '<div class="verdict ' + p.tone + '"><span class="k">' + p.k + '</span><h2>' + p.h + '</h2>' +
+                    '<p class="lead-in">' + p.lead + '</p><p>' + p.body + '</p></div>';
 
                 if (rest.length) {
                     h += '<div class="also"><h3>Also worth checking</h3>' + rest.map(function (r) {
                         return '<div class="row"><b>' + r.f.k + ' &middot; ' + r.f.h + '</b><span>' + r.f.short + '</span></div>';
                     }).join('') + '</div>';
                 }
-                h += '</div></section>';
 
-                h += '<section class="b-ink"><div class="wrap doc">' +
-                    '<p class="close-q">Want this fixed rather than diagnosed?</p>' +
-                    '<a class="btn" href="../contact/">Let&rsquo;s scale your brand</a></div></section>';
+                h += '<div class="tell">' + p.tell + '</div>';
+                h += '<p class="again"><a class="btn" href="../contact/">Let&rsquo;s scale your brand</a></p>';
 
-                document.getElementById('qsec').outerHTML = h;
-                window.scrollTo({ top: 0, behavior: 'smooth' });
+                card.outerHTML = '<div id="card">' + h + '</div>';
+                document.getElementById('card').scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
             document.addEventListener('click', function (e) {
