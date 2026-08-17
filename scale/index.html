@@ -71,33 +71,42 @@
         #back { background: none; border: 0; color: var(--mute); font: inherit; font-size: 14px; cursor: pointer; padding: 14px 0 0; }
         #back[hidden] { display: none; }
 
-        /* ---------- the reveal: the answer takes the hero slot ---------- */
-        .reveal .res-k { color: #f5a623; margin-bottom: 20px; }
-        .reveal.grey .res-k { color: #9fb0c4; }
-        .reveal .res-k:after { content: ""; display: block; width: 54px; height: 2px;
-            background: currentColor; opacity: .5; margin-top: 17px; }
-        .reveal .res-h { color: #fff; font-weight: 600; font-size: clamp(46px, 5.9vw, 62px);
-            line-height: 1.03; letter-spacing: -.035em; max-width: 19ch; margin: 0; }
-        .reveal .lead { margin-top: 24px; max-width: 48ch; }
+        /* ---------- the reveal takes the hero slot ---------- */
+        .reveal .res-chip { display: inline-block; background: #f5a623; color: #0d1117;
+            font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 800;
+            padding: 8px 14px; margin: 0 0 26px; }
+        .reveal.grey .res-chip { background: #c7d0dc; }
+        .reveal .res-h { color: #fff; font-weight: 700; font-size: clamp(42px, 5.6vw, 62px);
+            line-height: .99; letter-spacing: -.04em; max-width: 17ch; margin: 0; }
+        .reveal .lead { margin-top: 24px; max-width: 46ch; }
 
-        /* ---------- the finding ---------- */
-        .res-body { font-size: 18.5px; line-height: 1.62; color: var(--ink); margin: 0 0 36px; max-width: 62ch; }
-        .tell { border-left: 3px solid var(--ink); padding: 4px 0 4px 22px; margin: 0 0 48px;
-            font-size: 17px; line-height: 1.55; color: var(--mute); max-width: 58ch; }
+        /* ---------- the finding, on a white slab ---------- */
+        .b-slab { background: #fff; border-top: 0; padding: 48px 0 54px; }
+        .kicker { font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+            color: var(--mute); font-weight: 800; margin: 0 0 18px; }
+        .res-body { font-size: 19px; line-height: 1.6; color: var(--ink); margin: 0 0 34px; max-width: 60ch; }
+
+        /* the figure is pulled out of the finding's own tell - never invented */
+        .fig, .tell { border-top: 3px solid var(--ink); padding: 24px 0 0; margin: 0 0 46px; }
+        .fig b { display: block; font-size: clamp(40px, 6vw, 56px); line-height: 1;
+            letter-spacing: -.04em; color: var(--ink); font-weight: 700; }
+        .fig span { display: block; font-size: 16px; color: var(--mute); margin-top: 14px;
+            max-width: 48ch; line-height: 1.55; }
+        .tell { font-size: 17px; line-height: 1.55; color: var(--mute); max-width: 56ch; }
         .tell b { color: var(--ink); font-weight: 700; }
 
-        .also { border-top: 1px solid var(--ink); padding-top: 22px; }
-        .also h3 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
-            color: var(--mute); font-weight: 700; margin: 0 0 4px; }
+        .also h3 { font-size: 12px; letter-spacing: .16em; text-transform: uppercase;
+            color: var(--mute); font-weight: 800; margin: 0 0 4px; }
         .also .row { padding: 18px 0; border-bottom: 1px solid var(--line); }
         .also .row:last-child { border-bottom: 0; }
         .also .row b { display: block; color: var(--ink); font-size: 16.5px; margin-bottom: 4px; }
         .also .row span { color: var(--mute); font-size: 15.5px; line-height: 1.5; }
 
-        .close { margin-top: 54px; }
-        .close-q { font-size: clamp(22px, 3vw, 30px); font-weight: 700; letter-spacing: -.025em;
-            line-height: 1.16; margin: 0 0 26px; max-width: 20ch; }
-        .bar[hidden] { display: none; }
+        .b-ink { background: var(--ink); border-top: 0; border-bottom: 1px solid #232936;
+            padding: 50px 0 56px; }
+        .b-ink .close-q { color: #fff; font-size: clamp(24px, 3.2vw, 32px); font-weight: 700;
+            letter-spacing: -.03em; line-height: 1.14; margin: 0 0 26px; max-width: 18ch; }
+        .b-ink .btn { background: #f5a623; color: #0d1117; }
     </style>
 </head>
 
@@ -119,7 +128,7 @@
             <p class="lead">The one thing holding this account back: creative, media buying, or funnel. Most people
                 guess, fix the wrong one, and pay for it twice.</p></div>
     </section>
-    <section>
+    <section id="qsec">
         <div class="wrap doc">
             <div class="bar" id="bar"></div>
             <div class="card" id="card"></div>
@@ -402,9 +411,20 @@
             }
 
 
+            // the headline figure, lifted out of each finding's own tell - nothing invented here
+            var FIG = {
+                TRACKING: ['12.84 &rarr; 1.71', 'The same audited ad&rsquo;s ROAS, read through platform attribution and then through incrementality. On new audiences it was 5.'],
+                SELFINFLICTED: ['~30%', 'Of spend recovered at the same target, just by switching the killed high-spenders back on. For one operator at eight-figure spend it is the first move on any new account.'],
+                OVERLAUNCH: ['76&cent;', 'Per ad, per day. A real account running 186 ad objects on $141 &mdash; 151 of them never cleared $15 and produced three purchases between them.'],
+                DIVERSITY: ['200 &rarr; 20', 'Near-identical ads collapsing into about 20 entities. The ten inside each group served the same pool with zero unique reach.'],
+                FUNNEL_STEP: ['$150 &rarr; $50', 'CPA, after one account took site conversion rate from 2% to 4%. Meta prices you partly on expected action rate, so your site sets your ad costs.'],
+                FUNNEL_FLAT: ['0.8&ndash;1.5%', 'What a 2.5% blended store CVR is actually doing on cold traffic. Break-even maths built on the blended number fails at scale.'],
+                CREATIVE_WEAK: ['0.5&ndash;3%', 'The click-rate range across profitable accounts. It means nothing across accounts &mdash; only against the ads sitting beside it.'],
+                AOV: ['+11.5%', 'Average order value, from switching bid strategy on identical creative across 177 ad sets. Same ads, different bidding, different customer.']
+            };
+
             function finish() {
                 track('scale_completed', { answered: Object.keys(A).length });
-                backBtn.hidden = true;
 
                 var res = score(), p = res[0].f, rest = res.slice(1);
                 notifyCompletion(res);
@@ -413,25 +433,31 @@
                 var head = document.getElementById('head');
                 if (head) {
                     head.className = 'wrap doc reveal ' + p.tone;
-                    head.innerHTML = '<p class="eyebrow res-k"><span class="dot"></span>' + p.k + '</p>' +
+                    head.innerHTML = '<p class="res-chip">' + p.k + '</p>' +
                         '<h1 class="res-h">' + p.h + '</h1>' +
                         '<p class="lead">' + p.lead + '</p>';
                 }
 
-                var h = '<div class="res"><p class="res-body">' + p.body + '</p>' +
-                    '<div class="tell">' + p.tell + '</div>';
+                var h = '<section class="b-slab"><div class="wrap doc">' +
+                    '<p class="kicker">The finding</p>' +
+                    '<p class="res-body">' + p.body + '</p>';
+
+                var fg = FIG[res[0].key];
+                h += fg ? '<div class="fig"><b>' + fg[0] + '</b><span>' + fg[1] + '</span></div>'
+                        : '<div class="tell">' + p.tell + '</div>';
 
                 if (rest.length) {
                     h += '<div class="also"><h3>Also worth checking</h3>' + rest.map(function (r) {
                         return '<div class="row"><b>' + r.f.k + ' &middot; ' + r.f.h + '</b><span>' + r.f.short + '</span></div>';
                     }).join('') + '</div>';
                 }
+                h += '</div></section>';
 
-                h += '<div class="close"><p class="close-q">Want this fixed rather than diagnosed?</p>' +
-                    '<a class="btn" href="../contact/">Let&rsquo;s scale your brand</a></div></div>';
+                h += '<section class="b-ink"><div class="wrap doc">' +
+                    '<p class="close-q">Want this fixed rather than diagnosed?</p>' +
+                    '<a class="btn" href="../contact/">Let&rsquo;s scale your brand</a></div></section>';
 
-                card.outerHTML = '<div id="card">' + h + '</div>';
-                bar.hidden = true;
+                document.getElementById('qsec').outerHTML = h;
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
