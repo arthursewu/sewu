@@ -154,15 +154,22 @@ table.ladder tfoot .rowhead{border-bottom:0}
 
 @media(max-width:640px){ .intro{flex-direction:column;gap:16px}  }
 
-ul.cases{list-style:none;padding:0;margin:26px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:900px}
-ul.cases li{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent-text);
-  border-radius:10px;padding:20px 22px}
+/* split rows: label + result on the left, the story on the right.
+   rows self-size, so cases of different lengths do not fight a grid. */
+ul.cases{list-style:none;padding:0;margin:44px 0 0;max-width:900px}
+ul.cases li{display:grid;grid-template-columns:340px 1fr;gap:0 40px;
+  padding:22px 0 0;border-top:1px solid var(--line)}
+ul.cases li+li{margin-top:22px}
+ul.cases li:first-child{border-top:2px solid var(--ink)}
 ul.cases p{color:var(--mute);margin:0 0 6px;font-size:14.5px;line-height:1.55;max-width:none}
 ul.cases p:last-child{margin-bottom:0}
 ul.cases .eyebrow{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--mute-2);font-weight:800;line-height:1.3;margin:0 0 10px}
-ul.cases b{display:block;margin:0 0 12px;color:var(--ink);font-size:clamp(20px,2.1vw,26px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
-@media(max-width:700px){ ul.cases{grid-template-columns:1fr} }
+  color:var(--mute-2);font-weight:800;line-height:1.3;margin:0 0 8px}
+ul.cases b{display:block;margin:0;color:var(--ink);font-size:clamp(20px,2.1vw,25px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
+@media(max-width:700px){
+  ul.cases li{grid-template-columns:1fr;gap:0}
+  ul.cases .lead-col{margin-bottom:12px}
+}
 
 /* ---- mobile nav: logo + one button only ---- */
 .nav a.cta,.nav a.lnk{white-space:nowrap}
@@ -179,11 +186,10 @@ ul.cases b{display:block;margin:0 0 12px;color:var(--ink);font-size:clamp(20px,2
 
 /* ---- editorial: serif display, rules instead of card fills ---- */
 /* static content loses its box and gains a rule; interactive elements keep their fill */
-.stat,ul.cases li{background:transparent;border:0;border-top:1px solid var(--ink);
+.stat{background:transparent;border:0;border-top:1px solid var(--ink);
    border-radius:0;padding:15px 0 0}
 .stats{gap:28px}
-ul.cases{gap:28px 36px}
-@media(max-width:760px){ .stats{gap:20px} ul.cases{gap:22px} }
+@media(max-width:760px){ .stats{gap:20px} }
 
 /* h2/h3 follow h1 into the serif so the hierarchy is one voice */
 /* static panels on /scale and /report lose their fill, same as the homepage */
@@ -262,7 +268,7 @@ footer .ft-legal{margin:34px 0 0;font-size:12.5px;color:#6b7686;max-width:none}
 }
 
 
-ul.cases li{border-top-width:2px}
+ul.cases li:first-child{border-top-width:2px}
 
 /* ---- complete footer ---- */
 footer .ft-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px 48px;align-items:start}
