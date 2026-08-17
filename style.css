@@ -156,16 +156,29 @@ table.ladder tfoot .rowhead{border-bottom:0}
 
 /* split rows: label + result on the left, the story on the right.
    rows self-size, so cases of different lengths do not fight a grid. */
-ul.cases{list-style:none;padding:0;margin:44px 0 0;max-width:900px}
-ul.cases li{display:grid;grid-template-columns:340px 1fr;gap:0 40px;
-  padding:22px 0 0;border-top:1px solid var(--line)}
-ul.cases li+li{margin-top:22px}
-ul.cases li:first-child{border-top:2px solid var(--ink)}
-ul.cases p{color:var(--mute);margin:0 0 6px;font-size:14.5px;line-height:1.55;max-width:none}
+ul.cases{list-style:none;padding:0;margin:76px 0 0;max-width:900px}
+ul.cases li{display:grid;grid-template-columns:340px minmax(0,560px);gap:0 40px;
+  padding:26px 0 0;border-top:1px solid var(--line)}
+ul.cases li+li{margin-top:34px}
+ul.cases li:first-child{border-top:2px solid var(--ink);padding-top:30px}
+ul.cases li:nth-child(2){margin-top:58px}
+/* 14px paragraph gap, not 6px: under one line-height a break stops reading as a
+   break and the two paragraphs fuse into one grey block. That is the wall. */
+ul.cases p{color:var(--mute);margin:0 0 14px;font-size:15px;line-height:1.6;max-width:none}
 ul.cases p:last-child{margin-bottom:0}
+ul.cases .body-col p{max-width:465px}
 ul.cases .eyebrow{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
-  color:var(--mute-2);font-weight:800;line-height:1.3;margin:0 0 8px}
+  color:var(--mute-2);font-weight:800;line-height:1.3;margin:0 0 10px}
 ul.cases b{display:block;margin:0;color:var(--ink);font-size:clamp(20px,2.1vw,25px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
+
+/* the first case leads and the other three support it, so the block has an
+   entry point instead of four bands of identical weight. */
+ul.cases li:first-child b{font-size:clamp(29px,2.9vw,35px);line-height:1.08}
+ul.cases li:first-child .body-col p{font-size:16.5px;color:var(--ink);max-width:480px}
+ul.cases li:first-child .bar{height:13px}
+ul.cases li:first-child .barlab{font-size:12px}
+ul.cases li+li b{font-size:22px}
+ul.cases li+li p{font-size:14.5px}
 
 /* transformation mark. each row is on its OWN scale - "after" is always full
    width - so nothing implies one case's lift is comparable to another's. */
@@ -184,6 +197,9 @@ ul.cases .gfxcap{font-size:11px;font-weight:700;color:var(--mute-2);margin:7px 0
 @media(max-width:700px){
   ul.cases li{grid-template-columns:1fr;gap:0}
   ul.cases .lead-col{margin-bottom:12px}
+  ul.cases{margin-top:60px}
+  ul.cases li+li{margin-top:32px}
+  ul.cases li:nth-child(2){margin-top:44px}
 }
 
 /* ---- mobile nav: logo + one button only ---- */
@@ -281,9 +297,6 @@ footer .ft-legal{margin:34px 0 0;font-size:12.5px;color:#6b7686;max-width:none}
   .intro img{width:68px;height:68px}
   .intro .bio{margin-top:16px}
 }
-
-
-ul.cases li:first-child{border-top-width:2px}
 
 /* ---- complete footer ---- */
 footer .ft-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:40px 48px;align-items:start}
