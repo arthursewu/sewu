@@ -166,6 +166,21 @@ ul.cases p:last-child{margin-bottom:0}
 ul.cases .eyebrow{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--mute-2);font-weight:800;line-height:1.3;margin:0 0 8px}
 ul.cases b{display:block;margin:0;color:var(--ink);font-size:clamp(20px,2.1vw,25px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
+
+/* transformation mark. each row is on its OWN scale - "after" is always full
+   width - so nothing implies one case's lift is comparable to another's. */
+ul.cases .gfx{margin:14px 0 0}
+ul.cases .barrow{display:flex;align-items:center;gap:9px;margin:0 0 5px}
+ul.cases .barlab{font-size:11px;font-weight:800;color:var(--mute-2);width:44px;
+  text-align:right;font-variant-numeric:tabular-nums;letter-spacing:.02em;flex:none}
+ul.cases .bar{height:9px;border-radius:0 4px 4px 0;flex:none}
+ul.cases .bar.pre{background:var(--faint)}
+ul.cases .bar.post{background:var(--ink)}
+ul.cases .dots{display:flex;gap:7px;align-items:center;height:23px}
+ul.cases .dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--faint)}
+ul.cases .dot.on{background:var(--ink);border-color:var(--ink)}
+ul.cases .gfxcap{font-size:11px;font-weight:700;color:var(--mute-2);margin:7px 0 0;
+  letter-spacing:.02em}
 @media(max-width:700px){
   ul.cases li{grid-template-columns:1fr;gap:0}
   ul.cases .lead-col{margin-bottom:12px}
