@@ -71,62 +71,33 @@
         #back { background: none; border: 0; color: var(--mute); font: inherit; font-size: 14px; cursor: pointer; padding: 14px 0 0; }
         #back[hidden] { display: none; }
 
-        .verdict { border: 1px solid var(--accent-text); border-left: 4px solid var(--accent-text); background: var(--accent-wash); border-radius: 12px; padding: 26px 28px; }
-        .verdict.grey { border-color: var(--line); border-left-color: var(--faint); background: var(--panel); }
-        .verdict.amber { border-color: var(--warn); border-left-color: var(--warn); background: var(--warn-wash); }
-        .verdict .k { font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); font-weight: 700; display: block; margin-bottom: 10px; }
-        .verdict.grey .k { color: var(--mute); }
-        .verdict.amber .k { color: var(--warn-ink); }
-        .verdict h2 { margin-bottom: 12px; font-size: clamp(22px,3.2vw,30px); }
-        .verdict p { color: var(--mute); margin: 0 0 12px; }
-        .verdict p.lead-in { color: var(--ink); font-size: 17px; }
-        .verdict p:last-child { margin-bottom: 0; }
+        /* ---------- the reveal: the answer takes the hero slot ---------- */
+        .reveal .res-k { color: #f5a623; margin-bottom: 20px; }
+        .reveal.grey .res-k { color: #9fb0c4; }
+        .reveal .res-k:after { content: ""; display: block; width: 54px; height: 2px;
+            background: currentColor; opacity: .5; margin-top: 17px; }
+        .reveal .res-h { color: #fff; font-weight: 600; font-size: clamp(46px, 5.9vw, 62px);
+            line-height: 1.03; letter-spacing: -.035em; max-width: 19ch; margin: 0; }
+        .reveal .lead { margin-top: 24px; max-width: 48ch; }
 
-        .also { margin-top: 26px; border-top: 1px solid var(--line); padding-top: 20px; }
-        .also h3 { font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); margin-bottom: 14px; }
-        .also .row { padding: 13px 0; border-bottom: 1px solid var(--line); }
+        /* ---------- the finding ---------- */
+        .res-body { font-size: 18.5px; line-height: 1.62; color: var(--ink); margin: 0 0 36px; max-width: 62ch; }
+        .tell { border-left: 3px solid var(--ink); padding: 4px 0 4px 22px; margin: 0 0 48px;
+            font-size: 17px; line-height: 1.55; color: var(--mute); max-width: 58ch; }
+        .tell b { color: var(--ink); font-weight: 700; }
+
+        .also { border-top: 1px solid var(--ink); padding-top: 22px; }
+        .also h3 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
+            color: var(--mute); font-weight: 700; margin: 0 0 4px; }
+        .also .row { padding: 18px 0; border-bottom: 1px solid var(--line); }
         .also .row:last-child { border-bottom: 0; }
-        .also .row b { display: block; color: var(--ink); font-size: 16px; margin-bottom: 3px; }
-        .also .row span { color: var(--mute); font-size: 15px; }
+        .also .row b { display: block; color: var(--ink); font-size: 16.5px; margin-bottom: 4px; }
+        .also .row span { color: var(--mute); font-size: 15.5px; line-height: 1.5; }
 
-        .tell { margin-top: 22px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; font-size: 15px; color: var(--mute); }
-        .tell b { color: var(--ink); }
-
-        .inbox { margin-top: 24px; border: 1px solid var(--accent-text); border-radius: 12px; padding: 22px 24px; background: var(--accent-wash-2); }
-        .inbox h3 { margin-bottom: 8px; font-size: 19px; }
-        .inbox p { color: var(--mute); margin: 0; font-size: 15.5px; }
-        .inbox p b { color: var(--ink); }
-
-        ol.trace { list-style: none; counter-reset: s; padding: 0; margin: 24px 0 0; }
-        ol.trace li { counter-increment: s; position: relative; padding: 11px 0 11px 36px; border-bottom: 1px solid var(--line); color: var(--mute); font-size: 15px; }
-        ol.trace li:before {
-            content: counter(s); position: absolute; left: 0; top: 11px; width: 24px; height: 24px; border-radius: 50%;
-            background: var(--panel); border: 1px solid var(--line); color: var(--mute); font-size: 12px; font-weight: 700;
-            display: flex; align-items: center; justify-content: center;
-        }
-        ol.trace li.hit { color: var(--ink); }
-        ol.trace li.hit:before { border-color: var(--accent-text); color: var(--accent-text); }
-
-        .intake label { margin-top: 15px; }
-        .intake input { width: 100%; background: var(--bg); color: var(--ink); border: 1px solid var(--line); border-radius: 9px; padding: 14px; font: inherit; font-size: 16px; }
-        .intake input:focus { outline: 2px solid var(--accent-text); outline-offset: 1px; }
-        .intake .btn { margin-top: 20px; }
-        .fineprint { font-size: 13px; color: var(--mute); margin: 13px 0 0; }
-        .err { color: var(--err); font-size: 14px; margin: 9px 0 0; }
-        .preview { border: 1px solid var(--line); border-radius: 12px; background: var(--panel); padding: 20px 22px; margin: 24px 0 0; }
-        .preview .pk { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent-text); font-weight: 700; }
-        .preview h3 { margin: 8px 0 6px; font-size: 19px; }
-        .preview p { color: var(--mute); font-size: 14.5px; margin: 0; }
-        .preview .cap { font-size: 12px; color: var(--mute); margin-top: 13px; letter-spacing: .04em; text-transform: uppercase; }
-        .again { margin-top: 22px; }
-        .getfix { border: 1px solid var(--accent-text); border-radius: 14px; padding: 30px 30px 26px; background: var(--accent-wash-2); }
-        .getfix h2 { margin-bottom: 12px; }
-        .getfix p { color: var(--mute); }
-        .getfix p b { color: var(--ink); }
-        .bhv-embed { margin: 22px 0 6px; }
-        #bhv[hidden] { display: none; }
-        .backlink { font-size: 14px; color: var(--mute); text-decoration: none; }
-        .backlink:hover { color: var(--ink); }
+        .close { margin-top: 54px; }
+        .close-q { font-size: clamp(22px, 3vw, 30px); font-weight: 700; letter-spacing: -.025em;
+            line-height: 1.16; margin: 0 0 26px; max-width: 20ch; }
+        .bar[hidden] { display: none; }
     </style>
 </head>
 
@@ -142,8 +113,8 @@
         </div>
     </nav>
     <section id="main" tabindex="-1" class="hero-band">
-        <div class="wrap doc">
-            <p class="eyebrow">Free &middot; no numbers to type</p>
+        <div class="wrap doc" id="head">
+            <p class="eyebrow">For 7&ndash;8 figure DTC brands</p>
             <h1>Get your Scale Report. In under 60 seconds.</h1>
             <p class="lead">The one thing holding this account back: creative, media buying, or funnel. Most people
                 guess, fix the wrong one, and pay for it twice.</p></div>
@@ -153,14 +124,6 @@
             <div class="bar" id="bar"></div>
             <div class="card" id="card"></div>
             <button id="back" hidden>&larr; back</button>
-        </div>
-    </section>
-
-    <section id="bhv" hidden>
-        <div class="wrap doc">
-            <div class="getfix">
-                <p class="again"><a class="btn" href="../report/">Read the fixes</a></p>
-            </div>
         </div>
     </section>
 
@@ -439,27 +402,24 @@
             }
 
 
-            function revealForm(key) {
-                track('scale_email_shown');
-                var box = document.getElementById('bhv');
-                if (!box) return;
-                box.hidden = false;
-                var t = document.getElementById('bhv-track');
-                if (t) { t.value = key; }
-            }
-
             function finish() {
                 track('scale_completed', { answered: Object.keys(A).length });
-                bar.innerHTML = '<span style="width:100%"></span>';
                 backBtn.hidden = true;
 
                 var res = score(), p = res[0].f, rest = res.slice(1);
                 notifyCompletion(res);
-                bar.innerHTML = '<span style="width:100%"></span>';
-                backBtn.hidden = true;
 
-                var h = '<div class="verdict ' + p.tone + '"><span class="k">' + p.k + '</span><h2>' + p.h + '</h2>' +
-                    '<p class="lead-in">' + p.lead + '</p><p>' + p.body + '</p></div>';
+                // the reveal takes the hero slot - the answer outranks the invitation
+                var head = document.getElementById('head');
+                if (head) {
+                    head.className = 'wrap doc reveal ' + p.tone;
+                    head.innerHTML = '<p class="eyebrow res-k"><span class="dot"></span>' + p.k + '</p>' +
+                        '<h1 class="res-h">' + p.h + '</h1>' +
+                        '<p class="lead">' + p.lead + '</p>';
+                }
+
+                var h = '<div class="res"><p class="res-body">' + p.body + '</p>' +
+                    '<div class="tell">' + p.tell + '</div>';
 
                 if (rest.length) {
                     h += '<div class="also"><h3>Also worth checking</h3>' + rest.map(function (r) {
@@ -467,12 +427,12 @@
                     }).join('') + '</div>';
                 }
 
-                h += '<div class="tell">' + p.tell + '</div>';
-                h += '<p class="again"><a class="btn" href="../contact/">Let&rsquo;s scale your brand</a></p>';
+                h += '<div class="close"><p class="close-q">Want this fixed rather than diagnosed?</p>' +
+                    '<a class="btn" href="../contact/">Let&rsquo;s scale your brand</a></div></div>';
 
                 card.outerHTML = '<div id="card">' + h + '</div>';
-                revealForm(res[0].key);
-                document.getElementById('card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+                bar.hidden = true;
+                window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
             document.addEventListener('click', function (e) {
