@@ -80,37 +80,6 @@
             line-height: 1.03; letter-spacing: -.035em; max-width: 19ch; margin: 0; }
         .reveal .lead { margin-top: 24px; max-width: 48ch; }
 
-        /* ---------- the chain: where in the account it breaks ---------- */
-        /* semantic palette: amber = the break, ink = also flagged, green = clear */
-        .res-sec { --break: #f5a623; --break-ink: #8f5700; --ok: #0f7a5f; }
-        .b-tint { background: var(--panel); border-top: 0; padding: 44px 0 38px; }
-        .b-ink { background: var(--ink); border-top: 0; padding: 54px 0 58px; }
-        .b-ink .close-q { color: #fff; }
-        .b-ink .btn { background: #fff; color: var(--ink); }
-
-        .lanes h3 { font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
-            color: var(--mute); font-weight: 700; margin: 0 0 4px; }
-        .chain { display: block; width: 100%; height: auto; overflow: visible; }
-        .chain text { font-family: inherit; }
-        .chain .cl { font-size: 15px; letter-spacing: .15em; font-weight: 700; fill: var(--mute); }
-        .chain .cl.on { fill: var(--break-ink); }
-        .chain .cl.ok { fill: var(--ok); }
-        .chain .cn { font-size: 17px; fill: var(--mute); }
-        .chain .cn.on { fill: var(--break-ink); font-weight: 700; }
-        .chain .cn.ok { fill: var(--ok); }
-        @media (max-width: 620px) {
-            .chain .cl { font-size: 22px; letter-spacing: .1em; }
-            .chain .cn { font-size: 24px; }
-        }
-
-        /* findings list picks up the same palette */
-        .also .row { display: grid; grid-template-columns: 10px 1fr; gap: 16px; }
-        .also .row:before { content: ""; width: 10px; height: 10px; margin-top: 6px;
-            background: var(--ink); border-radius: 50%; }
-        .also .row.t-break:before { background: var(--break); }
-        .res-lede { font-size: 12px; letter-spacing: .14em; text-transform: uppercase;
-            color: var(--mute); font-weight: 700; margin: 0 0 18px; }
-
         /* ---------- the finding ---------- */
         .res-body { font-size: 18.5px; line-height: 1.62; color: var(--ink); margin: 0 0 36px; max-width: 62ch; }
         .tell { border-left: 3px solid var(--ink); padding: 4px 0 4px 22px; margin: 0 0 48px;
@@ -125,7 +94,7 @@
         .also .row b { display: block; color: var(--ink); font-size: 16.5px; margin-bottom: 4px; }
         .also .row span { color: var(--mute); font-size: 15.5px; line-height: 1.5; }
 
-        .close { margin-top: 0; }
+        .close { margin-top: 54px; }
         .close-q { font-size: clamp(22px, 3vw, 30px); font-weight: 700; letter-spacing: -.025em;
             line-height: 1.16; margin: 0 0 26px; max-width: 20ch; }
         .bar[hidden] { display: none; }
@@ -150,7 +119,7 @@
             <p class="lead">The one thing holding this account back: creative, media buying, or funnel. Most people
                 guess, fix the wrong one, and pay for it twice.</p></div>
     </section>
-    <section id="qsec">
+    <section>
         <div class="wrap doc">
             <div class="bar" id="bar"></div>
             <div class="card" id="card"></div>
@@ -433,41 +402,6 @@
             }
 
 
-            // an account is a chain: money buys delivery, delivery buys the click,
-            // the click has to survive the site. tracking is the layer over all of it.
-            function chain(hit, cnt, LANES) {
-                var x0 = 18, x1 = 662, seg = (x1 - x0) / 3, y = 152, tOn = hit === 'Tracking',
-                    DIM = 'var(--line-3)', ON = 'var(--ink)', BRK = 'var(--break)', OKC = 'var(--ok)';
-                var s = '<svg class="chain" viewBox="0 0 680 218" role="img" aria-label="Where the account breaks">';
-
-                // the tracking rail runs over the whole chain
-                s += '<path d="M' + x0 + ' 66 V48 H' + x1 + ' V66" fill="none" stroke="' + (tOn ? BRK : DIM) +
-                    '" stroke-width="' + (tOn ? 7 : 2) + '"' + (tOn ? '' : ' stroke-dasharray="5 7"') + '/>' +
-                    '<text x="340" y="28" text-anchor="middle" class="cl' + (tOn ? ' on' : '') + '">TRACKING</text>';
-
-                for (var i = 0; i < 3; i++) {
-                    var a = x0 + seg * i, n = cnt[LANES[i]] || 0,
-                        on = LANES[i] === hit, ok = !n,
-                        cls = on ? ' on' : (ok ? ' ok' : '');
-                    s += '<line x1="' + (a + 4) + '" y1="' + y + '" x2="' + (a + seg - 4) + '" y2="' + y +
-                        '" stroke="' + (on ? BRK : ok ? DIM : ON) + '" stroke-width="' + (on ? 22 : ok ? 3 : 8) + '"/>' +
-                        '<text x="' + (a + seg / 2) + '" y="' + (y - 40) + '" text-anchor="middle" class="cl' +
-                        cls + '">' + LANES[i].toUpperCase() + '</text>' +
-                        '<text x="' + (a + seg / 2) + '" y="' + (y + 48) + '" text-anchor="middle" class="cn' +
-                        cls + '">' + (n ? n + (n === 1 ? ' finding' : ' findings') : 'clear') + '</text>';
-                }
-
-                for (var j = 0; j <= 3; j++) {
-                    var cx = x0 + seg * j, L = LANES[j - 1], R = LANES[j],
-                        brk = (L === hit) || (R === hit),
-                        lit = brk || (L && cnt[L]) || (R && cnt[R]);
-                    s += '<circle cx="' + cx + '" cy="' + y + '" r="' + (brk ? 12 : 7) + '" fill="' +
-                        (brk ? BRK : lit ? ON : '#fff') + '" stroke="' +
-                        (brk ? BRK : lit ? ON : DIM) + '" stroke-width="3"/>';
-                }
-                return s + '</svg>';
-            }
-
             function finish() {
                 track('scale_completed', { answered: Object.keys(A).length });
                 backBtn.hidden = true;
@@ -484,37 +418,20 @@
                         '<p class="lead">' + p.lead + '</p>';
                 }
 
-                // the three lanes the headline promises, marked with where it landed
-                var LANES = ['Creative', 'Media buying', 'Funnel'], cnt = {}, flagged = 0;
-                res.forEach(function (r) { cnt[r.f.k] = (cnt[r.f.k] || 0) + 1; });
-                LANES.forEach(function (l) { flagged += cnt[l] || 0; });
-
-                // three bands, three grounds - the sections have to read as separate places
-                var h = '';
-                if (flagged) {
-                    h += '<section class="res-sec b-tint"><div class="wrap doc"><div class="lanes">' +
-                        '<h3>Where it is coming from</h3>' + chain(p.k, cnt, LANES) + '</div></div></section>';
-                }
-
-                h += '<section class="res-sec"><div class="wrap doc">' +
-                    '<p class="res-lede">The finding</p>' +
-                    '<p class="res-body">' + p.body + '</p>' +
+                var h = '<div class="res"><p class="res-body">' + p.body + '</p>' +
                     '<div class="tell">' + p.tell + '</div>';
 
                 if (rest.length) {
                     h += '<div class="also"><h3>Also worth checking</h3>' + rest.map(function (r) {
-                        return '<div class="row' + (r.f.k === p.k ? ' t-break' : '') + '"><div><b>' +
-                            r.f.k + ' &middot; ' + r.f.h + '</b><span>' + r.f.short + '</span></div></div>';
+                        return '<div class="row"><b>' + r.f.k + ' &middot; ' + r.f.h + '</b><span>' + r.f.short + '</span></div>';
                     }).join('') + '</div>';
                 }
 
-                h += '</div></section>';
+                h += '<div class="close"><p class="close-q">Want this fixed rather than diagnosed?</p>' +
+                    '<a class="btn" href="../contact/">Let&rsquo;s scale your brand</a></div></div>';
 
-                h += '<section class="res-sec b-ink"><div class="wrap doc"><div class="close">' +
-                    '<p class="close-q">Want this fixed rather than diagnosed?</p>' +
-                    '<a class="btn" href="../contact/">Let&rsquo;s scale your brand</a></div></div></section>';
-
-                document.getElementById('qsec').outerHTML = h;
+                card.outerHTML = '<div id="card">' + h + '</div>';
+                bar.hidden = true;
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             }
 
