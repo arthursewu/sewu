@@ -182,10 +182,10 @@ ul.cases .barlab{font-size:11px;font-weight:800;color:var(--mute-2);width:44px;
   text-align:right;font-variant-numeric:tabular-nums;letter-spacing:.02em;flex:none}
 ul.cases .bar{height:9px;border-radius:0 4px 4px 0;flex:none}
 ul.cases .bar.pre{background:var(--faint)}
-ul.cases .bar.post{background:var(--ink)}
+ul.cases .bar.post{background:#15803d}
 ul.cases .dots{display:flex;gap:7px;align-items:center;height:23px}
 ul.cases .dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--faint)}
-ul.cases .dot.on{background:var(--ink);border-color:var(--ink)}
+ul.cases .dot.on{background:#15803d;border-color:#15803d}
 ul.cases .gfxcap{font-size:11px;font-weight:700;color:var(--mute-2);margin:7px 0 0;
   letter-spacing:.02em}
 @media(max-width:700px){
