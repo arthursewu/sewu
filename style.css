@@ -10,7 +10,7 @@
   --accent-text:#f2f5f8;     /* text / border / icon */
   --accent-wash:rgba(242,245,248,.07);
   --accent-wash-2:rgba(242,245,248,.05);
-  --nav-cta:#047857; --nav-cta-ink:#ffffff;
+  --nav-cta:#396047; --nav-cta-ink:#ffffff;
   /* nav */
   --nav-bg:rgba(11,13,16,.82); --nav-ink:#f2f5f8; --nav-line:#232936; --nav-mute:#98a4b3;
   /* states */
@@ -28,7 +28,7 @@ html[data-theme="light"]{
   --accent-wash:rgba(13,17,23,.05);
   --accent-wash-2:rgba(13,17,23,.03);
   /* the nav is dark in both themes, so its cta must invert or it vanishes */
-  --nav-cta:#047857; --nav-cta-ink:#ffffff;
+  --nav-cta:#396047; --nav-cta-ink:#ffffff;
   --nav-bg:rgba(13,17,23,.94); --nav-ink:#ffffff; --nav-line:#0d1117; --nav-mute:#98a4b3;
   --warn:#b45309; --warn-ink:#7c3d06; --warn-wash:rgba(180,83,9,.08); --err:#b91c1c;
   --shadow:0 10px 30px rgba(13,17,23,.08);
@@ -50,7 +50,7 @@ p{margin:0 0 14px;max-width:62ch}
 .eyebrow{font-family:'IBM Plex Mono',Consolas,monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text);font-weight:600;margin-bottom:16px}
 .logo{font-size:22px;font-weight:800;letter-spacing:-.03em}
 header{padding:28px 0}
-.btn{display:inline-block;background:#047857;color:#ffffff;
+.btn{display:inline-block;background:#396047;color:#ffffff;
   font-weight:800;font-size:16px;letter-spacing:.02em;padding:16px 30px;border-radius:8px;
   text-decoration:none;border:0;cursor:pointer}
 .btn:hover{filter:brightness(1.12)}
@@ -170,7 +170,7 @@ ul.cases .body-col b{display:inline;margin:0;font-size:inherit;line-height:inher
 ul.cases .eyebrow{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--mute-2);font-weight:800;line-height:1.3;margin:0 0 10px}
 ul.cases b{display:block;margin:0;color:var(--ink);font-size:clamp(20px,2.1vw,25px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
-ul.cases b .hl{color:#047857}
+ul.cases b .hl{color:#396047}
 .btn-sub{font-family:'IBM Plex Mono',Consolas,monospace;font-size:10.5px;font-weight:500;letter-spacing:.14em;
   color:#98a4b3;margin:12px 0 0;text-transform:uppercase}
 /* post-proof ask, centered under the case list; sub-line needs the darker
@@ -178,9 +178,9 @@ ul.cases b .hl{color:#047857}
 .cta-cases{text-align:center;margin:64px 0 8px}
 .cta-cases .btn-sub{max-width:none;margin:12px 0 0;color:var(--mute)}
 ul.cases .verdict{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',Consolas,monospace;
-  font-size:10px;font-weight:600;letter-spacing:.12em;color:#047857;border:1px solid #cbd5e1;
+  font-size:10px;font-weight:600;letter-spacing:.12em;color:#396047;border:1px solid #cbd5e1;
   border-radius:4px;padding:4px 9px;margin:14px 0 0;text-transform:uppercase}
-ul.cases .verdict:before{content:"";width:7px;height:7px;border-radius:50%;background:#047857}
+ul.cases .verdict:before{content:"";width:7px;height:7px;border-radius:50%;background:#396047}
 /* scroll reveal: .rv is added by JS only, so no-JS visitors see everything */
 ul.cases>li.rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
 ul.cases>li.rv.in{opacity:1;transform:none}
@@ -198,10 +198,10 @@ ul.cases .barlab{font-family:'IBM Plex Mono',Consolas,monospace;font-size:10px;f
   text-align:right;font-variant-numeric:tabular-nums;letter-spacing:.02em;flex:none}
 ul.cases .bar{height:9px;border-radius:0 4px 4px 0;flex:none}
 ul.cases .bar.pre{background:var(--faint)}
-ul.cases .bar.post{background:#047857}
+ul.cases .bar.post{background:#396047}
 ul.cases .dots{display:flex;gap:7px;align-items:center;height:23px}
 ul.cases .dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--faint)}
-ul.cases .dot.on{background:#047857;border-color:#047857}
+ul.cases .dot.on{background:#396047;border-color:#396047}
 ul.cases .gfxcap{font-family:'IBM Plex Mono',Consolas,monospace;font-size:10px;font-weight:600;color:var(--mute-2);margin:7px 0 0;
   letter-spacing:.06em}
 @media(max-width:700px){
