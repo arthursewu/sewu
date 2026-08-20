@@ -173,6 +173,11 @@ ul.cases b{display:block;margin:0;color:var(--ink);font-size:clamp(20px,2.1vw,25
 ul.cases b .hl{color:#15803d}
 .btn-sub{font-family:'IBM Plex Mono',Consolas,monospace;font-size:10.5px;font-weight:500;letter-spacing:.14em;
   color:#98a4b3;margin:12px 0 0;text-transform:uppercase}
+/* post-proof ask, centered under the case list; sub-line needs the darker
+   gray on the white ground (#98a4b3 is the dark-hero value, 2.6:1 here) */
+.cta-cases{text-align:center;margin:64px 0 8px}
+.cta-cases .btn{background:#4ade80;color:#06240f}
+.cta-cases .btn-sub{max-width:none;margin:12px 0 0;color:var(--mute)}
 ul.cases .verdict{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',Consolas,monospace;
   font-size:10px;font-weight:600;letter-spacing:.12em;color:#15803d;border:1px solid #cbd5e1;
   border-radius:4px;padding:4px 9px;margin:14px 0 0;text-transform:uppercase}
