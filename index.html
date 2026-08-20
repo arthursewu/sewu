@@ -29,7 +29,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=87df73ca">
+    <link rel="stylesheet" href="style.css?v=209efbf5">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -115,8 +115,8 @@
                         </div>
                     </div>
                     <div class="body-col">
-                        <p>A clothing brand was losing money and did not know why.</p>
-                        <p>I found they were only running ads to people who already knew them. I
+                        <p>A clothing brand was <b>losing money</b> and did not know why.</p>
+                        <p>I found they were <b>only running ads to people who already knew them</b>. I
                             opened it up to new buyers and consolidated 100+ scattered ads.</p>
                     </div>
                 </li>
@@ -133,10 +133,10 @@
                         </div>
                     </div>
                     <div class="body-col">
-                        <p>An account was spending $10k a day and was acquiring customers at a
-                            loss.</p>
+                        <p>An account was spending $10k a day and was <b>acquiring customers at a
+                            loss</b>.</p>
                         <p>I found the campaigns were overlapping. I rebuilt them, and they acquired
-                            50% more customers on the same spend.</p>
+                            <b>50% more customers on the same spend</b>.</p>
                     </div>
                 </li>
                 <li>
@@ -152,9 +152,9 @@
                         </div>
                     </div>
                     <div class="body-col">
-                        <p>An apparel brand had roller coaster performance.</p>
+                        <p>An apparel brand had <b>roller coaster performance</b>.</p>
                         <p>I pushed hard on the good days and pulled back on the bad ones. Daily
-                            sales went from $4k to $16k.</p>
+                            sales went from <b>$4k to $16k</b>.</p>
                     </div>
                 </li>
                 <li>
@@ -168,10 +168,10 @@
                         </div>
                     </div>
                     <div class="body-col">
-                        <p>On top of buying the media, I started creating ads myself, off what
-                            customers say and what the account data shows.</p>
+                        <p>On top of buying the media, I started creating ads myself, off <b>what
+                            customers say and what the account data shows</b>.</p>
                         <p>I also help brief the creative team and keep them hungry, so their ads
-                            make money.</p>
+                            <b>make money</b>.</p>
                     </div>
                 </li>
             </ul>
@@ -200,6 +200,21 @@
         </div>
     </footer>
 
+    <script>
+        (function () {
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            if (!('IntersectionObserver' in window)) return;
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.25 });
+            document.querySelectorAll('ul.cases > li').forEach(function (li) {
+                li.classList.add('rv');
+                io.observe(li);
+            });
+        })();
+    </script>
 </body>
 
 </html>
