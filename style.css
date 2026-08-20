@@ -47,7 +47,7 @@ h2{font-size:clamp(26px,4vw,38px);font-weight:800}
 h3{font-size:20px;font-weight:700;margin-bottom:8px}
 p{margin:0 0 14px;max-width:62ch}
 .lead{font-size:clamp(19px,2.4vw,24px);color:var(--lead);font-weight:600;max-width:60ch}
-.eyebrow{font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent-text);font-weight:700;margin-bottom:16px}
+.eyebrow{font-family:'IBM Plex Mono',Consolas,monospace;font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-text);font-weight:600;margin-bottom:16px}
 .logo{font-size:22px;font-weight:800;letter-spacing:-.03em}
 header{padding:28px 0}
 .btn{display:inline-block;background:var(--accent);color:var(--accent-ink);
@@ -167,10 +167,16 @@ ul.cases p{color:var(--mute);margin:0 0 14px;font-size:16px;line-height:1.6;max-
 ul.cases p:last-child{margin-bottom:0}
 ul.cases .body-col p{max-width:500px}
 ul.cases .body-col b{display:inline;margin:0;font-size:inherit;line-height:inherit;letter-spacing:inherit;color:var(--ink);font-weight:700}
-ul.cases .eyebrow{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
+ul.cases .eyebrow{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--mute-2);font-weight:800;line-height:1.3;margin:0 0 10px}
 ul.cases b{display:block;margin:0;color:var(--ink);font-size:clamp(20px,2.1vw,25px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
 ul.cases b .hl{color:#15803d}
+.btn-sub{font-family:'IBM Plex Mono',Consolas,monospace;font-size:10.5px;font-weight:500;letter-spacing:.14em;
+  color:#98a4b3;margin:12px 0 0;text-transform:uppercase}
+ul.cases .verdict{display:inline-flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',Consolas,monospace;
+  font-size:10px;font-weight:600;letter-spacing:.12em;color:#15803d;border:1px solid #cbd5e1;
+  border-radius:4px;padding:4px 9px;margin:14px 0 0;text-transform:uppercase}
+ul.cases .verdict:before{content:"";width:7px;height:7px;border-radius:50%;background:#15803d}
 /* scroll reveal: .rv is added by JS only, so no-JS visitors see everything */
 ul.cases>li.rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
 ul.cases>li.rv.in{opacity:1;transform:none}
@@ -184,7 +190,7 @@ ul.cases>li.rv.in{opacity:1;transform:none}
    width - so nothing implies one case's lift is comparable to another's. */
 ul.cases .gfx{margin:14px 0 0}
 ul.cases .barrow{display:flex;align-items:center;gap:9px;margin:0 0 5px}
-ul.cases .barlab{font-size:11px;font-weight:800;color:var(--mute-2);width:44px;
+ul.cases .barlab{font-family:'IBM Plex Mono',Consolas,monospace;font-size:10px;font-weight:600;color:var(--mute-2);width:44px;
   text-align:right;font-variant-numeric:tabular-nums;letter-spacing:.02em;flex:none}
 ul.cases .bar{height:9px;border-radius:0 4px 4px 0;flex:none}
 ul.cases .bar.pre{background:var(--faint)}
@@ -192,8 +198,8 @@ ul.cases .bar.post{background:#15803d}
 ul.cases .dots{display:flex;gap:7px;align-items:center;height:23px}
 ul.cases .dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--faint)}
 ul.cases .dot.on{background:#15803d;border-color:#15803d}
-ul.cases .gfxcap{font-size:11px;font-weight:700;color:var(--mute-2);margin:7px 0 0;
-  letter-spacing:.02em}
+ul.cases .gfxcap{font-family:'IBM Plex Mono',Consolas,monospace;font-size:10px;font-weight:600;color:var(--mute-2);margin:7px 0 0;
+  letter-spacing:.06em}
 @media(max-width:700px){
   ul.cases li{grid-template-columns:1fr;gap:0}
   ul.cases .lead-col{margin-bottom:12px}
@@ -303,8 +309,8 @@ footer .ft-tag{color:#98a4b3;font-size:14px;line-height:1.5;margin:14px 0 18px;m
 footer .ft-ico-row{display:inline-flex;gap:16px;flex-wrap:wrap}
 footer .ft-ico{color:#98a4b3;display:inline-flex;align-items:center}
 footer .ft-ico:hover{color:#fff}
-footer .ft-col h4{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#6b7686;
-  font-weight:800;margin:0 0 14px}
+footer .ft-col h4{font-family:'IBM Plex Mono',Consolas,monospace;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:#6b7686;
+  font-weight:600;margin:0 0 14px}
 footer .ft-col a{display:block;color:#c7d0dc;text-decoration:none;font-size:14.5px;font-weight:600;padding:5px 0}
 footer .ft-col a:hover{color:#fff}
 footer .ft-legal{margin:40px 0 0;padding-top:22px;border-top:1px solid #232936;font-size:12.5px;color:#6b7686;max-width:none}
