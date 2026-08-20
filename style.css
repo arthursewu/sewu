@@ -157,21 +157,19 @@ table.ladder tfoot .rowhead{border-bottom:0}
 /* split rows: label + result on the left, the story on the right.
    rows self-size, so cases of different lengths do not fight a grid. */
 ul.cases{list-style:none;padding:0;margin:48px 0 0;max-width:900px}
-/* sticky stack: each case pins full-screen, the next slides up over it.
-   background must stay opaque or the covered case shows through. */
-ul.cases li{position:sticky;top:0;min-height:100vh;min-height:100svh;box-sizing:border-box;
-  background:var(--bg);display:grid;grid-template-columns:340px minmax(0,560px);gap:0 40px;
-  align-content:center;padding:10vh 0;border-top:1px solid var(--line)}
+ul.cases li{display:grid;grid-template-columns:340px minmax(0,560px);gap:0 40px;
+  padding:26px 0 0;border-top:1px solid var(--line)}
+ul.cases li+li{margin-top:38px}
 ul.cases li:first-child{border-top:2px solid var(--ink)}
 /* 14px paragraph gap, not 6px: under one line-height a break stops reading as a
    break and the two paragraphs fuse into one grey block. That is the wall. */
-ul.cases p{color:var(--mute);margin:0 0 14px;font-size:17px;line-height:1.6;max-width:none}
+ul.cases p{color:var(--mute);margin:0 0 14px;font-size:16px;line-height:1.6;max-width:none}
 ul.cases p:last-child{margin-bottom:0}
 ul.cases .body-col p{max-width:500px}
 ul.cases .body-col b{display:inline;margin:0;font-size:inherit;line-height:inherit;letter-spacing:inherit;color:var(--ink);font-weight:700}
 ul.cases .eyebrow{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--mute-2);font-weight:800;line-height:1.3;margin:0 0 10px}
-ul.cases b{display:block;margin:0;color:var(--ink);font-size:clamp(26px,2.6vw,36px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
+ul.cases b{display:block;margin:0;color:var(--ink);font-size:clamp(20px,2.1vw,25px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
 ul.cases b .hl{color:#15803d}
 .btn-sub{font-family:'IBM Plex Mono',Consolas,monospace;font-size:10.5px;font-weight:500;letter-spacing:.14em;
   color:#98a4b3;margin:12px 0 0;text-transform:uppercase}
@@ -179,6 +177,10 @@ ul.cases .verdict{display:inline-flex;align-items:center;gap:6px;font-family:'IB
   font-size:10px;font-weight:600;letter-spacing:.12em;color:#15803d;border:1px solid #cbd5e1;
   border-radius:4px;padding:4px 9px;margin:14px 0 0;text-transform:uppercase}
 ul.cases .verdict:before{content:"";width:7px;height:7px;border-radius:50%;background:#15803d}
+/* scroll reveal: .rv is added by JS only, so no-JS visitors see everything */
+ul.cases>li.rv{opacity:0;transform:translateY(28px);transition:opacity .6s ease,transform .6s ease}
+ul.cases>li.rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){ul.cases>li.rv{transition:none;opacity:1;transform:none}}
 
 /* every case is the same size on purpose - operator's call, 2026-08-17. no
    per-case type or bar overrides live here; add none. the block is separated
@@ -199,9 +201,10 @@ ul.cases .dot.on{background:#15803d;border-color:#15803d}
 ul.cases .gfxcap{font-family:'IBM Plex Mono',Consolas,monospace;font-size:10px;font-weight:600;color:var(--mute-2);margin:7px 0 0;
   letter-spacing:.06em}
 @media(max-width:700px){
-  ul.cases li{grid-template-columns:1fr;gap:0;padding:6vh 0}
+  ul.cases li{grid-template-columns:1fr;gap:0}
   ul.cases .lead-col{margin-bottom:12px}
   ul.cases{margin-top:60px}
+  ul.cases li+li{margin-top:32px}
 }
 
 /* ---- mobile nav: logo + one button only ---- */

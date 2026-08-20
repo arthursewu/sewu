@@ -29,7 +29,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=c1793e64">
+    <link rel="stylesheet" href="style.css?v=cec0c46b">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -205,6 +205,21 @@
         </div>
     </footer>
 
+    <script>
+        (function () {
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            if (!('IntersectionObserver' in window)) return;
+            var io = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.25 });
+            document.querySelectorAll('ul.cases > li').forEach(function (li) {
+                li.classList.add('rv');
+                io.observe(li);
+            });
+        })();
+    </script>
 </body>
 
 </html>
