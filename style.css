@@ -10,7 +10,7 @@
   --accent-text:#f2f5f8;     /* text / border / icon */
   --accent-wash:rgba(242,245,248,.07);
   --accent-wash-2:rgba(242,245,248,.05);
-  --nav-cta:#ffffff; --nav-cta-ink:#0d1117;
+  --nav-cta:#4ade80; --nav-cta-ink:#06240f;
   /* nav */
   --nav-bg:rgba(11,13,16,.82); --nav-ink:#f2f5f8; --nav-line:#232936; --nav-mute:#98a4b3;
   /* states */
@@ -28,7 +28,7 @@ html[data-theme="light"]{
   --accent-wash:rgba(13,17,23,.05);
   --accent-wash-2:rgba(13,17,23,.03);
   /* the nav is dark in both themes, so its cta must invert or it vanishes */
-  --nav-cta:#ffffff; --nav-cta-ink:#0d1117;
+  --nav-cta:#4ade80; --nav-cta-ink:#06240f;
   --nav-bg:rgba(13,17,23,.94); --nav-ink:#ffffff; --nav-line:#0d1117; --nav-mute:#98a4b3;
   --warn:#b45309; --warn-ink:#7c3d06; --warn-wash:rgba(180,83,9,.08); --err:#b91c1c;
   --shadow:0 10px 30px rgba(13,17,23,.08);
@@ -168,7 +168,7 @@ ul.cases p:last-child{margin-bottom:0}
 ul.cases .body-col p{max-width:465px}
 ul.cases .eyebrow{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;
   color:var(--mute-2);font-weight:800;line-height:1.3;margin:0 0 10px}
-ul.cases b{display:block;margin:0;color:#15803d;font-size:clamp(20px,2.1vw,25px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
+ul.cases b{display:block;margin:0;color:var(--ink);font-size:clamp(20px,2.1vw,25px);font-weight:800;line-height:1.15;letter-spacing:-.02em}
 
 /* every case is the same size on purpose - operator's call, 2026-08-17. no
    per-case type or bar overrides live here; add none. the block is separated
@@ -182,10 +182,10 @@ ul.cases .barlab{font-size:11px;font-weight:800;color:var(--mute-2);width:44px;
   text-align:right;font-variant-numeric:tabular-nums;letter-spacing:.02em;flex:none}
 ul.cases .bar{height:9px;border-radius:0 4px 4px 0;flex:none}
 ul.cases .bar.pre{background:var(--faint)}
-ul.cases .bar.post{background:#15803d}
+ul.cases .bar.post{background:var(--ink)}
 ul.cases .dots{display:flex;gap:7px;align-items:center;height:23px}
 ul.cases .dot{width:13px;height:13px;border-radius:50%;border:2px solid var(--faint)}
-ul.cases .dot.on{background:#15803d;border-color:#15803d}
+ul.cases .dot.on{background:var(--ink);border-color:var(--ink)}
 ul.cases .gfxcap{font-size:11px;font-weight:700;color:var(--mute-2);margin:7px 0 0;
   letter-spacing:.02em}
 @media(max-width:700px){
@@ -231,13 +231,13 @@ ul.cases .gfxcap{font-size:11px;font-weight:700;color:var(--mute-2);margin:7px 0
 .hero h1{color:#fff}
 .hero .lead{color:#c7d0dc}
 .hero p{color:#98a4b3}
-.hero .btn{background:#fff;color:var(--ink)}
+.hero .btn{background:#4ade80;color:#06240f}
 .hero .btn:hover{filter:brightness(.92)}
 .nav{border-bottom:0}
 /* numbers as graphics, inside the dark block */
 .hero .stats{gap:40px;margin-top:38px}
 .hero .stat{border-top:2px solid #3a4453;padding:18px 0 0}
-.hero .stat b{display:block;font-size:clamp(44px,6.6vw,82px);line-height:.9;letter-spacing:-.045em;color:#4ade80}
+.hero .stat b{display:block;font-size:clamp(44px,6.6vw,82px);line-height:.9;letter-spacing:-.045em;color:#fff}
 .hero .stat span{display:block;margin-top:12px;font-size:13px;color:#98a4b3;max-width:none}
 @media(max-width:760px){
   .hero{padding:44px 0 40px}
